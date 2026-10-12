@@ -81,20 +81,25 @@
 
     .app-wrapper { display: flex; min-height: 100vh; background: var(--bg-primary); transition: background 0.3s ease; }
 
-    .sidebar {
-      width: 260px;
-      background: linear-gradient(180deg, #047857, #059669);
-      display: flex;
-      flex-direction: column;
-      position: fixed;
-      top: 0; left: 0;
-      height: 100vh;
-      z-index: 1000;
-      transition: transform 0.3s ease, width 0.3s ease;
-      box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
-      overflow-y: auto;
-      overflow-x: hidden;
-    }
+.sidebar {
+  width: 260px;
+  background: linear-gradient(180deg, #047857, #059669);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0; left: 0;
+  height: 100vh;
+  z-index: 1000;
+  transform: translateX(0);
+  /* ✅ Smooth iOS-style transition */
+  transition: transform 0.42s cubic-bezier(0.32, 0.72, 0, 1),
+              width 0.3s ease,
+              box-shadow 0.3s ease;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+  overflow-y: auto;
+  overflow-x: hidden;
+  will-change: transform;
+}
 
     .sidebar::-webkit-scrollbar { width: 4px; }
     .sidebar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 4px; }
@@ -167,29 +172,109 @@
       max-width: 100%;
     }
 
-    .sidebar-toggle {
-      display: none; position: fixed;
-      top: 12px; left: 16px;
-      z-index: 1100; width: 44px; height: 44px;
-      border-radius: var(--radius-sm);
-      background: linear-gradient(135deg, #047857, #059669);
-      color: #ffffff; border: none;
-      font-size: 22px; cursor: pointer;
-      box-shadow: 0 4px 12px rgba(5, 150, 105, 0.35);
-      align-items: center; justify-content: center;
-      transition: all 0.2s ease;
-    }
-    .sidebar-toggle:hover { transform: scale(1.05); box-shadow: 0 6px 16px rgba(5, 150, 105, 0.45); }
-    .sidebar-toggle:active { transform: scale(0.95); }
+/* ============================================================
+   SIDEBAR TOGGLE (HAMBURGER) — Kanan Atas, Smooth Animation
+============================================================ */
+.sidebar-toggle {
+  display: none;
+  position: fixed;
+  top: 12px;
+  right: 16px;
+  left: auto;
+  z-index: 1100;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #047857, #059669);
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35),
+              0 2px 6px rgba(5, 150, 105, 0.2);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.3s ease,
+              background 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
+  will-change: transform;
+}
 
-    .sidebar-overlay {
-      display: none; position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 999; backdrop-filter: blur(4px);
-      animation: fadeIn 0.25s ease;
-    }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.sidebar-toggle:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px rgba(5, 150, 105, 0.45),
+              0 3px 8px rgba(5, 150, 105, 0.25);
+}
+
+.sidebar-toggle:active {
+  transform: scale(0.94);
+  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.4);
+}
+
+.sidebar-toggle:focus-visible {
+  outline: 3px solid rgba(16, 185, 129, 0.5);
+  outline-offset: 2px;
+}
+
+/* ===== Garis Hamburger ===== */
+.sidebar-toggle .hamburger-line {
+  display: block;
+  width: 20px;
+  height: 2.5px;
+  background: #ffffff;
+  border-radius: 2px;
+  transition: transform 0.35s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+              opacity 0.25s ease,
+              width 0.3s ease;
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+/* ===== Animasi: garis jadi X saat sidebar terbuka ===== */
+.sidebar-toggle.is-active .hamburger-line:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+.sidebar-toggle.is-active .hamburger-line:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.sidebar-toggle.is-active .hamburger-line:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* ============================================================
+   SIDEBAR OVERLAY — Smooth Fade + Blur
+============================================================ */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.55);
+  z-index: 999;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity;
+}
+
+.sidebar-overlay.show {
+  display: block;
+  opacity: 1;
+  animation: overlayFadeIn 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
 
     /* TOP HEADER BAR */
     .top-header {
@@ -1505,31 +1590,52 @@
       .main-content { margin-left: 240px; padding: 84px 20px 36px; }
     }
 
-    @media (max-width: 768px) {
-      .sidebar { transform: translateX(-100%); width: 280px; }
-      .sidebar.open { transform: translateX(0); }
-      .sidebar-toggle { display: flex; }
-      .top-header {
-        left: 0;
-        padding: 0 16px 0 72px;
-        height: 60px;
-      }
-      .top-header .header-user .header-user-detail { display: none; }
-      .top-header .header-btn.btn-login-header span:last-child,
-      .top-header .header-btn.btn-logout-header span:last-child { display: none; }
-      .top-header .header-btn.btn-login-header,
-      .top-header .header-btn.btn-logout-header { padding: 0 12px; }
-      .main-content { margin-left: 0; padding: 76px 16px 30px; }
-      .sidebar-overlay.show { display: block; }
-    }
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    width: 280px;
+    box-shadow: none;
+  }
+  .sidebar.open {
+    transform: translateX(0);
+    box-shadow: 8px 0 32px rgba(0, 0, 0, 0.25);
+  }
+  .sidebar-toggle { display: flex; }
+  .top-header {
+    left: 0;
+    /* ✅ Padding kanan untuk tombol toggle di kanan */
+    padding: 0 72px 0 16px;
+    height: 60px;
+  }
+  .top-header .header-user .header-user-detail { display: none; }
+  .top-header .header-btn.btn-login-header span:last-child,
+  .top-header .header-btn.btn-logout-header span:last-child { display: none; }
+  .top-header .header-btn.btn-login-header,
+  .top-header .header-btn.btn-logout-header { padding: 0 12px; }
+  .main-content { margin-left: 0; padding: 76px 16px 30px; }
+  .sidebar-overlay.show { display: block; }
+}
 
-    @media (max-width: 480px) {
-      .sidebar { width: 100%; max-width: 300px; }
-      .top-header { padding: 0 12px 0 68px; }
-      .top-header .header-left .page-title { font-size: 14px; }
-      .main-content { padding: 72px 12px 24px; }
-    }
-
+@media (max-width: 480px) {
+  .sidebar { width: 100%; max-width: 300px; }
+  
+  /* ✅ Toggle lebih kecil di layar sempit, tetap di kanan */
+  .sidebar-toggle {
+    width: 40px;
+    height: 40px;
+    top: 10px;
+    right: 12px;
+    border-radius: 10px;
+  }
+  .sidebar-toggle .hamburger-line {
+    width: 18px;
+    height: 2px;
+  }
+  
+  .top-header { padding: 0 64px 0 12px; }
+  .top-header .header-left .page-title { font-size: 14px; }
+  .main-content { padding: 72px 12px 24px; }
+}
     @media (max-width: 640px) {
       .filter-grid { grid-template-columns: 1fr 1fr; }
       .btn { font-size: 12px; padding: 6px 14px; }
@@ -2113,7 +2219,11 @@ select.form-control.error {
 </head>
 <body>
   <!-- Sidebar Toggle (Mobile) -->
-  <button class="sidebar-toggle" id="sidebarToggle" title="Menu">☰</button>
+  <button class="sidebar-toggle" id="sidebarToggle" title="Menu" aria-label="Toggle Menu">
+     <span class="hamburger-line"></span>
+     <span class="hamburger-line"></span>
+     <span class="hamburger-line"></span>
+  </button>
   
   <!-- Sidebar Overlay (Mobile) -->
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
@@ -3905,21 +4015,64 @@ setTimeout(() => {
       if (themeIconHeaderEl) themeIconHeaderEl.textContent = theme === 'dark' ? '☀️' : '🌙';
   }
 
-  function openSidebar() {
-    document.getElementById('sidebar')?.classList.add('open');
-    document.getElementById('sidebarOverlay')?.classList.add('show');
-    document.body.style.overflow = 'hidden';
+function openSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const toggle = document.getElementById('sidebarToggle');
+  
+  if (sidebar) sidebar.classList.add('open');
+  if (overlay) overlay.classList.add('show');
+  if (toggle) toggle.classList.add('is-active');   // ← animasi X
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const toggle = document.getElementById('sidebarToggle');
+  
+  if (sidebar) sidebar.classList.remove('open');
+  if (overlay) overlay.classList.remove('show');
+  if (toggle) toggle.classList.remove('is-active');
+  document.body.style.overflow = '';
+}
+
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  if (!sidebar) return;
+  
+  if (sidebar.classList.contains('open')) {
+    closeSidebar();
+  } else {
+    openSidebar();
   }
-  function closeSidebar() {
-    document.getElementById('sidebar')?.classList.remove('open');
-    document.getElementById('sidebarOverlay')?.classList.remove('show');
-    document.body.style.overflow = '';
+  
+  // Haptic feedback (opsional)
+  if (window.navigator && window.navigator.vibrate) {
+    window.navigator.vibrate(10);
   }
-  function toggleSidebar() {
+}
+
+// ✅ ESC untuk tutup sidebar
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
     const sidebar = document.getElementById('sidebar');
-    if (sidebar && sidebar.classList.contains('open')) closeSidebar();
-    else openSidebar();
+    if (sidebar && sidebar.classList.contains('open')) {
+      closeSidebar();
+    }
   }
+});
+
+// ✅ Auto close saat resize ke desktop
+let _resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(_resizeTimer);
+  _resizeTimer = setTimeout(() => {
+    if (window.innerWidth > 768) {
+      closeSidebar();
+    }
+  }, 150);
+});
 
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -13334,13 +13487,16 @@ function renderSettingLokasi(container) {
                     </div>
                 </div>
                 
-                <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;">
-                    <button class="btn btn-primary" id="btnAmbilLokasiSekarang">
-                        📍 Gunakan Lokasi Saya Sekarang
-                    </button>
-                    <button class="btn btn-outline" id="btnTestRadius">
-                        🧪 Test Radius
-                    </button>
+               <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;">
+                   <button class="btn btn-primary" id="btnAmbilLokasiSekarang">
+                       📍 Gunakan Lokasi Saya Sekarang
+                   </button>
+                   <button class="btn btn-outline" id="btnTestRadius">
+                       🧪 Test Radius
+                   </button>
+                   <button class="btn btn-success" id="btnKalkulatorRadius">
+                       📊 Kalkulator Radius
+                   </button>
                 </div>
                 
                 <!-- Peta Preview -->
@@ -13454,6 +13610,148 @@ function renderSettingLokasi(container) {
             btn.innerHTML = '🧪 Test Radius';
         }
     };
+
+    // ============================================================
+// HANDLER: Kalkulator Radius Ideal
+// ============================================================
+container.querySelector('#btnKalkulatorRadius').onclick = function() {
+    const oldModal = document.querySelector('.kalkulator-radius-modal');
+    if (oldModal) oldModal.remove();
+
+    const overlay = document.createElement('div');
+    overlay.className = 'modal-overlay kalkulator-radius-modal';
+    overlay.style.display = 'flex';
+    overlay.innerHTML = `
+        <div class="modal-box" style="max-width: 560px; max-height: 90vh; overflow-y: auto;">
+            <button class="modal-close" id="closeKalkulatorRadius">&times;</button>
+            <h2>📊 Kalkulator Radius Ideal</h2>
+            <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 20px;">
+                Hitung radius toleransi ideal untuk geofencing berdasarkan akurasi GPS dan ukuran sekolah Anda.
+            </p>
+
+            <div class="form-group">
+                <label>📏 Jarak Terjauh dari Pusat Sekolah (meter)</label>
+                <input type="number" id="kalkJarak" class="form-control" 
+                       placeholder="Contoh: 60" min="1" max="500" value="60">
+                <small class="field-hint">Jarak dari titik pusat ke ujung terjauh sekolah</small>
+            </div>
+
+            <div class="form-group">
+                <label>📡 Akurasi GPS Anda (meter)</label>
+                <input type="number" id="kalkAkurasi" class="form-control" 
+                       placeholder="Contoh: 15" min="1" max="500" value="15">
+                <small class="field-hint">Lihat di Google Maps atau aplikasi GPS Test</small>
+            </div>
+
+            <button class="btn btn-primary" id="btnHitungKalkulator" 
+                    style="width:100%; padding: 12px; font-size: 15px;">
+                🎯 Hitung Radius Ideal
+            </button>
+
+            <div id="kalkHasil" style="display:none; margin-top: 20px;"></div>
+        </div>
+    `;
+    document.body.appendChild(overlay);
+
+    const closeModal = () => overlay.remove();
+    overlay.querySelector('#closeKalkulatorRadius').onclick = closeModal;
+    overlay.onclick = (e) => { if (e.target === overlay) closeModal(); };
+
+    overlay.querySelector('#btnHitungKalkulator').onclick = function() {
+        const jarak = parseFloat(overlay.querySelector('#kalkJarak').value);
+        const akurasi = parseFloat(overlay.querySelector('#kalkAkurasi').value);
+
+        if (!jarak || !akurasi || jarak <= 0 || akurasi <= 0) {
+            showToast("Peringatan", "Isi kedua field dengan angka yang valid!", "danger");
+            return;
+        }
+
+        const buffer = akurasi * 2;
+        const radiusIdeal = Math.ceil((jarak + buffer) / 10) * 10;
+        const rasio = (radiusIdeal / akurasi).toFixed(1);
+
+        // Tentukan status
+        let warnaBg, warnaBorder, warnaText, emoji, statusText;
+        if (akurasi > 50) {
+            warnaBg = 'var(--danger-50)'; warnaBorder = 'var(--danger)'; warnaText = 'var(--danger)';
+            emoji = '❌'; statusText = 'Akurasi Buruk';
+        } else if (akurasi > 30) {
+            warnaBg = 'var(--warning-50)'; warnaBorder = 'var(--warning)'; warnaText = 'var(--warning)';
+            emoji = '⚠️'; statusText = 'Akurasi Sedang';
+        } else {
+            warnaBg = 'var(--success-50)'; warnaBorder = 'var(--success)'; warnaText = 'var(--success)';
+            emoji = '✅'; statusText = 'Akurasi Baik';
+        }
+
+        const hasil = overlay.querySelector('#kalkHasil');
+        hasil.style.display = 'block';
+        hasil.innerHTML = `
+            <div style="background:${warnaBg}; border: 2px solid ${warnaBorder}; 
+                        padding: 20px; border-radius: 12px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                    <strong style="font-size: 15px;">📐 Radius Ideal</strong>
+                    <span class="badge" style="background:${warnaText}; color:#fff; padding: 4px 12px;">
+                        ${emoji} ${statusText}
+                    </span>
+                </div>
+                <div style="font-size: 44px; font-weight: 800; color:${warnaText}; 
+                            text-align: center; line-height:1;">
+                    ${radiusIdeal} <small style="font-size: 18px; color: var(--text-muted);">meter</small>
+                </div>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px;">
+                    <div style="background: white; padding: 8px 12px; border-radius: 8px;">
+                        <div style="font-size: 10px; color: var(--text-muted); text-transform: uppercase;">Jarak Terjauh</div>
+                        <div style="font-weight: 700;">${jarak} m</div>
+                    </div>
+                    <div style="background: white; padding: 8px 12px; border-radius: 8px;">
+                        <div style="font-size: 10px; color: var(--text-muted); text-transform: uppercase;">Akurasi GPS</div>
+                        <div style="font-weight: 700;">±${akurasi} m</div>
+                    </div>
+                    <div style="background: white; padding: 8px 12px; border-radius: 8px;">
+                        <div style="font-size: 10px; color: var(--text-muted); text-transform: uppercase;">Buffer GPS (2×)</div>
+                        <div style="font-weight: 700;">${buffer} m</div>
+                    </div>
+                    <div style="background: white; padding: 8px 12px; border-radius: 8px;">
+                        <div style="font-size: 10px; color: var(--text-muted); text-transform: uppercase;">Rasio</div>
+                        <div style="font-weight: 700;">${rasio}x</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 16px; padding: 10px 14px; background: white; 
+                            border-radius: 8px; border-left: 4px solid ${warnaBorder}; 
+                            font-size: 12px; line-height: 1.6;">
+                    ${akurasi <= 30 
+                        ? `✅ <strong>Radius ${radiusIdeal}m cocok digunakan!</strong><br>Rasio ${rasio}x aman untuk geofencing.`
+                        : `❌ <strong>Akurasi GPS terlalu buruk!</strong><br>
+                           Ulangi pengukuran di area terbuka.<br>
+                           Target akurasi: di bawah 30 meter.`
+                    }
+                </div>
+
+                ${akurasi <= 30 ? `
+                    <button class="btn btn-primary" id="btnPakaiRadius" 
+                            style="width:100%; margin-top: 12px; padding: 12px;">
+                        ✅ Pakai Radius ${radiusIdeal}m
+                    </button>
+                ` : ''}
+            </div>
+        `;
+
+        // Tombol "Pakai Radius"
+        const btnPakai = hasil.querySelector('#btnPakaiRadius');
+        if (btnPakai) {
+            btnPakai.onclick = () => {
+                const radiusInput = document.querySelector('#geoRadius');
+                if (radiusInput) {
+                    radiusInput.value = radiusIdeal;
+                    showToast("Berhasil", `Radius diisi otomatis: ${radiusIdeal}m`, "success");
+                    closeModal();
+                }
+            };
+        }
+    };
+};
     
     // ============================================================
     // HANDLER: Reset
