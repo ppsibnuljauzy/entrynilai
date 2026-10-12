@@ -156,6 +156,70 @@
     .sidebar-nav .nav-item .nav-icon { font-size: 18px; width: 24px; text-align: center; flex-shrink: 0; }
     .sidebar-nav .nav-item.hidden-tab { display: none !important; }
 
+
+/* ============================================================
+   NAV GROUP — Kelompok Menu Sidebar
+============================================================ */
+.nav-group {
+  margin-bottom: 4px;
+}
+
+.nav-group-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px 4px;
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s ease;
+}
+
+.nav-group-title:hover {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.nav-group-title .nav-group-arrow {
+  font-size: 10px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: rotate(0deg);
+}
+
+.nav-group.collapsed .nav-group-arrow {
+  transform: rotate(-90deg);
+}
+
+.nav-group-items {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+  max-height: 500px;
+  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.25s ease;
+  opacity: 1;
+}
+
+.nav-group.collapsed .nav-group-items {
+  max-height: 0;
+  opacity: 0;
+}
+
+/* Nav item di dalam group — sedikit lebih kecil paddingnya */
+.nav-group .nav-item {
+  padding: 9px 16px 9px 28px;  /* indent kiri */
+  font-size: 13.5px;
+}
+
+.nav-group .nav-item.active::before {
+  left: 12px;  /* geser indikator aktif */
+}
+
+
     .sidebar-footer {
       padding: 12px 14px 16px;
       border-top: 1px solid rgba(255, 255, 255, 0.15);
@@ -173,18 +237,15 @@
     }
 
 /* ============================================================
-   SIDEBAR TOGGLE (HAMBURGER) — Kanan Atas, Smooth Animation
+   SIDEBAR TOGGLE (HAMBURGER) — Versi Baru: Statis di Header
 ============================================================ */
 .sidebar-toggle {
-  display: none;
-  position: fixed;
-  top: 12px;
-  right: 16px;
-  left: auto;
-  z-index: 1100;
+  display: none;                /* default: hidden, muncul via media query */
+  position: static;             /* ✅ tidak fixed lagi — ikut flow header */
   width: 44px;
   height: 44px;
   padding: 0;
+  flex-shrink: 0;               /* ✅ tidak mengecil saat header sempit */
   border-radius: 12px;
   background: linear-gradient(135deg, #047857, #059669);
   color: #ffffff;
@@ -202,6 +263,7 @@
               background 0.3s ease;
   -webkit-tap-highlight-color: transparent;
   will-change: transform;
+  margin-right: 10px;           /* jarak ke teks title */
 }
 
 .sidebar-toggle:hover {
@@ -234,7 +296,7 @@
   will-change: transform, opacity;
 }
 
-/* ===== Animasi: garis jadi X saat sidebar terbuka ===== */
+/* ===== Animasi: garis jadi X saat aktif ===== */
 .sidebar-toggle.is-active .hamburger-line:nth-child(1) {
   transform: translateY(6.5px) rotate(45deg);
 }
@@ -245,6 +307,7 @@
 .sidebar-toggle.is-active .hamburger-line:nth-child(3) {
   transform: translateY(-6.5px) rotate(-45deg);
 }
+
 
 /* ============================================================
    SIDEBAR OVERLAY — Smooth Fade + Blur
@@ -1036,6 +1099,235 @@
       40% { transform: scale(1.2); background: #34d399; }
     }
 
+
+/* ============================================================
+   MODAL KONFIRMASI LOGOUT — Elegan
+============================================================ */
+#modalKonfirmasiLogout {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999998;
+  animation: logoutOverlayFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#modalKonfirmasiLogout.show {
+  display: flex;
+}
+
+@keyframes logoutOverlayFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.logout-confirm-box {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-xl);
+  padding: 32px 28px 24px;
+  max-width: 420px;
+  width: 92%;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.25),
+    0 8px 24px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  animation: logoutBoxSlideUp 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border: 1px solid var(--border-color);
+}
+
+@keyframes logoutBoxSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.logout-confirm-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--danger), #f97316);
+}
+
+.logout-confirm-icon {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--danger-50), rgba(220, 38, 38, 0.15));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  animation: logoutIconPulse 2s ease-in-out infinite;
+  border: 3px solid rgba(220, 38, 38, 0.2);
+}
+
+@keyframes logoutIconPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.3);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 12px rgba(220, 38, 38, 0);
+  }
+}
+
+.logout-confirm-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 8px;
+  letter-spacing: -0.3px;
+}
+
+.logout-confirm-message {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0 0 16px;
+}
+
+.logout-user-info {
+  background: var(--bg-primary);
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--border-color);
+  text-align: left;
+}
+
+.logout-user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.logout-user-detail {
+  flex: 1;
+  min-width: 0;
+}
+
+.logout-user-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.logout-user-role {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.logout-confirm-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.logout-confirm-actions .btn {
+  flex: 1;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+}
+
+.btn-logout-confirm {
+  background: linear-gradient(135deg, var(--danger), #b91c1c);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.35);
+}
+
+.btn-logout-confirm:hover {
+  background: linear-gradient(135deg, #b91c1c, #991b1b);
+  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.5);
+  transform: translateY(-2px);
+}
+
+.btn-logout-confirm:active {
+  transform: scale(0.97);
+}
+
+.btn-logout-confirm:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Hint keyboard */
+.logout-confirm-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.logout-confirm-hint kbd {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 10px;
+  font-family: 'Inter', monospace;
+  font-weight: 600;
+  color: var(--text-secondary);
+  box-shadow: 0 1px 0 var(--border-color);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .logout-confirm-box {
+    padding: 24px 20px 20px;
+    border-radius: var(--radius-lg);
+  }
+  .logout-confirm-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 30px;
+  }
+  .logout-confirm-title {
+    font-size: 18px;
+  }
+  .logout-confirm-actions {
+    flex-direction: column-reverse;
+  }
+}
+
+
     /* SETTINGS */
     .setting-image-preview {
       max-width: 100%; max-height: 150px; margin-top: 8px;
@@ -1600,13 +1892,41 @@
     transform: translateX(0);
     box-shadow: 8px 0 32px rgba(0, 0, 0, 0.25);
   }
-  .sidebar-toggle { display: flex; }
+  
+  /* ✅ Tampilkan tombol hamburger di mobile */
+  .sidebar-toggle { 
+    display: flex; 
+  }
+  
   .top-header {
     left: 0;
-    /* ✅ Padding kanan untuk tombol toggle di kanan */
-    padding: 0 72px 0 16px;
+    padding: 0 16px;           /* ✅ tidak perlu padding kanan besar lagi */
     height: 60px;
+    gap: 8px;
   }
+  
+  .top-header .header-left {
+    gap: 8px;
+    min-width: 0;              /* ✅ penting agar teks bisa ellipsis */
+    flex: 1;
+  }
+  
+  .top-header .header-left > div {
+    min-width: 0;              /* ✅ penting untuk text-overflow */
+  }
+  
+  .top-header .header-left .page-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .top-header .header-left .page-subtitle {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
   .top-header .header-user .header-user-detail { display: none; }
   .top-header .header-btn.btn-login-header span:last-child,
   .top-header .header-btn.btn-logout-header span:last-child { display: none; }
@@ -1619,12 +1939,10 @@
 @media (max-width: 480px) {
   .sidebar { width: 100%; max-width: 300px; }
   
-  /* ✅ Toggle lebih kecil di layar sempit, tetap di kanan */
+  /* ✅ Tombol toggle lebih kecil di layar sempit */
   .sidebar-toggle {
-    width: 40px;
-    height: 40px;
-    top: 10px;
-    right: 12px;
+    width: 38px;
+    height: 38px;
     border-radius: 10px;
   }
   .sidebar-toggle .hamburger-line {
@@ -1632,10 +1950,13 @@
     height: 2px;
   }
   
-  .top-header { padding: 0 64px 0 12px; }
+  .top-header { padding: 0 12px; }
+  .top-header .header-left { gap: 6px; }
   .top-header .header-left .page-title { font-size: 14px; }
+  .top-header .header-left .page-subtitle { font-size: 10px; }
   .main-content { padding: 72px 12px 24px; }
 }
+
     @media (max-width: 640px) {
       .filter-grid { grid-template-columns: 1fr 1fr; }
       .btn { font-size: 12px; padding: 6px 14px; }
@@ -2215,22 +2536,333 @@ select.form-control.error {
 [data-theme="dark"] .kalender-libur:hover {
     background: var(--danger);
 }
+
+
+/* ============================================================
+   SIDEBAR LOGOUT BUTTON — Professional Style
+============================================================ */
+.sidebar-logout-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  margin-bottom: 12px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.15), rgba(185, 28, 28, 0.25));
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  text-align: left;
+}
+
+.sidebar-logout-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.sidebar-logout-btn:hover {
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.35), rgba(185, 28, 28, 0.5));
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateX(4px);
+  box-shadow: 0 4px 16px rgba(220, 38, 38, 0.3);
+}
+
+.sidebar-logout-btn:hover::before {
+  left: 100%;
+}
+
+.sidebar-logout-btn:active {
+  transform: scale(0.98) translateX(2px);
+}
+
+.sidebar-logout-btn .logout-icon {
+  font-size: 18px;
+  width: 24px;
+  text-align: center;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-logout-btn:hover .logout-icon {
+  transform: translateX(2px) rotate(-5deg);
+}
+
+.sidebar-logout-btn .logout-text {
+  flex: 1;
+  letter-spacing: 0.3px;
+}
+
+.sidebar-logout-btn .logout-arrow {
+  font-size: 16px;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: all 0.3s ease;
+  color: #fca5a5;
+}
+
+.sidebar-logout-btn:hover .logout-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.sidebar-copyright {
+  text-align: center;
+  padding: 8px 0;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.5;
+}
+
+/* Hilangkan tombol logout dari header (opsional, jika ingin double) */
+.top-header .btn-logout-header {
+  display: none !important;
+}
+
+
+/* ============================================================
+   LANDING PAGE (SEBELUM LOGIN)
+============================================================ */
+.landing-page {
+  min-height: calc(100vh - 120px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.landing-page::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(5, 150, 105, 0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.landing-page::after {
+  content: '';
+  position: absolute;
+  bottom: -30%;
+  left: -10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(5, 150, 105, 0.05) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.landing-hero {
+  text-align: center;
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 1;
+}
+
+.landing-hero .landing-logo {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  margin: 0 auto 20px;
+  box-shadow: 0 12px 40px rgba(5, 150, 105, 0.3);
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.landing-hero h1 {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0 0 8px;
+  letter-spacing: -1px;
+}
+
+.landing-hero h1 span {
+  color: var(--primary);
+}
+
+.landing-hero p {
+  font-size: 16px;
+  color: var(--text-secondary);
+  max-width: 500px;
+  margin: 0 auto 24px;
+  line-height: 1.7;
+}
+
+.landing-hero .btn {
+  padding: 14px 40px;
+  font-size: 16px;
+  border-radius: 50px;
+  box-shadow: 0 8px 24px rgba(5, 150, 105, 0.3);
+}
+
+.landing-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  max-width: 900px;
+  width: 100%;
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 1;
+}
+
+.landing-feature-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 24px 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.landing-feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary);
+}
+
+.landing-feature-card .feature-icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.landing-feature-card h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 6px;
+}
+
+.landing-feature-card p {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.landing-footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+  max-width: 600px;
+  width: 100%;
+}
+
+.landing-footer strong {
+  color: var(--primary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .landing-hero h1 { font-size: 28px; }
+  .landing-hero p { font-size: 14px; }
+  .landing-hero .landing-logo { width: 80px; height: 80px; font-size: 36px; }
+  .landing-features { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .landing-feature-card { padding: 18px 14px; }
+  .landing-feature-card .feature-icon { font-size: 26px; }
+  .landing-feature-card h4 { font-size: 13px; }
+}
+
+@media (max-width: 480px) {
+  .landing-features { grid-template-columns: 1fr; }
+  .landing-hero h1 { font-size: 24px; }
+}
+
+
+/* ============================================================
+   FIX: SIDEBAR TOGGLE — Desktop Mode
+============================================================ */
+
+/* 1. Tampilkan tombol toggle di desktop */
+@media (min-width: 769px) {
+  .sidebar-toggle {
+    display: flex;
+  }
+  
+  /* 2. Sidebar collapse — geser ke kiri */
+  body.sidebar-collapsed .sidebar {
+    transform: translateX(-100%);
+    box-shadow: none;
+  }
+  
+  /* 3. Main content melebar penuh */
+  body.sidebar-collapsed .main-content {
+    margin-left: 0;
+  }
+  
+  /* 4. Top header melebar penuh */
+  body.sidebar-collapsed .top-header {
+    left: 0;
+  }
+  
+  /* 5. Overlay tidak dipakai di desktop */
+  .sidebar-overlay {
+    display: none !important;
+  }
+}
+
+/* 6. Animasi X untuk hamburger saat collapsed */
+.sidebar-toggle.is-active .hamburger-line:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+.sidebar-toggle.is-active .hamburger-line:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.sidebar-toggle.is-active .hamburger-line:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
   </style>
 </head>
 <body>
-  <!-- Sidebar Toggle (Mobile) -->
-  <button class="sidebar-toggle" id="sidebarToggle" title="Menu" aria-label="Toggle Menu">
-     <span class="hamburger-line"></span>
-     <span class="hamburger-line"></span>
-     <span class="hamburger-line"></span>
-  </button>
-  
   <!-- Sidebar Overlay (Mobile) -->
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
   <!-- TOP HEADER BAR -->
   <header class="top-header" id="topHeader">
     <div class="header-left">
+      <!-- ✅ Tombol hamburger di dalam header kiri -->
+      <button class="sidebar-toggle" id="sidebarToggle" title="Menu" aria-label="Toggle Menu">
+         <span class="hamburger-line"></span>
+         <span class="hamburger-line"></span>
+         <span class="hamburger-line"></span>
+      </button>
+      
       <div>
         <div class="page-title" id="headerPageTitle">Dashboard</div>
         <div class="page-subtitle" id="headerPageSubtitle">Ringkasan Sistem</div>
@@ -2275,63 +2907,121 @@ select.form-control.error {
         </div>
       </div>
 
-      <nav class="sidebar-nav" id="sidebarNav">
-        <button class="nav-item" data-tab="DASHBOARD">
-          <span class="nav-icon">🏠</span>
-          <span>Dashboard</span>
-        </button>
-        <button class="nav-item" data-tab="DAFTAR">
-          <span class="nav-icon">📋</span>
-          <span>Data Master</span>
-        </button>
-        <button class="nav-item" data-tab="JADWAL">
-          <span class="nav-icon">🗓️</span>
-          <span>Jadwal Pelajaran</span>
-        </button>
-        <button class="nav-item" data-tab="JURNAL">
-          <span class="nav-icon">📔</span>
-          <span>Jurnal Mengajar</span>
-        </button>
-        <button class="nav-item" data-tab="INPUT">
-          <span class="nav-icon">✏️</span>
-          <span>Input Nilai</span>
-        </button>
-        <button class="nav-item" data-tab="TRANSAKSI">
-          <span class="nav-icon">📊</span>
-          <span>Transaksi</span>
-        </button>
-        <button class="nav-item" data-tab="REKAP_SISWA">
-          <span class="nav-icon">📈</span>
-          <span>Rekap Nilai</span>
-        </button>
-        <button class="nav-item" data-tab="ABSENSI_GURU">
-          <span class="nav-icon">👨‍🏫</span>
-          <span>Absensi Guru</span>
-        </button>
-        <button class="nav-item" data-tab="KALENDER">
-          <span class="nav-icon">📅</span>
-          <span>Kalender Libur</span>
-        </button>
-        <button class="nav-item" data-tab="ABSENSI_SISWA">
-          <span class="nav-icon">✅</span>
-          <span>Absensi Siswa</span>
-        </button>
-        <button class="nav-item" data-tab="MONITORING">
-          <span class="nav-icon">👀</span>
-          <span>Monitoring</span>
-        </button>
-        <button class="nav-item" data-tab="SETTING">
-          <span class="nav-icon">⚙️</span>
-          <span>Setting</span>
-        </button>
-      </nav>
+<nav class="sidebar-nav" id="sidebarNav">
+  
+  <!-- ===== KELOMPOK: UTAMA ===== -->
+  <div class="nav-group">
+    <div class="nav-group-title">
+      <span>🏠 Utama</span>
+      <span class="nav-group-arrow">▾</span>
+    </div>
+    <div class="nav-group-items">
+      <button class="nav-item" data-tab="DASHBOARD">
+        <span class="nav-icon">🏠</span>
+        <span>Dashboard</span>
+      </button>
+    </div>
+  </div>
 
-      <div class="sidebar-footer">
-        <div style="text-align:center; padding: 8px 0; font-size: 11px; color: rgba(255,255,255,0.55);">
-          © 2025 e-Nilai<br>
-          <span style="font-size:10px;">Sistem Informasi Nilai Santri</span>
-        </div>
-      </div>
+  <!-- ===== KELOMPOK: DATA MASTER ===== -->
+  <div class="nav-group">
+    <div class="nav-group-title">
+      <span>🗂️ Data Master</span>
+      <span class="nav-group-arrow">▾</span>
+    </div>
+    <div class="nav-group-items">
+      <button class="nav-item" data-tab="DAFTAR">
+        <span class="nav-icon">📋</span>
+        <span>Data Master</span>
+      </button>
+      <button class="nav-item" data-tab="JADWAL">
+        <span class="nav-icon">🗓️</span>
+        <span>Jadwal Pelajaran</span>
+      </button>
+      <button class="nav-item" data-tab="KALENDER">
+        <span class="nav-icon">📅</span>
+        <span>Kalender Libur</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== KELOMPOK: PEMBELAJARAN ===== -->
+  <div class="nav-group">
+    <div class="nav-group-title">
+      <span>📚 Pembelajaran</span>
+      <span class="nav-group-arrow">▾</span>
+    </div>
+    <div class="nav-group-items">
+      <button class="nav-item" data-tab="JURNAL">
+        <span class="nav-icon">📔</span>
+        <span>Jurnal Mengajar</span>
+      </button>
+      <button class="nav-item" data-tab="INPUT">
+        <span class="nav-icon">✏️</span>
+        <span>Input Nilai</span>
+      </button>
+      <button class="nav-item" data-tab="TRANSAKSI">
+        <span class="nav-icon">📊</span>
+        <span>Transaksi</span>
+      </button>
+      <button class="nav-item" data-tab="REKAP_SISWA">
+        <span class="nav-icon">📈</span>
+        <span>Rekap Nilai</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== KELOMPOK: ABSENSI ===== -->
+  <div class="nav-group">
+    <div class="nav-group-title">
+      <span>✅ Absensi</span>
+      <span class="nav-group-arrow">▾</span>
+    </div>
+    <div class="nav-group-items">
+      <button class="nav-item" data-tab="ABSENSI_GURU">
+        <span class="nav-icon">👨‍🏫</span>
+        <span>Absensi Guru</span>
+      </button>
+      <button class="nav-item" data-tab="ABSENSI_SISWA">
+        <span class="nav-icon">✅</span>
+        <span>Absensi Siswa</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== KELOMPOK: SISTEM ===== -->
+  <div class="nav-group">
+    <div class="nav-group-title">
+      <span>⚙️ Sistem</span>
+      <span class="nav-group-arrow">▾</span>
+    </div>
+    <div class="nav-group-items">
+      <button class="nav-item" data-tab="MONITORING">
+        <span class="nav-icon">👀</span>
+        <span>Monitoring</span>
+      </button>
+      <button class="nav-item" data-tab="SETTING">
+        <span class="nav-icon">⚙️</span>
+        <span>Setting</span>
+      </button>
+    </div>
+  </div>
+
+</nav>
+
+<div class="sidebar-footer">
+  <!-- Tombol Logout di Sidebar -->
+  <button class="sidebar-logout-btn" id="btnLogoutSidebar" style="display:none">
+    <span class="logout-icon">🚪</span>
+    <span class="logout-text">Keluar</span>
+    <span class="logout-arrow">→</span>
+  </button>
+  
+  <div class="sidebar-copyright">
+    © 2025 e-Nilai<br>
+    <span style="font-size:10px;">Sistem Informasi Nilai Santri</span>
+  </div>
+</div>
     </aside>
 
     <!-- MAIN CONTENT -->
@@ -2384,6 +3074,38 @@ select.form-control.error {
       </div>
     </div>
   </div>
+
+  <!-- MODAL KONFIRMASI LOGOUT -->
+<div id="modalKonfirmasiLogout">
+  <div class="logout-confirm-box">
+    <div class="logout-confirm-icon">👋</div>
+    <h2 class="logout-confirm-title">Konfirmasi Logout</h2>
+    <p class="logout-confirm-message">
+      Apakah Anda yakin ingin keluar dari sistem? Anda perlu memasukkan PIN kembali untuk masuk.
+    </p>
+    
+    <div class="logout-user-info" id="logoutUserInfo">
+      <div class="logout-user-avatar" id="logoutUserAvatar">?</div>
+      <div class="logout-user-detail">
+        <div class="logout-user-name" id="logoutUserName">-</div>
+        <div class="logout-user-role" id="logoutUserRole">-</div>
+      </div>
+    </div>
+    
+    <div class="logout-confirm-actions">
+      <button class="btn btn-ghost" id="btnBatalLogout">
+        ❌ Batal
+      </button>
+      <button class="btn btn-logout-confirm" id="btnKonfirmasiLogout">
+        🚪 Ya, Logout
+      </button>
+    </div>
+    
+    <div class="logout-confirm-hint">
+      Tekan <kbd>ESC</kbd> untuk batal • <kbd>Enter</kbd> untuk logout
+    </div>
+  </div>
+</div>
 
   <div id="toast-container"></div>
 
@@ -3483,60 +4205,133 @@ function getPengaturanJadwal(kelas) {
   }
 
 
-  // ============================================================
-  // TAB VISIBILITY
-  // ============================================================
+// ============================================================
+// TAB VISIBILITY (DENGAN NAV GROUP)
+// ============================================================
 function updateTabsVisibility() {
     const navItems = document.querySelectorAll('.nav-item');
+    
+    // ============================================================
+    // 1. ATUR VISIBILITAS SETIAP NAV ITEM
+    // ============================================================
     navItems.forEach(item => {
         const tabName = item.dataset.tab;
+        
+        // ---------- BELUM LOGIN ----------
         if (!isAuthorized) {
-            if (tabName === 'SETTING') item.classList.remove('hidden-tab');
-            else { item.classList.add('hidden-tab'); item.classList.remove('active'); }
+            if (tabName === 'SETTING') {
+                item.classList.remove('hidden-tab');
+            } else {
+                item.classList.add('hidden-tab');
+                item.classList.remove('active');
+            }
             return;
         }
+        
+        // ---------- USER (GURU) ----------
         if (userRole === 'USER') {
-            const allowedForUser = ['INPUT', 'DASHBOARD', 'JURNAL', 'ABSENSI_SISWA', 'ABSENSI_GURU',
-                                    'TRANSAKSI', 'REKAP_SISWA', 'MONITORING'];
-            if (allowedForUser.includes(tabName)) item.classList.remove('hidden-tab');
-            else { item.classList.add('hidden-tab'); item.classList.remove('active'); }
-        } else if (userRole === 'ADMIN') {
+            const allowedForUser = [
+                'INPUT', 'DASHBOARD', 'JURNAL', 'ABSENSI_SISWA', 'ABSENSI_GURU',
+                'TRANSAKSI', 'REKAP_SISWA', 'MONITORING'
+            ];
+            if (allowedForUser.includes(tabName)) {
+                item.classList.remove('hidden-tab');
+            } else {
+                item.classList.add('hidden-tab');
+                item.classList.remove('active');
+            }
+        }
+        // ---------- ADMIN ----------
+        else if (userRole === 'ADMIN') {
             item.classList.remove('hidden-tab');
         }
     });
+
+    // ============================================================
+    // 2. ✅ SEMBUNYIKAN GROUP JIKA SEMUA ITEM DI DALAMNYA HIDDEN
+    // ============================================================
+    document.querySelectorAll('.nav-group').forEach(group => {
+        const visibleItems = group.querySelectorAll('.nav-item:not(.hidden-tab)');
+        
+        if (visibleItems.length === 0) {
+            group.style.display = 'none';
+        } else {
+            group.style.display = '';
+        }
+    });
+
+    // ============================================================
+    // 3. RESET activeTab JIKA TIDAK DIIZINKAN
+    // ============================================================
     if (isAuthorized && userRole === 'USER' && 
         !['INPUT', 'DASHBOARD', 'JURNAL', 'ABSENSI_SISWA', 'ABSENSI_GURU',
           'TRANSAKSI', 'REKAP_SISWA', 'MONITORING'].includes(activeTab)) {
         activeTab = 'DASHBOARD';
     }
-    if (!isAuthorized) activeTab = 'SETTING';
+    if (!isAuthorized) {
+        activeTab = 'SETTING';
+    }
+
+    // ============================================================
+    // 4. SET KELAS "active" PADA NAV ITEM YANG SESUAI
+    // ============================================================
     document.querySelectorAll('.nav-item').forEach(item => {
-        item.classList.toggle('active', item.dataset.tab === activeTab && !item.classList.contains('hidden-tab'));
+        item.classList.toggle(
+            'active', 
+            item.dataset.tab === activeTab && !item.classList.contains('hidden-tab')
+        );
     });
+
+    // ============================================================
+    // 5. ✅ AUTO-EXPAND GROUP YANG BERISI TAB AKTIF
+    // ============================================================
+    const activeItem = document.querySelector(`.nav-item[data-tab="${activeTab}"]`);
+    if (activeItem && !activeItem.classList.contains('hidden-tab')) {
+        const parentGroup = activeItem.closest('.nav-group');
+        if (parentGroup) {
+            parentGroup.classList.remove('collapsed');
+            
+            // Update localStorage juga agar state konsisten
+            const groupIndex = Array.from(document.querySelectorAll('.nav-group')).indexOf(parentGroup);
+            const collapsedGroups = JSON.parse(localStorage.getItem('collapsedNavGroups') || '[]');
+            const idx = collapsedGroups.indexOf(groupIndex);
+            if (idx > -1) {
+                collapsedGroups.splice(idx, 1);
+                localStorage.setItem('collapsedNavGroups', JSON.stringify(collapsedGroups));
+            }
+        }
+    }
 }
 
 
-  function updateHeaderTitle(tab) {
-      const titles = {
-          'DASHBOARD': { title: 'Dashboard', subtitle: 'Ringkasan Sistem' },
-          'INPUT': { title: 'Input Nilai', subtitle: 'Input Nilai Santri' },
-          'DAFTAR': { title: 'Data Master', subtitle: 'Kelola Santri, Guru & Mapel' },
-          'TRANSAKSI': { title: 'Transaksi', subtitle: 'Tabel Transaksi Nilai' },
-          'REKAP_SISWA': { title: 'Rekap Nilai', subtitle: 'Rekapitulasi Nilai Akhir' },
-          'MONITORING': { title: 'Monitoring', subtitle: 'Monitoring Input Nilai' },
-          'JADWAL': { title: 'Jadwal Pelajaran', subtitle: 'Kelola Jadwal KBM' },
-          'JURNAL': { title: 'Jurnal Mengajar', subtitle: 'Materi & Indikator' },
-          'ABSENSI_SISWA': { title: 'Absensi Siswa', subtitle: 'Kehadiran Santri' },
-          'ABSENSI_GURU': { title: 'Absensi Guru', subtitle: 'Kehadiran Guru' },
-          'SETTING': { title: 'Setting', subtitle: 'Pengaturan Sistem' },
-          'KALENDER': { title: 'Kalender Libur', subtitle: 'Kelola Hari Libur KBM' }
-      };
-      const info = titles[tab] || { title: 'e-Nilai', subtitle: 'Sistem Informasi Nilai Santri' };
-      const titleEl = document.getElementById('headerPageTitle');
-      const subEl = document.getElementById('headerPageSubtitle');
-      if (titleEl) titleEl.textContent = info.title;
-      if (subEl) subEl.textContent = info.subtitle;
-  }
+function updateHeaderTitle(tab) {
+    const titles = {
+        'DASHBOARD': { title: 'Dashboard', subtitle: 'Ringkasan Sistem' },
+        'INPUT': { title: 'Input Nilai', subtitle: 'Input Nilai Santri' },
+        'DAFTAR': { title: 'Data Master', subtitle: 'Kelola Santri, Guru & Mapel' },
+        'TRANSAKSI': { title: 'Transaksi', subtitle: 'Tabel Transaksi Nilai' },
+        'REKAP_SISWA': { title: 'Rekap Nilai', subtitle: 'Rekapitulasi Nilai Akhir' },
+        'MONITORING': { title: 'Monitoring', subtitle: 'Monitoring Input Nilai' },
+        'JADWAL': { title: 'Jadwal Pelajaran', subtitle: 'Kelola Jadwal KBM' },
+        'JURNAL': { title: 'Jurnal Mengajar', subtitle: 'Materi & Indikator' },
+        'ABSENSI_SISWA': { title: 'Absensi Siswa', subtitle: 'Kehadiran Santri' },
+        'ABSENSI_GURU': { title: 'Absensi Guru', subtitle: 'Kehadiran Guru' },
+        'SETTING': { title: 'Selamat Datang', subtitle: 'Silakan login untuk melanjutkan' },
+        'KALENDER': { title: 'Kalender Libur', subtitle: 'Kelola Hari Libur KBM' }
+    };
+    
+    // Saat sudah login dan tab SETTING aktif, tampilkan judul Setting yang sebenarnya
+    let info = titles[tab] || { title: 'e-Nilai', subtitle: 'Sistem Informasi Nilai Santri' };
+    if (isAuthorized && tab === 'SETTING') {
+        info = { title: 'Setting', subtitle: 'Pengaturan Sistem' };
+    }
+    
+    const titleEl = document.getElementById('headerPageTitle');
+    const subEl = document.getElementById('headerPageSubtitle');
+    if (titleEl) titleEl.textContent = info.title;
+    if (subEl) subEl.textContent = info.subtitle;
+}
+
 
   // ============================================================
   // FIRESTORE LISTENERS
@@ -3834,52 +4629,65 @@ function getMapelSinkronDenganJurnal(guruId = null, kelas = null) {
   });
 
 
-  // ============================================================
-  // LOGIN / LOGOUT
-  // ============================================================
-  function updateUIAfterLogin() {
-      const headerAvatarEl = document.getElementById('headerAvatar');
-      const headerUserNameEl = document.getElementById('headerUserName');
-      const headerUserRoleEl = document.getElementById('headerUserRole');
-      const headerStatusDotEl = document.getElementById('headerStatusDot');
-      const btnLoginHeaderEl = document.getElementById('btnLoginHeader');
-      const btnLogoutHeaderEl = document.getElementById('btnLogoutHeader');
+function updateUIAfterLogin() {
+    const headerAvatarEl = document.getElementById('headerAvatar');
+    const headerUserNameEl = document.getElementById('headerUserName');
+    const headerUserRoleEl = document.getElementById('headerUserRole');
+    const headerStatusDotEl = document.getElementById('headerStatusDot');
+    const btnLoginHeaderEl = document.getElementById('btnLoginHeader');
+    const btnLogoutHeaderEl = document.getElementById('btnLogoutHeader');
+    const btnLogoutSidebarEl = document.getElementById('btnLogoutSidebar'); // ✅ TAMBAHKAN
 
-if (isAuthorized) {
-    if (btnLoginHeaderEl) btnLoginHeaderEl.style.display = "none";
-    if (btnLogoutHeaderEl) btnLogoutHeaderEl.style.display = "inline-flex";
-    const displayName = userRole === 'ADMIN' ? 'Administrator' : (verifiedGuruName || 'Penginput');
-    const roleText = userRole === 'ADMIN' ? 'Admin' : 'Guru/Penginput';
-    if (headerUserNameEl) headerUserNameEl.textContent = displayName;
-    if (headerUserRoleEl) headerUserRoleEl.textContent = roleText;
-    if (headerAvatarEl) headerAvatarEl.textContent = displayName.charAt(0).toUpperCase();
-    if (headerStatusDotEl) headerStatusDotEl.className = 'header-status-dot';
-    const loginOverlay = document.getElementById('loginOverlay');
-    if (loginOverlay) { loginOverlay.classList.add('hide'); loginOverlay.style.display = 'none'; }
-    document.body.classList.add('logged-in');
-    
-    // ====== Set filter jurnal otomatis untuk USER yang sudah verifikasi ======
-    if (userRole === 'USER' && verifiedGuruName) {
-        jurnalFilterGuru = verifiedGuruName;
+    if (isAuthorized) {
+        // Header
+        if (btnLoginHeaderEl) btnLoginHeaderEl.style.display = "none";
+        if (btnLogoutHeaderEl) btnLogoutHeaderEl.style.display = "none"; // Sembunyikan dari header
+        if (btnLogoutSidebarEl) btnLogoutSidebarEl.style.display = "flex"; // ✅ Tampilkan di sidebar
+        
+        const displayName = userRole === 'ADMIN' ? 'Administrator' : (verifiedGuruName || 'Penginput');
+        const roleText = userRole === 'ADMIN' ? 'Admin' : 'Guru/Penginput';
+        if (headerUserNameEl) headerUserNameEl.textContent = displayName;
+        if (headerUserRoleEl) headerUserRoleEl.textContent = roleText;
+        if (headerAvatarEl) headerAvatarEl.textContent = displayName.charAt(0).toUpperCase();
+        if (headerStatusDotEl) headerStatusDotEl.className = 'header-status-dot';
+        
+        const loginOverlay = document.getElementById('loginOverlay');
+        if (loginOverlay) { 
+            loginOverlay.classList.add('hide'); 
+            loginOverlay.style.display = 'none'; 
+        }
+        document.body.classList.add('logged-in');
+        
+        if (userRole === 'USER' && verifiedGuruName) {
+            jurnalFilterGuru = verifiedGuruName;
+        }
+    } else {
+        // Header
+        if (btnLoginHeaderEl) btnLoginHeaderEl.style.display = "inline-flex";
+        if (btnLogoutHeaderEl) btnLogoutHeaderEl.style.display = "none";
+        if (btnLogoutSidebarEl) btnLogoutSidebarEl.style.display = "none"; // ✅ Sembunyikan
+        
+        if (headerUserNameEl) headerUserNameEl.textContent = 'Offline';
+        if (headerUserRoleEl) headerUserRoleEl.textContent = 'Belum login';
+        if (headerAvatarEl) headerAvatarEl.textContent = '?';
+        if (headerStatusDotEl) headerStatusDotEl.className = 'header-status-dot offline';
+        document.body.classList.remove('role-user');
+        document.body.classList.remove('logged-in');
+        isNipVerified = false;
+        verifiedGuruName = ""; 
+        verifiedGuruNip = ""; 
+        verifiedGuruId = "";
+        
+        const loginOverlay = document.getElementById('loginOverlay');
+        if (loginOverlay) { 
+            loginOverlay.classList.remove('hide'); 
+            loginOverlay.style.display = 'flex'; 
+        }
     }
+    isLoginInProgress = false;
+    updateTabsVisibility();
 }
-       else {
-          if (btnLoginHeaderEl) btnLoginHeaderEl.style.display = "inline-flex";
-          if (btnLogoutHeaderEl) btnLogoutHeaderEl.style.display = "none";
-          if (headerUserNameEl) headerUserNameEl.textContent = 'Offline';
-          if (headerUserRoleEl) headerUserRoleEl.textContent = 'Belum login';
-          if (headerAvatarEl) headerAvatarEl.textContent = '?';
-          if (headerStatusDotEl) headerStatusDotEl.className = 'header-status-dot offline';
-          document.body.classList.remove('role-user');
-          document.body.classList.remove('logged-in');
-          isNipVerified = false;
-          verifiedGuruName = ""; verifiedGuruNip = ""; verifiedGuruId = "";
-          const loginOverlay = document.getElementById('loginOverlay');
-          if (loginOverlay) { loginOverlay.classList.remove('hide'); loginOverlay.style.display = 'flex'; }
-      }
-      isLoginInProgress = false;
-      updateTabsVisibility();
-  }
+
 
   function showLoginModal() {
       if (isAuthorized) {
@@ -3970,35 +4778,147 @@ async function processLogin(pin) {
 }
 
 
-  function logoutAkses() {
-      if (!isAuthorized) { showToast("Info", "Anda belum login.", "info"); return; }
-      if (confirm("Apakah Anda yakin ingin logout?")) {
-          const spinnerOverlay = document.getElementById('logoutSpinnerOverlay');
-          spinnerOverlay.classList.add('show');
-setTimeout(() => {
-    isAuthorized = false;
-    userRole = null;
-    isNipVerified = false;
-    verifiedGuruName = ""; verifiedGuruNip = ""; verifiedGuruId = "";
-    isLoginInProgress = false;
-    activeTab = 'SETTING';
-    // ====== Reset semua filter jurnal saat logout ======
-    jurnalFilterGuru = "SEMUA";
-    jurnalFilterMapel = "SEMUA";
-    jurnalFilterMateri = "SEMUA";
-    jurnalFilterKelas = "SEMUA";
-    spinnerOverlay.classList.remove('show');
-    document.body.classList.remove('logged-in');
-    const loginOverlay = document.getElementById('loginOverlay');
-    loginOverlay.classList.remove('hide');
-    loginOverlay.style.display = 'flex';
-    updateUIAfterLogin();
-    renderActiveTab();
-    showToast("Logout", "Anda telah keluar dari sistem.", "success");
-}, 1500);
-      }
-  }
-  window.logoutAkses = logoutAkses;
+// ============================================================
+// FUNGSI BARU: Tampilkan Modal Konfirmasi Logout
+// ============================================================
+function tampilkanModalKonfirmasiLogout() {
+    if (!isAuthorized) {
+        showToast("Info", "Anda belum login.", "info");
+        return;
+    }
+
+    const modal = document.getElementById('modalKonfirmasiLogout');
+    if (!modal) return;
+
+    // ====== Isi info user ======
+    const displayName = userRole === 'ADMIN' ? 'Administrator' : (verifiedGuruName || 'Pengguna');
+    const roleText = userRole === 'ADMIN' ? 'Admin' : 'Guru / Penginput';
+
+    const avatarEl = document.getElementById('logoutUserAvatar');
+    const nameEl = document.getElementById('logoutUserName');
+    const roleEl = document.getElementById('logoutUserRole');
+
+    if (avatarEl) avatarEl.textContent = displayName.charAt(0).toUpperCase();
+    if (nameEl) nameEl.textContent = displayName;
+    if (roleEl) roleEl.textContent = roleText;
+
+    // ====== Tampilkan modal ======
+    modal.classList.add('show');
+
+    // ====== Reset tombol konfirmasi ======
+    const btnKonfirmasi = document.getElementById('btnKonfirmasiLogout');
+    if (btnKonfirmasi) {
+        btnKonfirmasi.disabled = false;
+        btnKonfirmasi.innerHTML = '🚪 Ya, Logout';
+    }
+
+    // ====== Fokus ke tombol konfirmasi ======
+    setTimeout(() => btnKonfirmasi?.focus(), 100);
+
+    // ====== Handler: Tombol Batal ======
+    const btnBatal = document.getElementById('btnBatalLogout');
+    const closeModal = () => {
+        modal.classList.remove('show');
+    };
+
+    btnBatal.onclick = closeModal;
+
+    // ====== Handler: Tombol Konfirmasi Logout ======
+    btnKonfirmasi.onclick = () => {
+        btnKonfirmasi.disabled = true;
+        btnKonfirmasi.innerHTML = '<span class="spinner"></span> Memproses...';
+        
+        // Tutup modal konfirmasi
+        modal.classList.remove('show');
+
+        // Tampilkan spinner logout
+        setTimeout(() => {
+            eksekusiLogout();
+        }, 300);
+    };
+
+    // ====== Handler: Klik overlay untuk batal ======
+    modal.onclick = (e) => {
+        if (e.target === modal) closeModal();
+    };
+
+    // ====== Handler: Keyboard (ESC = batal, Enter = logout) ======
+    const handleKeydown = (e) => {
+        if (!modal.classList.contains('show')) return;
+        
+        if (e.key === 'Escape') {
+            e.preventDefault();
+            closeModal();
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            btnKonfirmasi.click();
+        }
+    };
+
+    // Hapus listener lama (jika ada) lalu pasang baru
+    document.removeEventListener('keydown', handleKeydown);
+    document.addEventListener('keydown', handleKeydown);
+
+    // Cleanup listener saat modal ditutup
+    const originalClose = closeModal;
+    btnBatal.onclick = () => {
+        document.removeEventListener('keydown', handleKeydown);
+        originalClose();
+    };
+    
+    // Override closeModal untuk cleanup
+    modal._closeWithCleanup = () => {
+        document.removeEventListener('keydown', handleKeydown);
+        modal.classList.remove('show');
+    };
+}
+
+// ============================================================
+// EKSEKUSI LOGOUT (setelah konfirmasi)
+// ============================================================
+function eksekusiLogout() {
+    const spinnerOverlay = document.getElementById('logoutSpinnerOverlay');
+    if (spinnerOverlay) spinnerOverlay.classList.add('show');
+
+    setTimeout(() => {
+        // ====== Reset state ======
+        isAuthorized = false;
+        userRole = null;
+        isNipVerified = false;
+        verifiedGuruName = "";
+        verifiedGuruNip = "";
+        verifiedGuruId = "";
+        isLoginInProgress = false;
+        activeTab = 'SETTING';
+
+        // Reset filter jurnal
+        jurnalFilterGuru = "SEMUA";
+        jurnalFilterMapel = "SEMUA";
+        jurnalFilterMateri = "SEMUA";
+        jurnalFilterKelas = "SEMUA";
+
+        if (spinnerOverlay) spinnerOverlay.classList.remove('show');
+        document.body.classList.remove('logged-in');
+
+        const loginOverlay = document.getElementById('loginOverlay');
+        if (loginOverlay) {
+            loginOverlay.classList.remove('hide');
+            loginOverlay.style.display = 'flex';
+        }
+
+        updateUIAfterLogin();
+        renderActiveTab();
+        showToast("Logout Berhasil", "Anda telah keluar dari sistem.", "success");
+    }, 1500);
+}
+
+// ============================================================
+// FUNGSI UTAMA: logoutAkses (dipanggil dari tombol)
+// ============================================================
+function logoutAkses() {
+    tampilkanModalKonfirmasiLogout();
+}
+window.logoutAkses = logoutAkses;
 
 
   function toggleTheme() {
@@ -4026,32 +4946,58 @@ function openSidebar() {
   document.body.style.overflow = 'hidden';
 }
 
+
 function closeSidebar() {
   const sidebar = document.getElementById('sidebar');
   const overlay = document.getElementById('sidebarOverlay');
-  const toggle = document.getElementById('sidebarToggle');
-  
+  const toggle  = document.getElementById('sidebarToggle');
+
+  if (window.innerWidth > 768) {
+    // Desktop: jangan tutup paksa, hanya bersihkan overlay
+    if (overlay) overlay.classList.remove('show');
+    return;
+  }
+
   if (sidebar) sidebar.classList.remove('open');
   if (overlay) overlay.classList.remove('show');
-  if (toggle) toggle.classList.remove('is-active');
+  if (toggle)  toggle.classList.remove('is-active');
   document.body.style.overflow = '';
 }
 
+
 function toggleSidebar() {
   const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const toggle  = document.getElementById('sidebarToggle');
   if (!sidebar) return;
-  
-  if (sidebar.classList.contains('open')) {
-    closeSidebar();
+
+  const isDesktop = window.innerWidth > 768;
+
+  if (isDesktop) {
+    // === MODE DESKTOP: collapse/expand ===
+    document.body.classList.toggle('sidebar-collapsed');
+    const collapsed = document.body.classList.contains('sidebar-collapsed');
+
+    // Simpan preferensi
+    localStorage.setItem('sidebarCollapsed', collapsed ? '1' : '0');
+
+    // Update ikon hamburger (opsional: jadi panah)
+    if (toggle) toggle.classList.toggle('is-active', collapsed);
   } else {
-    openSidebar();
+    // === MODE MOBILE: slide + overlay (seperti sebelumnya) ===
+    if (sidebar.classList.contains('open')) {
+      closeSidebar();
+    } else {
+      openSidebar();
+    }
   }
-  
-  // Haptic feedback (opsional)
+
+  // Haptic feedback
   if (window.navigator && window.navigator.vibrate) {
     window.navigator.vibrate(10);
   }
 }
+
 
 // ✅ ESC untuk tutup sidebar
 document.addEventListener('keydown', (e) => {
@@ -4093,6 +5039,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     document.getElementById('btnLoginHeader')?.addEventListener('click', showLoginModal);
     document.getElementById('btnLogoutHeader')?.addEventListener('click', logoutAkses);
+    document.getElementById('btnLogoutSidebar')?.addEventListener('click', logoutAkses);
     document.getElementById('themeToggleHeader')?.addEventListener('click', toggleTheme);
     
     document.getElementById('loginConfirmBtn')?.addEventListener('click', () => {
@@ -4117,6 +5064,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
     
     document.getElementById('sidebarToggle')?.addEventListener('click', toggleSidebar);
+   
+    // Restore status sidebar di desktop
+if (window.innerWidth > 768) {
+  const collapsed = localStorage.getItem('sidebarCollapsed') === '1';
+  if (collapsed) {
+    document.body.classList.add('sidebar-collapsed');
+    document.getElementById('sidebarToggle')?.classList.add('is-active');
+  }
+}
+
     document.getElementById('sidebarOverlay')?.addEventListener('click', closeSidebar);
     
     const togglePasswordBtn = document.getElementById('togglePasswordBtn');
@@ -4137,10 +5094,54 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
     }
     
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 768) closeSidebar();
-    });
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 768) {
+    // Keluar dari mode mobile → pastikan sidebar desktop tampil normal
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    if (sidebar) sidebar.classList.remove('open');
+    if (overlay) overlay.classList.remove('show');
+    document.body.style.overflow = '';
+
+    // Kembalikan status collapse dari localStorage
+    const collapsed = localStorage.getItem('sidebarCollapsed') === '1';
+    document.body.classList.toggle('sidebar-collapsed', collapsed);
+  }
+});
+
+// ============================================================
+// SIDEBAR NAV GROUP — Toggle Collapse
+// ============================================================
+document.querySelectorAll('.nav-group-title').forEach(title => {
+  title.addEventListener('click', () => {
+    const group = title.closest('.nav-group');
+    group.classList.toggle('collapsed');
     
+    // Simpan state ke localStorage
+    const groupIndex = Array.from(document.querySelectorAll('.nav-group')).indexOf(group);
+    const collapsedGroups = JSON.parse(localStorage.getItem('collapsedNavGroups') || '[]');
+    
+    if (group.classList.contains('collapsed')) {
+      if (!collapsedGroups.includes(groupIndex)) collapsedGroups.push(groupIndex);
+    } else {
+      const idx = collapsedGroups.indexOf(groupIndex);
+      if (idx > -1) collapsedGroups.splice(idx, 1);
+    }
+    
+    localStorage.setItem('collapsedNavGroups', JSON.stringify(collapsedGroups));
+  });
+});
+
+// Restore state dari localStorage saat load
+(function restoreNavGroups() {
+  const collapsedGroups = JSON.parse(localStorage.getItem('collapsedNavGroups') || '[]');
+  document.querySelectorAll('.nav-group').forEach((group, index) => {
+    if (collapsedGroups.includes(index)) {
+      group.classList.add('collapsed');
+    }
+  });
+})();
+
     // ============================================================
     // Inisialisasi pengaturan jadwal default jika belum ada
     // ============================================================
@@ -4275,19 +5276,51 @@ if (foundGuru) {
   window.showNipVerificationModal = showNipVerificationModal;
 
 
-  // ============================================================
-  // RENDER ROUTER
-  // ============================================================
 function renderActiveTab() {
     const mainPanel = document.getElementById('mainPanel');
     if (!isAuthorized) {
         if (mainPanel) {
             mainPanel.innerHTML = `
-              <div style="text-align:center; padding:60px 20px;">
-                <div style="font-size: 48px; margin-bottom: 16px;">🔒</div>
-                <h3 style="font-weight: 600; margin-bottom: 8px;">Akses Terkunci</h3>
-                <p style="color: var(--text-secondary);">Silakan login untuk mengakses sistem</p>
-                <button class="btn btn-primary" onclick="document.getElementById('btnLoginHeader').click()" style="margin-top: 12px;">🔑 Masuk Sekarang</button>
+              <div class="landing-page">
+                <div class="landing-hero">
+                  <div class="landing-logo">📚</div>
+                  <h1>e-<span>Nilai</span></h1>
+                  <p>
+                    Sistem Informasi Nilai Santri yang modern, cepat, dan terintegrasi. 
+                    Kelola nilai, absensi, jurnal mengajar, dan laporan akademik dalam satu platform.
+                  </p>
+                  <button class="btn btn-primary" onclick="document.getElementById('btnLoginHeader').click()">
+                    🔑 Masuk ke Sistem
+                  </button>
+                </div>
+
+                <div class="landing-features">
+                  <div class="landing-feature-card">
+                    <span class="feature-icon">✏️</span>
+                    <h4>Input Nilai</h4>
+                    <p>Input nilai UH, PTS, dan PAS dengan mudah dan cepat.</p>
+                  </div>
+                  <div class="landing-feature-card">
+                    <span class="feature-icon">📊</span>
+                    <h4>Rekap Otomatis</h4>
+                    <p>Rekapitulasi nilai akhir dan deskripsi otomatis per santri.</p>
+                  </div>
+                  <div class="landing-feature-card">
+                    <span class="feature-icon">📅</span>
+                    <h4>Jadwal & Jurnal</h4>
+                    <p>Kelola jadwal pelajaran dan jurnal mengajar guru.</p>
+                  </div>
+                  <div class="landing-feature-card">
+                    <span class="feature-icon">✅</span>
+                    <h4>Absensi Digital</h4>
+                    <p>Absensi siswa dan guru dengan validasi lokasi (GPS).</p>
+                  </div>
+                </div>
+
+                <div class="landing-footer">
+                  © ${new Date().getFullYear()} <strong>e-Nilai</strong> — Sistem Informasi Nilai Santri<br>
+                  <span style="font-size: 11px;">Dikelola oleh Administrator</span>
+                </div>
               </div>
             `;
         }
@@ -4407,210 +5440,350 @@ window.renderActiveTab = renderActiveTab;
       return { label: 'Tidak Terdefinisi', class: 'badge-gray' };
   }
 
-  // ============================================================
-  // DASHBOARD
-  // ============================================================
-  function renderDashboard() {
-      const mainPanel = document.getElementById('mainPanel');
-      if (!mainPanel) return;
 
-      const allNilai = window._latestTx || [];
-      const allGuru = guruCache || [];
-      const allMapel = mapelCache || [];
-      const allSantri = santriCache || [];
+// ============================================================
+// DASHBOARD — FILTERED BY USER
+// ============================================================
+function renderDashboard() {
+    const mainPanel = document.getElementById('mainPanel');
+    if (!mainPanel) return;
 
-      const totalSantri = allSantri.length;
-      const totalGuru = allGuru.length;
-      const totalMapel = allMapel.length;
-      const totalNilai = allNilai.length;
+    const isUser = userRole === 'USER';
+    const isAdmin = userRole === 'ADMIN';
 
-      const nilaiUH = allNilai.filter(n => n.type === 'UH').length;
-      const nilaiPTS = allNilai.filter(n => n.type === 'PTS').length;
-      const nilaiPAS = allNilai.filter(n => ['PAS_LISAN','PAS_TULIS','PAS_PRAKTEK','PAS'].includes(n.type)).length;
+    // ============================================================
+    // ✅ FILTER DATA BERDASARKAN USER YANG LOGIN
+    // ============================================================
+    let allNilai, allGuru, allMapel, allSantri;
+    let absensiSiswaFiltered, absensiGuruFiltered, jurnalFiltered, jadwalFiltered;
 
-      const avgScore = totalNilai > 0 
-          ? (allNilai.reduce((a, b) => a + (Number(b.score) || 0), 0) / totalNilai).toFixed(1)
-          : '0.0';
+    if (isUser && verifiedGuruId) {
+        // ---------- USER (GURU) ----------
+        // 1. Mapel yang diampu guru ini
+        allMapel = (mapelCache || []).filter(m => m.guruId === verifiedGuruId);
 
-      const recent = [...allNilai].sort((a, b) => {
-          const ta = a.createdAt?.toDate ? a.createdAt.toDate().getTime() : 0;
-          const tb = b.createdAt?.toDate ? b.createdAt.toDate().getTime() : 0;
-          return tb - ta;
-      }).slice(0, 8);
+        // 2. Key mapel+kelas untuk filter
+        const mapelKeysGuru = new Set(
+            allMapel.map(m => `${m.name}|${m.kelas}`)
+        );
 
-      const mapelCount = {};
-      allNilai.forEach(n => {
-          const key = n.mapel || 'Tanpa Mapel';
-          mapelCount[key] = (mapelCount[key] || 0) + 1;
-      });
-      const topMapel = Object.entries(mapelCount).sort((a, b) => b[1] - a[1]).slice(0, 5);
+        // 3. Kelas yang diajar guru ini
+        const kelasGuru = [...new Set(allMapel.map(m => m.kelas).filter(k => k))];
 
-      const statusPeriode = getPeriodeStatus();
-      let periodeLabel = 'Belum diatur', periodeBadge = 'badge-gray';
-      if (statusPeriode === 'active') { periodeLabel = 'Aktif'; periodeBadge = 'badge-success'; }
-      else if (statusPeriode === 'pending') { periodeLabel = 'Belum dimulai'; periodeBadge = 'badge-warning'; }
-      else if (statusPeriode === 'expired') { periodeLabel = 'Berakhir'; periodeBadge = 'badge-danger'; }
+        // 4. Nilai: hanya yang diinput/diampu guru ini
+        allNilai = (window._latestTx || []).filter(n =>
+            n.guruId === verifiedGuruId ||
+            mapelKeysGuru.has(`${n.mapel}|${n.kelas}`)
+        );
 
-      const jam = new Date().getHours();
-      let greeting = 'Selamat Pagi';
-      if (jam >= 11 && jam < 15) greeting = 'Selamat Siang';
-      else if (jam >= 15 && jam < 18) greeting = 'Selamat Sore';
-      else if (jam >= 18 || jam < 4) greeting = 'Selamat Malam';
+        // 5. Santri: hanya di kelas yang diajar guru ini
+        allSantri = (santriCache || []).filter(s =>
+            kelasGuru.includes(String(s.kelas))
+        );
 
-      const namaUser = userRole === 'ADMIN' ? 'Administrator' : (verifiedGuruName || 'Pengguna');
+        // 6. Guru: hanya diri sendiri
+        allGuru = (guruCache || []).filter(g => g.id === verifiedGuruId);
 
-      const totalAbsensiSiswa = absensiSiswaCache.length;
-      const hadirSiswa = absensiSiswaCache.filter(a => a.status === 'H').length;
-      const persenHadirSiswa = totalAbsensiSiswa > 0 ? Math.round((hadirSiswa / totalAbsensiSiswa) * 100) : 0;
-      const totalJurnal = jurnalCache.length;
-      const totalJadwal = jadwalCache.length;
+        // 7. Absensi Siswa: hanya untuk mapel yang diampu
+        absensiSiswaFiltered = absensiSiswaCache.filter(a =>
+            a.guruId === verifiedGuruId ||
+            mapelKeysGuru.has(`${a.mapelName}|${a.kelas}`)
+        );
 
-      mainPanel.innerHTML = `
-          <div class="dashboard-welcome">
-              <h2>${greeting}, ${escapeHtml(namaUser)}! 👋</h2>
-              <p>Berikut ringkasan aktivitas sistem informasi nilai santri hari ini.</p>
-              <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-                  <span class="badge ${periodeBadge}" style="background:rgba(255,255,255,0.2); color:#fff;">
-                      📅 Periode: ${periodeLabel}
-                  </span>
-                  <span class="badge" style="background:rgba(255,255,255,0.2); color:#fff;">
-                      🕐 ${new Date().toLocaleString('id-ID', {day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})}
-                  </span>
-              </div>
-          </div>
+        // 8. Absensi Guru: hanya milik guru ini
+        absensiGuruFiltered = absensiGuruCache.filter(a => a.guruId === verifiedGuruId);
 
-          <div class="dashboard-grid">
-              <div class="dashboard-card dc-blue">
-                  <div class="dc-head"><div class="dc-icon">👥</div><span class="dc-trend">Santri</span></div>
-                  <div class="dc-number">${totalSantri}</div>
-                  <div class="dc-label">Total Santri</div>
-                  <div class="dc-sub">Terdaftar di sistem</div>
-              </div>
-              <div class="dashboard-card dc-green">
-                  <div class="dc-head"><div class="dc-icon">👨‍🏫</div><span class="dc-trend">Guru</span></div>
-                  <div class="dc-number">${totalGuru}</div>
-                  <div class="dc-label">Total Guru</div>
-                  <div class="dc-sub">Pengampu mapel</div>
-              </div>
-              <div class="dashboard-card dc-yellow">
-                  <div class="dc-head"><div class="dc-icon">📚</div><span class="dc-trend">Mapel</span></div>
-                  <div class="dc-number">${totalMapel}</div>
-                  <div class="dc-label">Mata Pelajaran</div>
-                  <div class="dc-sub">Aktif di semua kelas</div>
-              </div>
-              <div class="dashboard-card dc-info">
-                  <div class="dc-head"><div class="dc-icon">📊</div><span class="dc-trend">Nilai</span></div>
-                  <div class="dc-number">${totalNilai}</div>
-                  <div class="dc-label">Data Nilai</div>
-                  <div class="dc-sub">Rata-rata: <strong>${avgScore}</strong></div>
-              </div>
-          </div>
+        // 9. Jurnal: hanya milik guru ini
+        jurnalFiltered = jurnalCache.filter(j => j.guruId === verifiedGuruId);
 
-          <div class="dashboard-grid">
-              <div class="dashboard-card dc-green">
-                  <div class="dc-head"><div class="dc-icon">✅</div><span class="dc-trend">Kehadiran</span></div>
-                  <div class="dc-number">${persenHadirSiswa}%</div>
-                  <div class="dc-label">Kehadiran Siswa</div>
-                  <div class="dc-sub">${hadirSiswa} dari ${totalAbsensiSiswa} data</div>
-              </div>
-              <div class="dashboard-card dc-blue">
-                  <div class="dc-head"><div class="dc-icon">📔</div><span class="dc-trend">Jurnal</span></div>
-                  <div class="dc-number">${totalJurnal}</div>
-                  <div class="dc-label">Total Jurnal</div>
-                  <div class="dc-sub">Catatan mengajar</div>
-              </div>
-              <div class="dashboard-card dc-info">
-                  <div class="dc-head"><div class="dc-icon">🗓️</div><span class="dc-trend">Jadwal</span></div>
-                  <div class="dc-number">${totalJadwal}</div>
-                  <div class="dc-label">Slot Jadwal</div>
-                  <div class="dc-sub">Jadwal aktif</div>
-              </div>
-              <div class="dashboard-card dc-yellow">
-                  <div class="dc-head"><div class="dc-icon">👨‍🏫</div><span class="dc-trend">Absen Guru</span></div>
-                  <div class="dc-number">${absensiGuruCache.length}</div>
-                  <div class="dc-label">Absensi Guru</div>
-                  <div class="dc-sub">Data tercatat</div>
-              </div>
-          </div>
+        // 10. Jadwal: hanya jadwal guru ini
+        jadwalFiltered = jadwalCache.filter(j => j.guruId === verifiedGuruId);
 
-          <div class="dashboard-row">
-              <div class="dashboard-panel">
-                  <div class="panel-header">
-                      <h4>📈 Distribusi Nilai</h4>
-                      <span class="badge badge-primary">${totalNilai} total</span>
-                  </div>
-                  <div class="panel-body">
-                      <div class="dashboard-progress-item">
-                          <div class="dp-head">
-                              <span class="dp-name">📝 UH</span>
-                              <span class="dp-count">${nilaiUH} data</span>
-                          </div>
-                          <div class="progress-bar"><div class="fill blue" style="width:${totalNilai ? (nilaiUH/totalNilai*100) : 0}%"></div></div>
-                      </div>
-                      <div class="dashboard-progress-item">
-                          <div class="dp-head">
-                              <span class="dp-name">📊 PTS</span>
-                              <span class="dp-count">${nilaiPTS} data</span>
-                          </div>
-                          <div class="progress-bar"><div class="fill yellow" style="width:${totalNilai ? (nilaiPTS/totalNilai*100) : 0}%"></div></div>
-                      </div>
-                      <div class="dashboard-progress-item">
-                          <div class="dp-head">
-                              <span class="dp-name">📋 PAS</span>
-                              <span class="dp-count">${nilaiPAS} data</span>
-                          </div>
-                          <div class="progress-bar"><div class="fill green" style="width:${totalNilai ? (nilaiPAS/totalNilai*100) : 0}%"></div></div>
-                      </div>
-                  </div>
-              </div>
+    } else {
+        // ---------- ADMIN ----------
+        allNilai = window._latestTx || [];
+        allGuru = guruCache || [];
+        allMapel = mapelCache || [];
+        allSantri = santriCache || [];
+        absensiSiswaFiltered = absensiSiswaCache;
+        absensiGuruFiltered = absensiGuruCache;
+        jurnalFiltered = jurnalCache;
+        jadwalFiltered = jadwalCache;
+    }
 
-              <div class="dashboard-panel">
-                  <div class="panel-header"><h4>🏆 Mapel Terbanyak Dinilai</h4></div>
-                  <div class="panel-body">
-                      ${topMapel.length ? topMapel.map(([name, count], i) => `
-                          <div class="dashboard-progress-item">
-                              <div class="dp-head">
-                                  <span class="dp-name">${i+1}. ${escapeHtml(name)}</span>
-                                  <span class="dp-count">${count} nilai</span>
-                              </div>
-                              <div class="progress-bar"><div class="fill green" style="width:${topMapel[0][1] ? (count/topMapel[0][1]*100) : 0}%"></div></div>
-                          </div>
-                      `).join('') : '<div class="dashboard-empty">Belum ada data nilai</div>'}
-                  </div>
-              </div>
-          </div>
+    // ============================================================
+    // HITUNG STATISTIK
+    // ============================================================
+    const totalSantri = allSantri.length;
+    const totalGuru = allGuru.length;
+    const totalMapel = allMapel.length;
+    const totalNilai = allNilai.length;
 
-          <div class="dashboard-panel">
-              <div class="panel-header">
-                  <h4>🕒 Aktivitas Terbaru</h4>
-                  <span class="badge badge-info">${recent.length} terakhir</span>
-              </div>
-              <div class="panel-body">
-                  ${recent.length ? recent.map(n => {
-                      const typeIcon = n.type === 'UH' ? '📝' : n.type === 'PTS' ? '📊' : '📋';
-                      const waktu = n.createdAt?.toDate 
-                          ? n.createdAt.toDate().toLocaleString('id-ID', {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})
-                          : '-';
-                      const status = getStatusNilai(n.score);
-                      return `
-                          <div class="dashboard-activity-item">
-                              <div class="act-icon">${typeIcon}</div>
-                              <div class="act-body">
-                                  <div class="act-title">${escapeHtml(n.santriName || '-')} — ${escapeHtml(n.mapel || '-')}</div>
-                                  <div class="act-meta">
-                                      Kelas ${escapeHtml(n.kelas || '-')} • 
-                                      <strong style="color:var(--primary);">${n.score}</strong>
-                                      <span class="status-badge-score ${status.class}" style="margin-left:6px;">${status.label}</span>
-                                      • ${waktu}
-                                  </div>
-                              </div>
-                          </div>
-                      `;
-                  }).join('') : '<div class="dashboard-empty">Belum ada aktivitas</div>'}
-              </div>
-          </div>
-      `;
-  }
+    const nilaiUH  = allNilai.filter(n => n.type === 'UH').length;
+    const nilaiPTS = allNilai.filter(n => n.type === 'PTS').length;
+    const nilaiPAS = allNilai.filter(n => ['PAS_LISAN','PAS_TULIS','PAS_PRAKTEK','PAS'].includes(n.type)).length;
+
+    const avgScore = totalNilai > 0
+        ? (allNilai.reduce((a, b) => a + (Number(b.score) || 0), 0) / totalNilai).toFixed(1)
+        : '0.0';
+
+    // ============================================================
+    // AKTIVITAS TERBARU (dari data yang sudah difilter)
+    // ============================================================
+    const recent = [...allNilai].sort((a, b) => {
+        const ta = a.createdAt?.toDate ? a.createdAt.toDate().getTime() : 0;
+        const tb = b.createdAt?.toDate ? b.createdAt.toDate().getTime() : 0;
+        return tb - ta;
+    }).slice(0, 8);
+
+    // ============================================================
+    // TOP MAPEL TERBANYAK DINILAI (dari data yang sudah difilter)
+    // ============================================================
+    const mapelCount = {};
+    allNilai.forEach(n => {
+        const key = n.mapel || 'Tanpa Mapel';
+        mapelCount[key] = (mapelCount[key] || 0) + 1;
+    });
+    const topMapel = Object.entries(mapelCount)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 5);
+
+    // ============================================================
+    // STATUS PERIODE
+    // ============================================================
+    const statusPeriode = getPeriodeStatus();
+    let periodeLabel = 'Belum diatur', periodeBadge = 'badge-gray';
+    if (statusPeriode === 'active')       { periodeLabel = 'Aktif';          periodeBadge = 'badge-success'; }
+    else if (statusPeriode === 'pending') { periodeLabel = 'Belum dimulai';  periodeBadge = 'badge-warning'; }
+    else if (statusPeriode === 'expired') { periodeLabel = 'Berakhir';       periodeBadge = 'badge-danger';  }
+
+    // ============================================================
+    // GREETING
+    // ============================================================
+    const jam = new Date().getHours();
+    let greeting = 'Selamat Pagi';
+    if (jam >= 11 && jam < 15)      greeting = 'Selamat Siang';
+    else if (jam >= 15 && jam < 18) greeting = 'Selamat Sore';
+    else if (jam >= 18 || jam < 4)  greeting = 'Selamat Malam';
+
+    const namaUser = isAdmin ? 'Administrator' : (verifiedGuruName || 'Pengguna');
+
+    // ============================================================
+    // STATISTIK KEHADIRAN, JURNAL, JADWAL (dari data yang sudah difilter)
+    // ============================================================
+    const totalAbsensiSiswa = absensiSiswaFiltered.length;
+    const hadirSiswa = absensiSiswaFiltered.filter(a => a.status === 'H').length;
+    const persenHadirSiswa = totalAbsensiSiswa > 0 ? Math.round((hadirSiswa / totalAbsensiSiswa) * 100) : 0;
+
+    const totalJurnal = jurnalFiltered.length;
+    const totalJadwal = jadwalFiltered.length;
+    const totalAbsensiGuru = absensiGuruFiltered.length;
+
+    // ============================================================
+    // RENDER HTML
+    // ============================================================
+    mainPanel.innerHTML = `
+        <div class="dashboard-welcome">
+            <h2>${greeting}, ${escapeHtml(namaUser)}! 👋</h2>
+            <p>
+                ${isUser
+                    ? 'Berikut ringkasan aktivitas mengajar Anda hari ini.'
+                    : 'Berikut ringkasan aktivitas sistem informasi nilai santri hari ini.'}
+            </p>
+            <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+                <span class="badge ${periodeBadge}" style="background:rgba(255,255,255,0.2); color:#fff;">
+                    📅 Periode: ${periodeLabel}
+                </span>
+                <span class="badge" style="background:rgba(255,255,255,0.2); color:#fff;">
+                    🕐 ${new Date().toLocaleString('id-ID', {day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})}
+                </span>
+                ${isUser ? `
+                    <span class="badge" style="background:rgba(255,255,255,0.25); color:#fff; border:1px solid rgba(255,255,255,0.4);">
+                        🔒 Data Anda Saja
+                    </span>
+                ` : ''}
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- BARIS 1: STATISTIK UTAMA -->
+        <!-- ============================================== -->
+        <div class="dashboard-grid">
+            ${isUser ? `
+                <!-- USER: Mapel yang Diampu -->
+                <div class="dashboard-card dc-blue">
+                    <div class="dc-head"><div class="dc-icon">📚</div><span class="dc-trend">Anda</span></div>
+                    <div class="dc-number">${totalMapel}</div>
+                    <div class="dc-label">Mapel Diampu</div>
+                    <div class="dc-sub">Mata pelajaran Anda</div>
+                </div>
+                <div class="dashboard-card dc-green">
+                    <div class="dc-head"><div class="dc-icon">👥</div><span class="dc-trend">Anda</span></div>
+                    <div class="dc-number">${totalSantri}</div>
+                    <div class="dc-label">Santri Diajar</div>
+                    <div class="dc-sub">Dari kelas yang Anda ajar</div>
+                </div>
+                <div class="dashboard-card dc-info">
+                    <div class="dc-head"><div class="dc-icon">📊</div><span class="dc-trend">Anda</span></div>
+                    <div class="dc-number">${totalNilai}</div>
+                    <div class="dc-label">Nilai Diinput</div>
+                    <div class="dc-sub">Rata-rata: <strong>${avgScore}</strong></div>
+                </div>
+                <div class="dashboard-card dc-yellow">
+                    <div class="dc-head"><div class="dc-icon">📔</div><span class="dc-trend">Anda</span></div>
+                    <div class="dc-number">${totalJurnal}</div>
+                    <div class="dc-label">Jurnal Mengajar</div>
+                    <div class="dc-sub">Catatan Anda</div>
+                </div>
+            ` : `
+                <!-- ADMIN: Statistik Global -->
+                <div class="dashboard-card dc-blue">
+                    <div class="dc-head"><div class="dc-icon">👥</div><span class="dc-trend">Santri</span></div>
+                    <div class="dc-number">${totalSantri}</div>
+                    <div class="dc-label">Total Santri</div>
+                    <div class="dc-sub">Terdaftar di sistem</div>
+                </div>
+                <div class="dashboard-card dc-green">
+                    <div class="dc-head"><div class="dc-icon">👨‍🏫</div><span class="dc-trend">Guru</span></div>
+                    <div class="dc-number">${totalGuru}</div>
+                    <div class="dc-label">Total Guru</div>
+                    <div class="dc-sub">Pengampu mapel</div>
+                </div>
+                <div class="dashboard-card dc-yellow">
+                    <div class="dc-head"><div class="dc-icon">📚</div><span class="dc-trend">Mapel</span></div>
+                    <div class="dc-number">${totalMapel}</div>
+                    <div class="dc-label">Mata Pelajaran</div>
+                    <div class="dc-sub">Aktif di semua kelas</div>
+                </div>
+                <div class="dashboard-card dc-info">
+                    <div class="dc-head"><div class="dc-icon">📊</div><span class="dc-trend">Nilai</span></div>
+                    <div class="dc-number">${totalNilai}</div>
+                    <div class="dc-label">Data Nilai</div>
+                    <div class="dc-sub">Rata-rata: <strong>${avgScore}</strong></div>
+                </div>
+            `}
+        </div>
+
+        <!-- ============================================== -->
+        <!-- BARIS 2: STATISTIK SEKUNDER -->
+        <!-- ============================================== -->
+        <div class="dashboard-grid">
+            <div class="dashboard-card dc-green">
+                <div class="dc-head"><div class="dc-icon">✅</div><span class="dc-trend">Kehadiran</span></div>
+                <div class="dc-number">${persenHadirSiswa}%</div>
+                <div class="dc-label">${isUser ? 'Kehadiran Siswa Anda' : 'Kehadiran Siswa'}</div>
+                <div class="dc-sub">${hadirSiswa} dari ${totalAbsensiSiswa} data</div>
+            </div>
+            <div class="dashboard-card dc-blue">
+                <div class="dc-head"><div class="dc-icon">📔</div><span class="dc-trend">Jurnal</span></div>
+                <div class="dc-number">${totalJurnal}</div>
+                <div class="dc-label">${isUser ? 'Jurnal Anda' : 'Total Jurnal'}</div>
+                <div class="dc-sub">Catatan mengajar</div>
+            </div>
+            <div class="dashboard-card dc-info">
+                <div class="dc-head"><div class="dc-icon">🗓️</div><span class="dc-trend">Jadwal</span></div>
+                <div class="dc-number">${totalJadwal}</div>
+                <div class="dc-label">${isUser ? 'Jadwal Anda' : 'Slot Jadwal'}</div>
+                <div class="dc-sub">Jadwal aktif</div>
+            </div>
+            <div class="dashboard-card dc-yellow">
+                <div class="dc-head"><div class="dc-icon">👨‍🏫</div><span class="dc-trend">Absen</span></div>
+                <div class="dc-number">${totalAbsensiGuru}</div>
+                <div class="dc-label">${isUser ? 'Absen Anda' : 'Absensi Guru'}</div>
+                <div class="dc-sub">Data tercatat</div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- BARIS 3: DISTRIBUSI & TOP MAPEL -->
+        <!-- ============================================== -->
+        <div class="dashboard-row">
+            <div class="dashboard-panel">
+                <div class="panel-header">
+                    <h4>📈 Distribusi Nilai ${isUser ? 'Anda' : ''}</h4>
+                    <span class="badge badge-primary">${totalNilai} total</span>
+                </div>
+                <div class="panel-body">
+                    <div class="dashboard-progress-item">
+                        <div class="dp-head">
+                            <span class="dp-name">📝 UH</span>
+                            <span class="dp-count">${nilaiUH} data</span>
+                        </div>
+                        <div class="progress-bar"><div class="fill blue" style="width:${totalNilai ? (nilaiUH/totalNilai*100) : 0}%"></div></div>
+                    </div>
+                    <div class="dashboard-progress-item">
+                        <div class="dp-head">
+                            <span class="dp-name">📊 PTS</span>
+                            <span class="dp-count">${nilaiPTS} data</span>
+                        </div>
+                        <div class="progress-bar"><div class="fill yellow" style="width:${totalNilai ? (nilaiPTS/totalNilai*100) : 0}%"></div></div>
+                    </div>
+                    <div class="dashboard-progress-item">
+                        <div class="dp-head">
+                            <span class="dp-name">📋 PAS</span>
+                            <span class="dp-count">${nilaiPAS} data</span>
+                        </div>
+                        <div class="progress-bar"><div class="fill green" style="width:${totalNilai ? (nilaiPAS/totalNilai*100) : 0}%"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-panel">
+                <div class="panel-header">
+                    <h4>🏆 ${isUser ? 'Mapel Anda Terbanyak Dinilai' : 'Mapel Terbanyak Dinilai'}</h4>
+                </div>
+                <div class="panel-body">
+                    ${topMapel.length ? topMapel.map(([name, count], i) => `
+                        <div class="dashboard-progress-item">
+                            <div class="dp-head">
+                                <span class="dp-name">${i+1}. ${escapeHtml(name)}</span>
+                                <span class="dp-count">${count} nilai</span>
+                            </div>
+                            <div class="progress-bar"><div class="fill green" style="width:${topMapel[0][1] ? (count/topMapel[0][1]*100) : 0}%"></div></div>
+                        </div>
+                    `).join('') : `<div class="dashboard-empty">
+                        ${isUser ? 'Belum ada nilai yang Anda input' : 'Belum ada data nilai'}
+                    </div>`}
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- BARIS 4: AKTIVITAS TERBARU -->
+        <!-- ============================================== -->
+        <div class="dashboard-panel">
+            <div class="panel-header">
+                <h4>🕒 ${isUser ? 'Aktivitas Anda Terbaru' : 'Aktivitas Terbaru'}</h4>
+                <span class="badge badge-info">${recent.length} terakhir</span>
+            </div>
+            <div class="panel-body">
+                ${recent.length ? recent.map(n => {
+                    const typeIcon = n.type === 'UH' ? '📝' : n.type === 'PTS' ? '📊' : '📋';
+                    const waktu = n.createdAt?.toDate
+                        ? n.createdAt.toDate().toLocaleString('id-ID', {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})
+                        : '-';
+                    const status = getStatusNilai(n.score);
+                    return `
+                        <div class="dashboard-activity-item">
+                            <div class="act-icon">${typeIcon}</div>
+                            <div class="act-body">
+                                <div class="act-title">${escapeHtml(n.santriName || '-')} — ${escapeHtml(n.mapel || '-')}</div>
+                                <div class="act-meta">
+                                    Kelas ${escapeHtml(n.kelas || '-')} •
+                                    <strong style="color:var(--primary);">${n.score}</strong>
+                                    <span class="status-badge-score ${status.class}" style="margin-left:6px;">${status.label}</span>
+                                    • ${waktu}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('') : `<div class="dashboard-empty">
+                    ${isUser ? 'Belum ada aktivitas input nilai' : 'Belum ada aktivitas'}
+                </div>`}
+            </div>
+        </div>
+    `;
+}
 
 
 // ============================================================
