@@ -3027,27 +3027,21 @@ select.form-control.error {
     </div>
   </div>
 
-  <!-- ===== KELOMPOK: ABSENSI ===== -->
+  <!-- ===== KELOMPOK: ABSENSI GURU ===== -->
   <div class="nav-group">
     <div class="nav-group-title">
-      <span>✅ Absensi</span>
+      <span>✅ Absensi Guru</span>
       <span class="nav-group-arrow">▾</span>
     </div>
     <div class="nav-group-items">
       <button class="nav-item" data-tab="ABSENSI_GURU">
         <span class="nav-icon">👨‍🏫</span>
-        <span>Absensi Guru</span>
+        <span>Input Absensi Guru</span>
       </button>
-      <button class="nav-item" data-tab="ABSENSI_SISWA">
-        <span class="nav-icon">✅</span>
-        <span>Absensi Siswa</span>
-      </button>
-      <!-- ✅ TAMBAHKAN INI -->
       <button class="nav-item" data-tab="REKAP_KEHADIRAN">
         <span class="nav-icon">📊</span>
         <span>Rekap Kehadiran</span>
       </button>
-      <!-- ✅ TAMBAHKAN INI -->
       <button class="nav-item" data-tab="REKAP_PERTEMUAN">
         <span class="nav-icon">📋</span>
         <span>Rekap Pertemuan</span>
@@ -3055,6 +3049,24 @@ select.form-control.error {
       <button class="nav-item" data-tab="GURU_PENGGANTI">
         <span class="nav-icon">🔄</span>
         <span>Guru Pengganti</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== ✅ KELOMPOK BARU: ABSENSI SISWA (TERPISAH) ===== -->
+  <div class="nav-group">
+    <div class="nav-group-title">
+      <span>📋 Absensi Siswa</span>
+      <span class="nav-group-arrow">▾</span>
+    </div>
+    <div class="nav-group-items">
+      <button class="nav-item" data-tab="ABSENSI_SISWA">
+        <span class="nav-icon">📋</span>
+        <span>Input Absensi Siswa</span>
+      </button>
+      <button class="nav-item" data-tab="REKAP_ABSENSI_SISWA">
+        <span class="nav-icon">📊</span>
+        <span>Rekap Absensi Siswa</span>
       </button>
     </div>
   </div>
@@ -5135,8 +5147,9 @@ function updateTabsVisibility() {
             const allowedForUser = [
                 'INPUT', 'DASHBOARD', 'JURNAL', 'ABSENSI_SISWA', 'ABSENSI_GURU',
                 'TRANSAKSI', 'REKAP_SISWA', 'MONITORING', 'REKAP_KEHADIRAN',
-                'REKAP_PERTEMUAN',  // ✅ SUDAH ADA
-                'GURU_PENGGANTI'  // ✅ TAMBAHKAN
+                'REKAP_PERTEMUAN',
+                'GURU_PENGGANTI',
+                'REKAP_ABSENSI_SISWA'  // ✅ TAMBAHKAN
             ];
             if (allowedForUser.includes(tabName)) {
                 item.classList.remove('hidden-tab');
@@ -5171,9 +5184,10 @@ if (isAuthorized && userRole === 'USER' &&
     !['INPUT', 'DASHBOARD', 'JURNAL', 'ABSENSI_SISWA', 'ABSENSI_GURU',
       'TRANSAKSI', 'REKAP_SISWA', 'MONITORING', 'REKAP_KEHADIRAN',
       'REKAP_PERTEMUAN',
-      'GURU_PENGGANTI'].includes(activeTab)) {   // ✅ TAMBAHKAN
+      'GURU_PENGGANTI',
+      'REKAP_ABSENSI_SISWA'].includes(activeTab)) {
     activeTab = 'DASHBOARD';
-}    
+}
 
     if (!isAuthorized) {
         activeTab = 'SETTING';
@@ -5206,8 +5220,9 @@ function updateHeaderTitle(tab) {
         'MONITORING': { title: 'Monitoring', subtitle: 'Monitoring Input Nilai' },
         'JADWAL': { title: 'Jadwal Pelajaran', subtitle: 'Kelola Jadwal KBM' },
         'JURNAL': { title: 'Jurnal Mengajar', subtitle: 'Materi & Indikator' },
-        'ABSENSI_SISWA': { title: 'Absensi Siswa', subtitle: 'Kehadiran Santri' },
-        'ABSENSI_GURU': { title: 'Absensi Guru', subtitle: 'Kehadiran Guru' },
+        'ABSENSI_SISWA': { title: 'Input Absensi Siswa', subtitle: 'Kehadiran Santri' },
+        'REKAP_ABSENSI_SISWA': { title: 'Rekap Absensi Siswa', subtitle: 'Statistik Kehadiran per Siswa' },
+        'ABSENSI_GURU': { title: 'Input Absensi Guru', subtitle: 'Kehadiran Guru' },
         'REKAP_KEHADIRAN': { title: 'Rekap Kehadiran', subtitle: 'Statistik Per Semester' },
         'REKAP_PERTEMUAN': { title: 'Rekap Pertemuan', subtitle: 'Realisasi Pertemuan per Mapel' },  // ✅ PASTIKAN ADA
         'SETTING': { title: 'Selamat Datang', subtitle: 'Silakan login untuk melanjutkan' },
@@ -7246,7 +7261,8 @@ function renderActiveTab() {
         const allowed = [
             'INPUT', 'DASHBOARD', 'JURNAL', 'ABSENSI_SISWA', 'ABSENSI_GURU',
             'TRANSAKSI', 'REKAP_SISWA', 'MONITORING', 'REKAP_KEHADIRAN',
-            'REKAP_PERTEMUAN', 'GURU_PENGGANTI'  // ✅ TAMBAHKAN
+            'REKAP_PERTEMUAN', 'GURU_PENGGANTI',
+            'REKAP_ABSENSI_SISWA'   // ✅ TAMBAHKAN: agar tidak di-reset ke DASHBOARD
         ];
         if (!allowed.includes(activeTab)) activeTab = 'DASHBOARD';
         
@@ -7275,8 +7291,27 @@ function renderActiveTab() {
             updateHeaderTitle('JURNAL'); 
         }
         else if (activeTab === 'ABSENSI_SISWA') { 
+            absensiSiswaRekapSubTab = 'INPUT_ABSENSI';
             renderAbsensiSiswaTab(); 
             updateHeaderTitle('ABSENSI_SISWA'); 
+        }
+        // ✅ TAMBAHKAN: Cabang REKAP_ABSENSI_SISWA untuk USER
+        else if (activeTab === 'REKAP_ABSENSI_SISWA') {
+            if (!isNipVerified) {
+                mainPanel.innerHTML = `
+                  <div style="text-align:center; padding:40px 20px;">
+                    <div style="font-size: 40px; margin-bottom: 12px;">🔐</div>
+                    <h4 style="font-weight: 600;">Verifikasi Password Diperlukan</h4>
+                    <p style="color: var(--text-secondary);">Silakan verifikasi Password Anda.</p>
+                    <button class="btn btn-primary" onclick="window.showNipVerificationModal()">Verifikasi Password Sekarang</button>
+                  </div>
+                `;
+                updateHeaderTitle('REKAP_ABSENSI_SISWA');
+                return;
+            }
+            absensiSiswaRekapSubTab = 'REKAP_ABSENSI';
+            renderAbsensiSiswaTab(); 
+            updateHeaderTitle('REKAP_ABSENSI_SISWA'); 
         }
         else if (activeTab === 'ABSENSI_GURU') { 
             renderAbsensiGuruTab(); 
@@ -7314,7 +7349,7 @@ function renderActiveTab() {
             renderRekapPertemuanTab();
             updateHeaderTitle('REKAP_PERTEMUAN');
         }
-        // ✅ TAMBAHAN: GURU PENGGANTI (USER)
+        // ✅ GURU PENGGANTI (USER)
         else if (activeTab === 'GURU_PENGGANTI') {
             if (!isNipVerified) {
                 mainPanel.innerHTML = `
@@ -7422,8 +7457,14 @@ function renderActiveTab() {
         updateHeaderTitle('JURNAL'); 
     }
     else if (activeTab === 'ABSENSI_SISWA') { 
+        absensiSiswaRekapSubTab = 'INPUT_ABSENSI';
         renderAbsensiSiswaTab(); 
         updateHeaderTitle('ABSENSI_SISWA'); 
+    }
+    else if (activeTab === 'REKAP_ABSENSI_SISWA') { 
+        absensiSiswaRekapSubTab = 'REKAP_ABSENSI';
+        renderAbsensiSiswaTab(); 
+        updateHeaderTitle('REKAP_ABSENSI_SISWA'); 
     }
     else if (activeTab === 'ABSENSI_GURU') { 
         renderAbsensiGuruTab(); 
@@ -7437,7 +7478,6 @@ function renderActiveTab() {
         renderRekapPertemuanTab(); 
         updateHeaderTitle('REKAP_PERTEMUAN'); 
     }
-    // ✅ TAMBAHAN: GURU PENGGANTI (ADMIN)
     else if (activeTab === 'GURU_PENGGANTI') { 
         renderGuruPenggantiTab(); 
         updateHeaderTitle('GURU_PENGGANTI'); 
@@ -10479,52 +10519,51 @@ function renderAbsensiSiswaTab() {
     if (!mainPanel) return;
     
     // ============================================================
-    // ✅ SUB-TAB: Input Absensi & Rekap Absensi
+    // ✅ Sub-tab sudah dipindah ke sidebar:
+    //    - ABSENSI_SISWA       → Input Absensi
+    //    - REKAP_ABSENSI_SISWA → Rekap Absensi
     // ============================================================
     const activeSubTab = absensiSiswaRekapSubTab || 'INPUT_ABSENSI';
     
-    // Render sub-tab selector dulu
-    mainPanel.innerHTML = `
-        <div style="margin-bottom:16px;">
-            <h3 style="font-size:16px; font-weight:600; margin:0;">✅ Absensi Siswa</h3>
-            <p style="color: var(--text-secondary); font-size: 12px; margin-top: 4px;">
-                ⚠️ <strong>Wajib:</strong> Lakukan <strong>Absensi Guru</strong> terlebih dahulu sebelum input absensi siswa pada tanggal yang sama.
-            </p>
-        </div>
-        
-        <div class="sub-tabs" style="margin-bottom: 16px;">
-            <button class="sub-tab ${activeSubTab === 'INPUT_ABSENSI' ? 'active' : ''}" 
-                    onclick="window.setAbsensiSiswaSubTab('INPUT_ABSENSI')">
-                ✏️ Input Absensi
-            </button>
-            <button class="sub-tab ${activeSubTab === 'REKAP_ABSENSI' ? 'active' : ''}" 
-                    onclick="window.setAbsensiSiswaSubTab('REKAP_ABSENSI')">
-                📊 Rekap Absensi
-            </button>
-        </div>
-        
-        <div id="absensiSiswaContent"></div>
-    `;
-    
-    // ============================================================
-    // RENDER SESUAI SUB-TAB
-    // ============================================================
+    // Render header sesuai sub-tab
     if (activeSubTab === 'REKAP_ABSENSI') {
+        mainPanel.innerHTML = `
+            <div style="margin-bottom:16px;">
+                <h3 style="font-size:16px; font-weight:600; margin:0;">📊 Rekap Absensi Siswa</h3>
+                <p style="color: var(--text-secondary); font-size: 12px; margin-top: 4px;">
+                    Rekapitulasi kehadiran per siswa: Hadir, Sakit, Izin, Alpa.
+                </p>
+            </div>
+            <div id="absensiSiswaContent"></div>
+        `;
         renderRekapAbsensiSiswa();
         return;
     }
     
-    // Lanjutkan dengan render input absensi
+    // Default: Input Absensi
+    mainPanel.innerHTML = `
+        <div style="margin-bottom:16px;">
+            <h3 style="font-size:16px; font-weight:600; margin:0;">✏️ Input Absensi Siswa</h3>
+            <p style="color: var(--text-secondary); font-size: 12px; margin-top: 4px;">
+                ⚠️ <strong>Wajib:</strong> Lakukan <strong>Absensi Guru</strong> terlebih dahulu sebelum input absensi siswa pada tanggal yang sama.
+            </p>
+        </div>
+        <div id="absensiSiswaContent"></div>
+    `;
     renderInputAbsensiSiswa();
 }
 
-// ============================================================
-// ✅ FUNGSI BARU: Set Sub-Tab Absensi Siswa
-// ============================================================
+
 window.setAbsensiSiswaSubTab = function(subTab) {
+    if (subTab === 'REKAP_ABSENSI') {
+        activeTab = 'REKAP_ABSENSI_SISWA';
+    } else {
+        activeTab = 'ABSENSI_SISWA';
+    }
     absensiSiswaRekapSubTab = subTab;
-    renderAbsensiSiswaTab();
+    renderActiveTab();
 };
+
 
 // ============================================================
 // ✅ FUNGSI BARU: Render Input Absensi (wrapper)
@@ -12316,15 +12355,7 @@ if (userRole === 'USER' && verifiedGuruId) {
     
     updateHapusMassalBtn();
 }
-
 // === BATAS AKHIR function renderAbsensiSiswaRekap() { === //
-
-
-
-
-
-
-
 
 
 // ============================================================
@@ -15125,7 +15156,7 @@ function renderAbsensiGuruTab() {
     // ============================================================
     mainPanel.innerHTML = `
         <div style="margin-bottom:16px;">
-            <h3 style="font-size:16px; font-weight:600; margin:0;">👨‍🏫 Absensi Guru</h3>
+            <h3 style="font-size:16px; font-weight:600; margin:0;">👨‍🏫 Input Absensi Guru</h3>
             <p style="color: var(--text-secondary); font-size: 12px; margin-top: 4px;">
                 Absensi 2 tahap: <strong>Absen Masuk</strong> & <strong>Absen Keluar</strong>. 
                 Jam otomatis dari sistem. Untuk absen susulan (tanggal lampau), wajib izin Admin.
@@ -23681,35 +23712,71 @@ function renderMonitoringTab() {
     const allGuru = guruCache || [];
     const allMapel = mapelCache || [];
     const allSantri = santriCache || [];
-    let totalGuru = allGuru.length;
+    
+    // ============================================================
+    // ✅ BARU: Filter data berdasarkan role (guru yang login)
+    // ============================================================
+    let guruList = allGuru;
+    let mapelList = allMapel;
+    let santriList = allSantri;
+    
+    if (isUser && verifiedGuruId) {
+        // USER: hanya guru sendiri
+        guruList = allGuru.filter(g => g.id === verifiedGuruId);
+        
+        // ✅ FIX: Mapel hanya yang diampu guru ini
+        mapelList = allMapel.filter(m => m.guruId === verifiedGuruId);
+        
+        // ✅ FIX: Santri hanya dari kelas yang diajar guru ini
+        const kelasGuru = [...new Set(mapelList.map(m => m.kelas).filter(k => k))];
+        santriList = allSantri.filter(s => kelasGuru.includes(String(s.kelas)));
+    }
+    
+    let totalGuru = guruList.length;
     let totalGuruWithMapel = 0;
     let totalGuruComplete = 0;
     let totalGuruPartial = 0;
     let totalGuruEmpty = 0;
-    const guruData = allGuru.map(guru => {
-        const mapelGuru = allMapel.filter(m => m.guruId === guru.id);
+    
+    // ============================================================
+    // ✅ FIX: Hitung statistik HANYA dari guru & mapel yang relevan
+    // ============================================================
+    const guruData = guruList.map(guru => {
+        // Mapel guru — untuk USER sudah terfilter, untuk ADMIN tetap semua
+        const mapelGuru = mapelList.filter(m => m.guruId === guru.id);
         const kelasGuru = [...new Set(mapelGuru.map(m => m.kelas).filter(k => k))];
+        
         const mapelDetails = mapelGuru.map(m => {
-            const santriKelas = allSantri.filter(s => String(s.kelas) === String(m.kelas));
+            // ✅ FIX: santri per kelas dari santriList (sudah terfilter untuk USER)
+            const santriKelas = santriList.filter(s => String(s.kelas) === String(m.kelas));
             const totalSantri = santriKelas.length;
+            
+            // ✅ FIX: filter nilai berdasarkan guruId juga (bukan hanya mapel+kelas)
+            // agar konsisten dengan data yang diampu guru
             const uhData = allNilai.filter(n => 
                 n.mapel === m.name && 
                 n.type === 'UH' && 
-                String(n.kelas) === String(m.kelas)
+                String(n.kelas) === String(m.kelas) &&
+                (n.guruId === guru.id || !n.guruId)
             );
             const uhUnique = new Set(uhData.map(n => n.santriName));
+            
             const ptsData = allNilai.filter(n => 
                 n.mapel === m.name && 
                 n.type === 'PTS' && 
-                String(n.kelas) === String(m.kelas)
+                String(n.kelas) === String(m.kelas) &&
+                (n.guruId === guru.id || !n.guruId)
             );
             const ptsUnique = new Set(ptsData.map(n => n.santriName));
+            
             const pasData = allNilai.filter(n => 
                 n.mapel === m.name && 
                 (n.type === 'PAS_LISAN' || n.type === 'PAS_TULIS' || n.type === 'PAS_PRAKTEK' || n.type === 'PAS') &&
-                String(n.kelas) === String(m.kelas)
+                String(n.kelas) === String(m.kelas) &&
+                (n.guruId === guru.id || !n.guruId)
             );
             const pasUnique = new Set(pasData.map(n => n.santriName));
+            
             return {
                 name: m.name,
                 kelas: m.kelas,
@@ -23719,33 +23786,36 @@ function renderMonitoringTab() {
                 pas: { done: pasUnique.size, total: totalSantri }
             };
         });
+        
         let uhTotal = 0, uhDone = 0;
         let ptsTotal = 0, ptsDone = 0;
         let pasTotal = 0, pasDone = 0;
         mapelDetails.forEach(m => {
-            uhTotal += m.uh.total;
-            uhDone += m.uh.done;
-            ptsTotal += m.pts.total;
-            ptsDone += m.pts.done;
-            pasTotal += m.pas.total;
-            pasDone += m.pas.done;
+            uhTotal += m.uh.total;   uhDone += m.uh.done;
+            ptsTotal += m.pts.total; ptsDone += m.pts.done;
+            pasTotal += m.pas.total; pasDone += m.pas.done;
         });
-        const uhStatus = uhTotal > 0 ? (uhDone / uhTotal) * 100 : 0;
+        
+        const uhStatus  = uhTotal  > 0 ? (uhDone  / uhTotal)  * 100 : 0;
         const ptsStatus = ptsTotal > 0 ? (ptsDone / ptsTotal) * 100 : 0;
         const pasStatus = pasTotal > 0 ? (pasDone / pasTotal) * 100 : 0;
+        
         const isComplete = uhStatus >= 100 && ptsStatus >= 100 && pasStatus >= 100 && mapelGuru.length > 0;
-        const isPartial = (uhStatus > 0 || ptsStatus > 0 || pasStatus > 0) && !isComplete;
-        const isEmpty = uhStatus === 0 && ptsStatus === 0 && pasStatus === 0;
+        const isPartial  = (uhStatus > 0 || ptsStatus > 0 || pasStatus > 0) && !isComplete;
+        const isEmpty    = uhStatus === 0 && ptsStatus === 0 && pasStatus === 0;
+        
         if (mapelGuru.length > 0) totalGuruWithMapel++;
         if (isComplete) totalGuruComplete++;
-        if (isPartial) totalGuruPartial++;
+        if (isPartial)  totalGuruPartial++;
         if (isEmpty && mapelGuru.length > 0) totalGuruEmpty++;
+        
         const totalProgress = (uhStatus + ptsStatus + pasStatus) / 3;
+        
         return {
             ...guru,
             mapelCount: mapelGuru.length,
             kelas: kelasGuru,
-            mapelDetails: mapelDetails,
+            mapelDetails,
             uhTotal, uhDone,
             ptsTotal, ptsDone,
             pasTotal, pasDone,
@@ -23759,45 +23829,99 @@ function renderMonitoringTab() {
         };
     });
     
+    // ============================================================
+    // ✅ BARU: Daftar unik untuk dropdown (dari data yang relevan)
+    // ============================================================
+    const daftarKelas = [...new Set(
+        guruData.flatMap(g => g.kelas)
+    )].sort((a, b) => (parseInt(a) || 0) - (parseInt(b) || 0));
+    
+    const daftarGuru = guruData
+        .map(g => ({ id: g.id, name: g.name }))
+        .sort((a, b) => a.name.localeCompare(b.name));
+    
+    // ✅ BARU: Daftar mapel — cascade dari kelas (jika kelas dipilih)
+    let mapelUntukFilter = mapelList;
+    if (monitoringFilterKelas && monitoringFilterKelas !== 'SEMUA') {
+        mapelUntukFilter = mapelList.filter(m => String(m.kelas) === String(monitoringFilterKelas));
+    }
+    const daftarMapel = [...new Set(
+        mapelUntukFilter.map(m => m.name).filter(n => n)
+    )].sort();
+    
+    // ============================================================
+    // State filter
+    // ============================================================
     let filterStatus = monitoringFilterStatus || 'SEMUA';
     let filterKelas = monitoringFilterKelas || 'SEMUA';
     let filterGuruId = isUser ? (verifiedGuruId || 'SEMUA') : (monitoringFilterGuru || 'SEMUA');
     let filterMapelName = monitoringFilterMapel || 'SEMUA';
     
+    // ✅ FIX: Validasi filter mapel jika kelas berubah
+    if (filterMapelName !== 'SEMUA' && !daftarMapel.includes(filterMapelName)) {
+        monitoringFilterMapel = filterMapelName = 'SEMUA';
+    }
+    // ✅ FIX: Validasi filter kelas
+    if (filterKelas !== 'SEMUA' && !daftarKelas.includes(filterKelas)) {
+        monitoringFilterKelas = filterKelas = 'SEMUA';
+    }
+    
+    // ============================================================
+    // Terapkan filter
+    // ============================================================
     let filteredData = guruData;
     
-    if (filterStatus === 'COMPLETE') filteredData = filteredData.filter(g => g.isComplete);
+    if (filterStatus === 'COMPLETE')  filteredData = filteredData.filter(g => g.isComplete);
     else if (filterStatus === 'PARTIAL') filteredData = filteredData.filter(g => g.isPartial);
-    else if (filterStatus === 'EMPTY') filteredData = filteredData.filter(g => g.isEmpty);
+    else if (filterStatus === 'EMPTY')   filteredData = filteredData.filter(g => g.isEmpty);
     else if (filterStatus === 'NO_MAPEL') filteredData = filteredData.filter(g => g.mapelCount === 0);
     
-    if (filterKelas !== 'SEMUA') filteredData = filteredData.filter(g => g.kelas.includes(filterKelas));
+    // ✅ FIX: Filter kelas
+    if (filterKelas !== 'SEMUA') {
+        filteredData = filteredData.filter(g => g.kelas.includes(filterKelas));
+    }
     
+    // ✅ FIX: Filter guru
     if (filterGuruId !== 'SEMUA' && filterGuruId !== '') {
         filteredData = filteredData.filter(g => g.id === filterGuruId);
     }
     
+    // ✅ FIX: Filter mapel — cek mapelDetails ATAU kelas
     if (filterMapelName !== 'SEMUA' && filterMapelName !== '') {
-        filteredData = filteredData.filter(g => 
-            g.mapelDetails.some(m => m.name === filterMapelName)
-        );
+        filteredData = filteredData
+            .map(g => {
+                // Jika filter mapel aktif, hanya tampilkan mapel yang cocok di detail
+                const mapelFiltered = g.mapelDetails.filter(m => 
+                    m.name === filterMapelName &&
+                    (filterKelas === 'SEMUA' || String(m.kelas) === String(filterKelas))
+                );
+                if (mapelFiltered.length === 0) return null;
+                return {
+                    ...g,
+                    mapelDetails: mapelFiltered,
+                    mapelCount: mapelFiltered.length
+                };
+            })
+            .filter(Boolean);
     }
     
+    // Sort: yang belum selesai di atas
     filteredData.sort((a, b) => {
         if (a.isComplete && !b.isComplete) return 1;
         if (!a.isComplete && b.isComplete) return -1;
         return a.totalProgress - b.totalProgress;
     });
     
-    const daftarKelas = [...new Set(santriCache.map(s => s.kelas).filter(k => k))].sort();
-    const daftarGuru = guruCache.map(g => ({ id: g.id, name: g.name })).sort((a, b) => a.name.localeCompare(b.name));
-    const daftarMapel = [...new Set(mapelCache.map(m => m.name).filter(n => n))].sort();
-    
+    // ============================================================
+    // RENDER HTML
+    // ============================================================
     const mainPanel = document.getElementById('mainPanel');
     let html = `
         <div class="flex-between" style="margin-bottom: 16px;">
             <h3 style="font-size: 16px; font-weight: 600; margin: 0;">👀 Monitoring Input Nilai Guru</h3>
-            <span class="badge badge-primary" style="font-size: 13px; padding: 6px 14px;">${isUser ? '1 Guru' : totalGuru + ' Guru'}</span>
+            <span class="badge badge-primary" style="font-size: 13px; padding: 6px 14px;">
+                ${isUser ? '1 Guru' : totalGuru + ' Guru'}
+            </span>
         </div>
         
         ${isUser ? `
@@ -23805,6 +23929,9 @@ function renderMonitoringTab() {
               <div class="periode-icon">🔒</div>
               <div class="periode-text">
                   <strong>Filter Terkunci:</strong> Monitoring hanya untuk guru <strong>${escapeHtml(verifiedGuruName)}</strong>
+                  ${daftarKelas.length > 0 
+                    ? ` — <em>${daftarKelas.length} kelas</em> (${daftarKelas.map(k => 'Kls ' + k).join(', ')})`
+                    : ''}
               </div>
           </div>
         ` : ''}
@@ -23829,10 +23956,18 @@ function renderMonitoringTab() {
         </div>
         
         <div class="filter-section">
-            <div class="filter-grid" style="grid-template-columns: ${isUser ? '1fr 1fr 1fr' : '1fr 1fr 1fr 1fr'};">
+            <div style="background: var(--primary-50); padding: 8px 12px; border-radius: var(--radius-sm); margin-bottom: 12px; font-size: 12px; color: var(--primary-dark); border-left: 3px solid var(--primary);">
+                🔗 <strong>Filter Cascade:</strong> 
+                ${isUser 
+                  ? 'Pilih <strong>Kelas</strong> → dropdown <strong>Mapel</strong> otomatis menyesuaikan.'
+                  : 'Pilih <strong>Kelas</strong> → <strong>Mapel</strong> → <strong>Guru</strong> secara bertingkat.'
+                }
+            </div>
+            
+            <div class="filter-grid" style="grid-template-columns: ${isUser ? '1fr 1fr 1fr 1fr' : '1fr 1fr 1fr 1fr'};">
                 ${!isUser ? `
                 <div class="filter-item">
-                    <label>👨‍🏫 Guru</label>
+                    <label>① 👨‍🏫 Guru</label>
                     <select id="monitoringFilterGuru" class="form-control">
                         <option value="SEMUA" ${filterGuruId === 'SEMUA' ? 'selected' : ''}>📋 Semua Guru</option>
                         ${daftarGuru.map(g => `<option value="${g.id}" ${filterGuruId === g.id ? 'selected' : ''}>${escapeHtml(g.name)}</option>`).join('')}
@@ -23846,13 +23981,32 @@ function renderMonitoringTab() {
                     <small class="field-hint" style="color: var(--primary);">🔒 Terkunci ke akun Anda</small>
                 </div>
                 `}
+                
                 <div class="filter-item">
-                    <label>📚 Mapel</label>
+                    <label>${isUser ? '①' : '②'} 📚 Kelas</label>
+                    <select id="monitoringFilterKelas" class="form-control">
+                        <option value="SEMUA" ${filterKelas === 'SEMUA' ? 'selected' : ''}>📚 Semua Kelas</option>
+                        ${daftarKelas.map(k => `<option value="${k}" ${String(filterKelas) === String(k) ? 'selected' : ''}>Kelas ${k}</option>`).join('')}
+                    </select>
+                </div>
+                
+                <div class="filter-item">
+                    <label>${isUser ? '②' : '③'} 📖 Mapel</label>
                     <select id="monitoringFilterMapel" class="form-control">
                         <option value="SEMUA" ${filterMapelName === 'SEMUA' ? 'selected' : ''}>📋 Semua Mapel</option>
                         ${daftarMapel.map(m => `<option value="${m}" ${filterMapelName === m ? 'selected' : ''}>${escapeHtml(m)}</option>`).join('')}
                     </select>
+                    ${filterKelas !== 'SEMUA' ? `
+                        <small class="field-hint" style="color: var(--success);">
+                            ✅ ${daftarMapel.length} mapel untuk Kelas ${filterKelas}
+                        </small>
+                    ` : `
+                        <small class="field-hint" style="color: var(--text-muted);">
+                            💡 Pilih Kelas untuk memfilter Mapel
+                        </small>
+                    `}
                 </div>
+                
                 <div class="filter-item">
                     <label>📋 Status</label>
                     <select id="monitoringFilterStatus" class="form-control">
@@ -23861,13 +24015,6 @@ function renderMonitoringTab() {
                         <option value="PARTIAL" ${filterStatus === 'PARTIAL' ? 'selected' : ''}>⏳ Sebagian</option>
                         <option value="EMPTY" ${filterStatus === 'EMPTY' ? 'selected' : ''}>❌ Belum Input</option>
                         <option value="NO_MAPEL" ${filterStatus === 'NO_MAPEL' ? 'selected' : ''}>📭 Tanpa Mapel</option>
-                    </select>
-                </div>
-                <div class="filter-item">
-                    <label>📚 Kelas</label>
-                    <select id="monitoringFilterKelas" class="form-control">
-                        <option value="SEMUA" ${filterKelas === 'SEMUA' ? 'selected' : ''}>📚 Semua Kelas</option>
-                        ${daftarKelas.map(k => `<option value="${k}" ${filterKelas === k ? 'selected' : ''}>Kelas ${k}</option>`).join('')}
                     </select>
                 </div>
             </div>
@@ -23880,6 +24027,7 @@ function renderMonitoringTab() {
         <div class="monitoring-grid">
             ${filteredData.length === 0 ? `
                 <div style="text-align:center; padding:40px; color: var(--text-muted);">
+                    <div style="font-size:32px; margin-bottom:8px;">📭</div>
                     Tidak ada data guru yang ditemukan dengan filter saat ini.
                 </div>
             ` : filteredData.map(g => `
@@ -23888,7 +24036,7 @@ function renderMonitoringTab() {
                         <div>
                             <div class="guru-name">${escapeHtml(g.name)}</div>
                             <div class="guru-detail">Password: ${escapeHtml(g.nip || '-')} • ${g.mapelCount} Mapel</div>
-                            ${g.kelas.length > 0 ? `<div class="guru-detail">Kelas: ${g.kelas.join(', ')}</div>` : ''}
+                            ${g.kelas.length > 0 ? `<div class="guru-detail">Kelas: ${g.kelas.map(k => 'Kls ' + k).join(', ')}</div>` : ''}
                         </div>
                         <div class="flex" style="gap:6px; align-items:center;">
                             <span class="badge ${g.isComplete ? 'badge-success' : g.isPartial ? 'badge-warning' : 'badge-danger'}">
@@ -23922,7 +24070,7 @@ function renderMonitoringTab() {
                     ${g.mapelDetails.length > 0 ? `
                         <div class="mapel-detail-grid">
                             ${g.mapelDetails.map(m => {
-                                const uhPct = m.uh.total > 0 ? Math.round((m.uh.done / m.uh.total) * 100) : 0;
+                                const uhPct  = m.uh.total  > 0 ? Math.round((m.uh.done  / m.uh.total)  * 100) : 0;
                                 const ptsPct = m.pts.total > 0 ? Math.round((m.pts.done / m.pts.total) * 100) : 0;
                                 const pasPct = m.pas.total > 0 ? Math.round((m.pas.done / m.pas.total) * 100) : 0;
                                 const avgPct = Math.round((uhPct + ptsPct + pasPct) / 3);
@@ -23951,40 +24099,53 @@ function renderMonitoringTab() {
     `;
     mainPanel.innerHTML = html;
     
+    // ============================================================
+    // ✅ EVENT LISTENERS CASCADE
+    // ============================================================
+    
+    // Guru filter (ADMIN only)
     if (!isUser) {
         const filterGuruSelect = document.getElementById('monitoringFilterGuru');
         if (filterGuruSelect) {
             filterGuruSelect.addEventListener('change', function() {
                 monitoringFilterGuru = this.value;
+                monitoringFilterKelas = 'SEMUA';
+                monitoringFilterMapel = 'SEMUA';
                 renderMonitoringTab();
             });
         }
     }
     
-    const filterMapelSelect = document.getElementById('monitoringFilterMapel');
-    const filterStatusSelect = document.getElementById('monitoringFilterStatus');
+    // ✅ FIX: Kelas berubah → RESET mapel (cascade)
     const filterKelasSelect = document.getElementById('monitoringFilterKelas');
-    const resetBtn = document.getElementById('btnResetMonitoringFilter');
+    if (filterKelasSelect) {
+        filterKelasSelect.addEventListener('change', function() {
+            monitoringFilterKelas = this.value;
+            monitoringFilterMapel = 'SEMUA'; // ✅ reset mapel
+            renderMonitoringTab();
+        });
+    }
     
+    // Mapel berubah
+    const filterMapelSelect = document.getElementById('monitoringFilterMapel');
     if (filterMapelSelect) {
         filterMapelSelect.addEventListener('change', function() {
             monitoringFilterMapel = this.value;
             renderMonitoringTab();
         });
     }
+    
+    // Status berubah
+    const filterStatusSelect = document.getElementById('monitoringFilterStatus');
     if (filterStatusSelect) {
         filterStatusSelect.addEventListener('change', function() {
             monitoringFilterStatus = this.value;
             renderMonitoringTab();
         });
     }
-    if (filterKelasSelect) {
-        filterKelasSelect.addEventListener('change', function() {
-            monitoringFilterKelas = this.value;
-            renderMonitoringTab();
-        });
-    }
     
+    // Reset
+    const resetBtn = document.getElementById('btnResetMonitoringFilter');
     if (resetBtn) {
         resetBtn.addEventListener('click', function() {
             monitoringFilterStatus = 'SEMUA';
