@@ -3141,6 +3141,29 @@ select.form-control.error {
         padding: 12px;
     }
 }
+
+
+/* ============================================================
+   PERMOHONAN ABSEN GURU — RESPONSIVE
+============================================================ */
+@media (max-width: 640px) {
+    /* Grid kartu permohonan jadi 1 kolom */
+    .card-header + .card-body > div > div[style*="grid-template-columns: auto 1fr auto"] {
+        grid-template-columns: auto 1fr !important;
+        gap: 8px !important;
+    }
+    
+    /* Tombol aksi turun ke bawah */
+    .card-header + .card-body > div > div[style*="grid-template-columns: auto 1fr auto"] > div:last-child {
+        grid-column: 1 / -1;
+        justify-self: stretch;
+    }
+    
+    .card-header + .card-body > div > div[style*="grid-template-columns: auto 1fr auto"] > div:last-child .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
   </style>
 </head>
 <body>
@@ -15071,15 +15094,13 @@ function renderPermohonanStatusGuru() {
     if (!verifiedGuruId) return '';
     
     // ============================================================
-    // ✅ Ambil permohonan milik guru ini (gabungan dari 2 collection)
-    // 1. permohonanAbsensiCache (izin input susulan / tanggal lampau)
-    // 2. permohonanAbsenLuarJamCache (izin luar jam masuk/keluar)
+    // GABUNGKAN SEMUA SUMBER PERMOHONAN
     // ============================================================
     const permohonanTanggalLampau = permohonanAbsensiCache
         .filter(p => p.guruId === verifiedGuruId)
         .map(p => ({
             ...p,
-            _source: 'TANGGAL_LAMPAU',  // izin input tanggal lampau
+            _source: 'TANGGAL_LAMPAU',
             _tipe: 'TANGGAL_LAMPAU'
         }));
     
@@ -15091,204 +15112,392 @@ function renderPermohonanStatusGuru() {
             _tipe: p.tipeAbsen || 'MASUK'
         }));
     
-    // Gabungkan & urutkan berdasarkan tanggal request terbaru
     const semuaPermohonan = [...permohonanTanggalLampau, ...permohonanLuarJam]
         .sort((a, b) => {
             const ta = a.createdAt?.toDate ? a.createdAt.toDate().getTime() : 0;
             const tb = b.createdAt?.toDate ? b.createdAt.toDate().getTime() : 0;
             return tb - ta;
-        })
-        .slice(0, 10); // tampilkan 10 terbaru
+        });
     
     if (semuaPermohonan.length === 0) return '';
     
-    const pending = semuaPermohonan.filter(p => p.status === 'pending');
-    const approved = semuaPermohonan.filter(p => p.status === 'approved');
+    // ============================================================
+    // GROUPING BERDASARKAN STATUS
+    // ============================================================
+    const pending  = semuaPermohonan.filter(p => p.status === 'pending');
+    const approved = semuaPermohonan.filter(p => {
+        if (p.status !== 'approved') return false;
+        const sisa = hitungSisaWaktuIzin(p.berlakuSampai);
+        return !sisa?.expired; // hanya yang masih aktif
+    });
+    const expired  = semuaPermohonan.filter(p => {
+        if (p.status !== 'approved') return false;
+        const sisa = hitungSisaWaktuIzin(p.berlakuSampai);
+        return sisa?.expired === true;
+    });
     const rejected = semuaPermohonan.filter(p => p.status === 'rejected');
     
     // ============================================================
-    // ✅ Helper: Label & warna untuk tipe permohonan
+    // HELPER: Metadata tipe permohonan
     // ============================================================
-    const getTipeLabel = (p) => {
+    const getTipeMeta = (p) => {
         if (p._source === 'TANGGAL_LAMPAU') {
-            return { 
-                label: '📅 Input Tanggal Lampau', 
-                cls: 'badge-info',
-                reasonBadge: ''
+            return {
+                icon: '📅',
+                label: 'Input Tanggal Lampau',
+                color: 'var(--info)',
+                bg: 'var(--info-50)',
+                badgeCls: 'badge-info'
             };
         }
-        
-        // Luar jam
         const isMasuk = (p.tipeAbsen || 'MASUK') === 'MASUK';
-        let label = isMasuk ? '🟢 Absen Masuk' : '🔴 Absen Keluar';
-        let cls = isMasuk ? 'badge-success' : 'badge-danger';
-        let reasonBadge = '';
-        
+        return {
+            icon: isMasuk ? '🟢' : '🔴',
+            label: isMasuk ? 'Absen Masuk' : 'Absen Keluar',
+            color: isMasuk ? 'var(--success)' : 'var(--danger)',
+            bg: isMasuk ? 'var(--success-50)' : 'var(--danger-50)',
+            badgeCls: isMasuk ? 'badge-success' : 'badge-danger'
+        };
+    };
+    
+    // ============================================================
+    // HELPER: Reason badge (khusus izin luar jam)
+    // ============================================================
+    const getReasonBadge = (p) => {
         if (p.reason === 'expired_after_last_schedule') {
-            reasonBadge = `<br><span class="badge badge-danger" style="font-size:9px; margin-top:2px;">⚠️ ALPA Recovery</span>`;
-        } else if (p.reason === 'too_late' && !isMasuk) {
-            reasonBadge = `<br><span class="badge badge-warning" style="font-size:9px; margin-top:2px;">⏰ Keluar Susulan</span>`;
-        } else if (p.reason === 'too_early') {
-            reasonBadge = `<br><span class="badge badge-info" style="font-size:9px; margin-top:2px;">⏰ Lebih Awal</span>`;
-        } else if (p.reason === 'no_schedule') {
-            reasonBadge = `<br><span class="badge badge-gray" style="font-size:9px; margin-top:2px;">📅 Tanpa Jadwal</span>`;
+            return `<span class="badge badge-danger" style="font-size:10px;">⚠️ ALPA Recovery</span>`;
         }
-        
-        return { label, cls, reasonBadge };
-    };
-    
-    // ============================================================
-    // ✅ Helper: Status badge per permohonan
-    // ============================================================
-    const getStatusBadge = (p) => {
-        if (p.status === 'pending') {
-            return `<span class="badge badge-warning">⏳ Menunggu</span>`;
+        if (p.reason === 'too_late' && p.tipeAbsen === 'KELUAR') {
+            return `<span class="badge badge-warning" style="font-size:10px;">⏰ Susulan</span>`;
         }
-        
-        if (p.status === 'approved') {
-            const sisa = hitungSisaWaktuIzin(p.berlakuSampai);
-            if (sisa && sisa.expired) {
-                return `<span class="badge badge-danger">⌛ Kadaluarsa</span>`;
-            }
-            return `<span class="badge badge-success">✅ Disetujui</span>`;
+        if (p.reason === 'too_early') {
+            return `<span class="badge badge-info" style="font-size:10px;">⏰ Lebih Awal</span>`;
         }
-        
-        if (p.status === 'rejected') {
-            return p.revoked 
-                ? `<span class="badge badge-warning">🚫 Dicabut</span>`
-                : `<span class="badge badge-danger">❌ Ditolak</span>`;
+        if (p.reason === 'no_schedule') {
+            return `<span class="badge badge-gray" style="font-size:10px;">📅 Tanpa Jadwal</span>`;
         }
-        
-        return `<span class="badge badge-gray">-</span>`;
-    };
-    
-    // ============================================================
-    // ✅ Helper: Tombol aksi (ajukan ulang jika perlu)
-    // ============================================================
-    const getActionButton = (p) => {
-        // Pending → tidak ada aksi
-        if (p.status === 'pending') {
-            return `<span style="font-size:11px; color:var(--text-muted);">-</span>`;
-        }
-        
-        // Approved & belum expired → tidak ada aksi
-        if (p.status === 'approved') {
-            const sisa = hitungSisaWaktuIzin(p.berlakuSampai);
-            if (!sisa || !sisa.expired) {
-                return `<span style="font-size:11px; color:var(--text-muted);">-</span>`;
-            }
-            // Expired → ajukan ulang
-            return `
-                <button class="btn btn-warning btn-xs" 
-                        onclick="window.ajukanUlangPermohonanLuarJam('${p.id}')"
-                        title="Ajukan permohonan baru">
-                    📩 Ajukan Ulang
-                </button>
-            `;
-        }
-        
-        // Rejected/Revoked → ajukan ulang
-        if (p.status === 'rejected') {
-            return `
-                <button class="btn btn-warning btn-xs" 
-                        onclick="window.ajukanUlangPermohonanLuarJam('${p.id}')"
-                        title="Ajukan permohonan baru">
-                    📩 Ajukan Ulang
-                </button>
-            `;
-        }
-        
         return '';
     };
     
     // ============================================================
-    // ✅ Helper: Tampilkan waktu berlaku + sisa waktu
+    // HELPER: Render satu kartu permohonan
     // ============================================================
-    const getBerlakuInfo = (p) => {
-        if (!p.berlakuSampai) return '-';
+    const renderKartu = (p, variant = 'default') => {
+        const tipe = getTipeMeta(p);
+        const reasonBadge = getReasonBadge(p);
         
-        const tglBerlaku = formatTanggalIndo(p.berlakuSampai);
+        // ---- Warna border berdasarkan variant ----
+        const borderColors = {
+            pending: 'var(--warning)',
+            approved: 'var(--success)',
+            expired: 'var(--text-muted)',
+            rejected: 'var(--danger)',
+            default: 'var(--border-color)'
+        };
+        const borderColor = borderColors[variant] || borderColors.default;
         
-        if (p.status === 'approved') {
+        // ---- Status badge ----
+        let statusBadge = '';
+        if (p.status === 'pending') {
+            statusBadge = `<span class="badge badge-warning">⏳ Menunggu</span>`;
+        } else if (p.status === 'approved') {
             const sisa = hitungSisaWaktuIzin(p.berlakuSampai);
-            if (sisa && !sisa.expired) {
-                let warna = 'var(--success)';
-                if (sisa.urgent) warna = 'var(--danger)';
-                else if (sisa.warning) warna = 'var(--warning)';
-                
-                return `${tglBerlaku}<br><small style="color:${warna}; font-weight:600;">⏱️ ${sisa.label}</small>`;
+            if (sisa?.expired) {
+                statusBadge = `<span class="badge badge-gray">⌛ Kadaluarsa</span>`;
+            } else {
+                statusBadge = `<span class="badge badge-success">✅ Disetujui</span>`;
             }
-            if (sisa && sisa.expired) {
-                return `${tglBerlaku}<br><small style="color:var(--danger);">⌛ Kadaluarsa</small>`;
+        } else if (p.status === 'rejected') {
+            statusBadge = p.revoked 
+                ? `<span class="badge badge-warning">🚫 Dicabut</span>`
+                : `<span class="badge badge-danger">❌ Ditolak</span>`;
+        }
+        
+        // ---- Info berlaku / sisa waktu ----
+        let berlakuHtml = '';
+        if (p.berlakuSampai) {
+            const tglBerlaku = formatTanggalIndo(p.berlakuSampai);
+            const sisa = hitungSisaWaktuIzin(p.berlakuSampai);
+            
+            if (p.status === 'approved' && sisa) {
+                if (sisa.expired) {
+                    berlakuHtml = `
+                        <div style="font-size:11px; color:var(--text-muted);">
+                            📅 Berlaku s/d <strong>${tglBerlaku}</strong>
+                            <span style="color:var(--danger);"> • ⌛ Kadaluarsa</span>
+                        </div>
+                    `;
+                } else {
+                    let warnaSisa = 'var(--success)';
+                    if (sisa.urgent) warnaSisa = 'var(--danger)';
+                    else if (sisa.warning) warnaSisa = 'var(--warning)';
+                    
+                    berlakuHtml = `
+                        <div style="font-size:11px; color:var(--text-muted);">
+                            📅 Berlaku s/d <strong>${tglBerlaku}</strong>
+                            <span style="color:${warnaSisa}; font-weight:600;"> • ⏱️ ${sisa.label}</span>
+                        </div>
+                    `;
+                }
+            } else {
+                berlakuHtml = `
+                    <div style="font-size:11px; color:var(--text-muted);">
+                        📅 Berlaku s/d <strong>${tglBerlaku}</strong>
+                    </div>
+                `;
             }
         }
         
-        return tglBerlaku;
+        // ---- Catatan admin ----
+        const catatanAdminHtml = p.catatanAdmin 
+            ? `<div style="margin-top:6px; padding:6px 10px; background:var(--danger-50); border-radius:4px; font-size:11px; color:var(--danger); border-left:2px solid var(--danger);">
+                   <strong>📝 Catatan Admin:</strong> ${escapeHtml(p.catatanAdmin)}
+               </div>`
+            : '';
+        
+        // ---- Tombol aksi ----
+        let actionBtn = '';
+        const perluAjukanUlang = 
+            p.status === 'rejected' || 
+            (p.status === 'approved' && hitungSisaWaktuIzin(p.berlakuSampai)?.expired);
+        
+        if (perluAjukanUlang) {
+            if (p._source === 'LUAR_JAM') {
+                actionBtn = `
+                    <button class="btn btn-warning btn-xs" 
+                            onclick="window.ajukanUlangPermohonanLuarJam('${p.id}')"
+                            style="white-space:nowrap;">
+                        📩 Ajukan Ulang
+                    </button>
+                `;
+            } else {
+                actionBtn = `
+                    <button class="btn btn-warning btn-xs" 
+                            onclick="window.ajukanUlangPermohonan('${p.tanggal}')"
+                            style="white-space:nowrap;">
+                        📩 Ajukan Ulang
+                    </button>
+                `;
+            }
+        }
+        
+        return `
+            <div style="
+                display: grid;
+                grid-template-columns: auto 1fr auto;
+                gap: 12px;
+                align-items: start;
+                padding: 12px 14px;
+                background: var(--bg-secondary);
+                border: 1px solid var(--border-color);
+                border-left: 4px solid ${borderColor};
+                border-radius: var(--radius-sm);
+                margin-bottom: 8px;
+                transition: box-shadow 0.2s ease;
+            ">
+                <!-- ICON TIPE -->
+                <div style="
+                    width: 40px; height: 40px;
+                    border-radius: 10px;
+                    background: ${tipe.bg};
+                    display: flex; align-items: center; justify-content: center;
+                    font-size: 20px;
+                    flex-shrink: 0;
+                ">
+                    ${tipe.icon}
+                </div>
+                
+                <!-- KONTEN UTAMA -->
+                <div style="min-width: 0;">
+                    <!-- Baris 1: Tipe + Reason + Status -->
+                    <div style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-bottom: 4px;">
+                        <span style="font-weight: 700; font-size: 13px; color: ${tipe.color};">
+                            ${tipe.label}
+                        </span>
+                        ${reasonBadge}
+                        ${statusBadge}
+                    </div>
+                    
+                    <!-- Baris 2: Tanggal -->
+                    <div style="font-size: 12px; color: var(--text-primary); font-weight: 500;">
+                        📅 ${formatTanggalIndo(p.tanggal)}
+                    </div>
+                    
+                    <!-- Baris 3: Alasan -->
+                    ${p.alasan ? `
+                        <div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px; line-height: 1.4; word-break: break-word;">
+                            💬 ${escapeHtml(p.alasan)}
+                        </div>
+                    ` : ''}
+                    
+                    <!-- Baris 4: Berlaku -->
+                    ${berlakuHtml}
+                    
+                    <!-- Baris 5: Catatan admin -->
+                    ${catatanAdminHtml}
+                </div>
+                
+                <!-- AKSI -->
+                <div style="flex-shrink: 0;">
+                    ${actionBtn}
+                </div>
+            </div>
+        `;
     };
     
     // ============================================================
-    // RENDER HTML
+    // RENDER HEADER CARD + GROUPING SECTIONS
     // ============================================================
     return `
-        <div class="card" style="margin-bottom: 16px; border-left: 4px solid var(--warning);">
-            <div class="card-header" style="background: var(--warning-50);">
-                <h3>📩 Permohonan Absen Anda</h3>
-                <div class="flex" style="gap:8px; flex-wrap:wrap;">
-                    ${pending.length > 0 ? `<span class="badge badge-warning">⏳ ${pending.length} Pending</span>` : ''}
-                    ${approved.length > 0 ? `<span class="badge badge-success">✅ ${approved.length} Disetujui</span>` : ''}
-                    ${rejected.length > 0 ? `<span class="badge badge-danger">❌ ${rejected.length} Ditolak</span>` : ''}
+        <div class="card" style="margin-bottom: 16px; overflow: hidden;">
+            <!-- HEADER -->
+            <div class="card-header" style="
+                background: linear-gradient(135deg, var(--warning-50), var(--bg-secondary));
+                border-bottom: 2px solid var(--border-color);
+                padding: 14px 18px;
+            ">
+                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                    <div style="
+                        width: 36px; height: 36px;
+                        border-radius: 10px;
+                        background: linear-gradient(135deg, var(--warning), var(--warning-light, #f59e0b));
+                        display: flex; align-items: center; justify-content: center;
+                        font-size: 18px;
+                        box-shadow: 0 2px 8px rgba(217,119,6,0.3);
+                    ">
+                        📩
+                    </div>
+                    <div style="flex: 1; min-width: 0;">
+                        <h3 style="font-size: 15px; font-weight: 700; margin: 0; color: var(--text-primary);">
+                            Permohonan Absen Anda
+                        </h3>
+                        <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">
+                            ${semuaPermohonan.length} permohonan terdaftar
+                        </div>
+                    </div>
+                    
+                    <!-- SUMMARY BADGES -->
+                    <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                        ${pending.length > 0 ? `
+                            <span class="badge badge-warning" style="display:flex; align-items:center; gap:4px;">
+                                ⏳ ${pending.length}
+                            </span>
+                        ` : ''}
+                        ${approved.length > 0 ? `
+                            <span class="badge badge-success" style="display:flex; align-items:center; gap:4px;">
+                                ✅ ${approved.length}
+                            </span>
+                        ` : ''}
+                        ${expired.length > 0 ? `
+                            <span class="badge badge-gray" style="display:flex; align-items:center; gap:4px;">
+                                ⌛ ${expired.length}
+                            </span>
+                        ` : ''}
+                        ${rejected.length > 0 ? `
+                            <span class="badge badge-danger" style="display:flex; align-items:center; gap:4px;">
+                                ❌ ${rejected.length}
+                            </span>
+                        ` : ''}
+                    </div>
                 </div>
             </div>
-            <div class="card-body" style="padding:0;">
-                <div class="table-wrapper" style="margin:0; border:none;">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Jenis Izin</th>
-                                <th>Tanggal</th>
-                                <th>Alasan</th>
-                                <th>Status</th>
-                                <th>Berlaku Sampai</th>
-                                <th style="text-align:center;">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${semuaPermohonan.map(p => {
-                                const tipeInfo = getTipeLabel(p);
-                                return `
-                                    <tr>
-                                        <td data-label="Jenis Izin">
-                                            <span class="badge ${tipeInfo.cls}">${tipeInfo.label}</span>
-                                            ${tipeInfo.reasonBadge}
-                                        </td>
-                                        <td data-label="Tanggal">${formatTanggalIndo(p.tanggal)}</td>
-                                        <td data-label="Alasan" style="font-size:12px; max-width:200px; word-wrap:break-word;">
-                                            ${escapeHtml(p.alasan || '-')}
-                                            ${p.catatanAdmin 
-                                                ? `<br><small style="color:var(--danger);">📝 Admin: ${escapeHtml(p.catatanAdmin)}</small>` 
-                                                : ''}
-                                        </td>
-                                        <td data-label="Status">${getStatusBadge(p)}</td>
-                                        <td data-label="Berlaku" style="font-size:12px;">
-                                            ${getBerlakuInfo(p)}
-                                        </td>
-                                        <td data-label="Aksi" style="text-align:center;">
-                                            ${getActionButton(p)}
-                                        </td>
-                                    </tr>
-                                `;
-                            }).join('')}
-                        </tbody>
-                    </table>
-                </div>
+            
+            <div class="card-body" style="padding: 14px 18px;">
+                
+                <!-- SECTION 1: PENDING -->
+                ${pending.length > 0 ? `
+                    <div style="margin-bottom: 16px;">
+                        <div style="
+                            display: flex; align-items: center; gap: 6px;
+                            font-size: 11px; font-weight: 700;
+                            text-transform: uppercase; letter-spacing: 0.5px;
+                            color: var(--warning);
+                            margin-bottom: 8px;
+                        ">
+                            <span style="
+                                width: 6px; height: 6px; border-radius: 50%;
+                                background: var(--warning);
+                                animation: notifPulse 1.5s infinite;
+                            "></span>
+                            ⏳ Menunggu Persetujuan (${pending.length})
+                        </div>
+                        ${pending.map(p => renderKartu(p, 'pending')).join('')}
+                    </div>
+                ` : ''}
+                
+                <!-- SECTION 2: APPROVED (AKTIF) -->
+                ${approved.length > 0 ? `
+                    <div style="margin-bottom: 16px;">
+                        <div style="
+                            display: flex; align-items: center; gap: 6px;
+                            font-size: 11px; font-weight: 700;
+                            text-transform: uppercase; letter-spacing: 0.5px;
+                            color: var(--success);
+                            margin-bottom: 8px;
+                        ">
+                            <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--success);"></span>
+                            ✅ Izin Aktif (${approved.length})
+                        </div>
+                        ${approved.map(p => renderKartu(p, 'approved')).join('')}
+                    </div>
+                ` : ''}
+                
+                <!-- SECTION 3: EXPIRED -->
+                ${expired.length > 0 ? `
+                    <details style="margin-bottom: 16px;">
+                        <summary style="
+                            cursor: pointer; user-select: none;
+                            display: flex; align-items: center; gap: 6px;
+                            font-size: 11px; font-weight: 700;
+                            text-transform: uppercase; letter-spacing: 0.5px;
+                            color: var(--text-muted);
+                            padding: 6px 0;
+                        ">
+                            <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--text-muted);"></span>
+                            ⌛ Kadaluarsa (${expired.length}) — klik untuk lihat
+                        </summary>
+                        <div style="margin-top: 8px;">
+                            ${expired.map(p => renderKartu(p, 'expired')).join('')}
+                        </div>
+                    </details>
+                ` : ''}
+                
+                <!-- SECTION 4: REJECTED -->
+                ${rejected.length > 0 ? `
+                    <details>
+                        <summary style="
+                            cursor: pointer; user-select: none;
+                            display: flex; align-items: center; gap: 6px;
+                            font-size: 11px; font-weight: 700;
+                            text-transform: uppercase; letter-spacing: 0.5px;
+                            color: var(--danger);
+                            padding: 6px 0;
+                        ">
+                            <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--danger);"></span>
+                            ❌ Ditolak / Dicabut (${rejected.length}) — klik untuk lihat
+                        </summary>
+                        <div style="margin-top: 8px;">
+                            ${rejected.map(p => renderKartu(p, 'rejected')).join('')}
+                        </div>
+                    </details>
+                ` : ''}
             </div>
-            <div class="card-footer" style="justify-content:space-between; flex-wrap:wrap; gap:8px;">
-                <span style="font-size:11px; color:var(--text-muted);">
-                    💡 Menampilkan ${semuaPermohonan.length} permohonan terbaru
-                </span>
-                <span style="font-size:11px; color:var(--text-muted);">
-                    Total: ${permohonanTanggalLampau.length + permohonanLuarJam.length} permohonan
-                </span>
+            
+            <!-- FOOTER INFO -->
+            <div style="
+                padding: 10px 18px;
+                background: var(--bg-primary);
+                border-top: 1px solid var(--border-color);
+                font-size: 11px;
+                color: var(--text-muted);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 6px;
+            ">
+                <span>💡 Izin aktif memungkinkan Anda absen di luar jam/tanggal.</span>
+                <span>🔄 Menampilkan ${semuaPermohonan.length} permohonan</span>
             </div>
         </div>
     `;
