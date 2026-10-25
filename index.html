@@ -7634,15 +7634,14 @@ function renderNipVerificationPrompt(tabName) {
 
 
 // ============================================================
-// ✅ SMOOTH PAGE TRANSITION — versi baru
+// ✅ SMOOTH PAGE TRANSITION — versi FIXED (mobile-friendly)
 // ============================================================
 let _isTransitioning = false;
 let _currentPageToken = 0;
 let _suppressTransition = false;
-
+let _transitionTimer = null;
 
 function _wrapPageTransition(html, token) {
-  // Bungkus konten dengan wrapper animasi
   return `<div class="page-transition" data-token="${token}">${html}</div>`;
 }
 
@@ -7650,7 +7649,7 @@ function _runPageTransition(renderContentFn) {
   const mainPanel = document.getElementById('mainPanel');
   if (!mainPanel) return;
 
-    // === Skip animasi untuk realtime update ===
+  // === Skip animasi untuk realtime update ===
   if (_suppressTransition) {
     renderContentFn();
     return;
@@ -7658,14 +7657,19 @@ function _runPageTransition(renderContentFn) {
 
   const token = ++_currentPageToken;
 
-  // === Jika tidak ada konten lama / render pertama → langsung render ===
-  const hasExisting = mainPanel.querySelector('.page-transition');
-
+  // ============================================================
+  // FUNGSI: PAINT — render konten baru + bungkus dengan wrapper
+  // ============================================================
   const paint = () => {
-    // Panggil fungsi render konten (yang akan mengisi mainPanel.innerHTML)
-    renderContentFn();
-    // Bungkus hasil render dengan wrapper animasi
-    if (mainPanel.firstElementChild && !mainPanel.firstElementChild.classList.contains('page-transition')) {
+    try {
+      renderContentFn();
+    } catch (err) {
+      console.error('❌ renderContentFn error:', err);
+      return;
+    }
+
+    const firstChild = mainPanel.firstElementChild;
+    if (firstChild && !firstChild.classList.contains('page-transition')) {
       const wrapper = document.createElement('div');
       wrapper.className = 'page-transition';
       wrapper.dataset.token = String(token);
@@ -7676,46 +7680,72 @@ function _runPageTransition(renderContentFn) {
     }
   };
 
+  // ============================================================
+  // RENDER PERTAMA (belum ada wrapper) → langsung paint
+  // ============================================================
+  const hasExisting = mainPanel.querySelector('.page-transition');
   if (!hasExisting) {
-    // Render pertama → langsung tanpa fade out
     paint();
     return;
   }
 
+  // ============================================================
   // Cegah double-trigger saat transisi berjalan
-  if (_isTransitioning) return;
+  // ============================================================
+  if (_isTransitioning) {
+    // Klik cepat: batalkan transisi sebelumnya, render langsung tanpa animasi
+    if (_transitionTimer) {
+      clearTimeout(_transitionTimer);
+      _transitionTimer = null;
+    }
+    mainPanel.classList.remove('is-leaving');
+    _isTransitioning = false;
+    paint();
+    return;
+  }
+
   _isTransitioning = true;
 
-  // === FASE 1: fade out ===
+  // ============================================================
+  // FASE 1: FADE OUT
+  // ============================================================
   mainPanel.classList.add('is-leaving');
 
-  const onOutEnd = () => {
-    mainPanel.classList.remove('is-leaving');
+  if (_transitionTimer) {
+    clearTimeout(_transitionTimer);
+    _transitionTimer = null;
+  }
 
-    // Pastikan token masih relevan (user mungkin klik tab lain)
+  let processed = false;
+
+  const finishTransition = () => {
+    if (processed) return;
+    processed = true;
+
+    mainPanel.classList.remove('is-leaving');
+    if (_transitionTimer) {
+      clearTimeout(_transitionTimer);
+      _transitionTimer = null;
+    }
+
+    // Kalau token sudah berubah (user sudah klik tab lain), skip paint
     if (token !== _currentPageToken) {
       _isTransitioning = false;
       return;
     }
 
-    // === FASE 2: ganti konten ===
+    // FASE 2: ganti konten
     paint();
     _isTransitioning = false;
   };
 
-  // Pakai animationend agar sinkron dengan CSS, fallback setTimeout
-  const done = (e) => {
-    if (e && e.target !== mainPanel.firstElementChild) return;
-    mainPanel.removeEventListener('animationend', done);
-    onOutEnd();
-  };
-  mainPanel.addEventListener('animationend', done);
-  setTimeout(() => {
-    // safety net jika animationend tidak fire
-    mainPanel.removeEventListener('animationend', done);
-    if (_isTransitioning && token === _currentPageToken) onOutEnd();
-  }, 220);
+  // ============================================================
+  // Pakai setTimeout SAJA — lebih reliable di mobile
+  // (animationend sering tidak fire di mobile / tab background)
+  // ============================================================
+  _transitionTimer = setTimeout(finishTransition, 200);
 }
+
 
 function renderActiveTab() {
   const mainPanel = document.getElementById('mainPanel');
