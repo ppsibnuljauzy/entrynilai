@@ -3164,6 +3164,106 @@ select.form-control.error {
         justify-content: center;
     }
 }
+
+
+/* ============================================================
+   ✅ SMOOTH PAGE TRANSITION — Brimo/Livin Style
+============================================================ */
+
+/* Container animasi utama */
+.main-content {
+  position: relative;
+}
+
+/* Page wrapper — kontainer yang di-animate */
+#mainPanel > .page-transition {
+  animation: pageFadeInUp 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: opacity, transform;
+}
+
+/* Saat leaving (fade out) */
+#mainPanel.is-leaving > .page-transition {
+  animation: pageFadeOutDown 0.18s cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+/* Keyframe: masuk — fade + slide up halus */
+@keyframes pageFadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.995);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Keyframe: keluar — fade + slide down cepat */
+@keyframes pageFadeOutDown {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.995);
+  }
+}
+
+/* Opsional: cegah scroll jump saat transisi */
+#mainPanel {
+  transition: min-height 0.3s ease;
+}
+
+/* Aksesibilitas: kurangi animasi jika user set reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  #mainPanel > .page-transition,
+  #mainPanel.is-leaving > .page-transition {
+    animation-duration: 0.01s !important;
+  }
+}
+
+/* ============================================================
+   ✅ Nav-item click feedback (ripple-lite)
+============================================================ */
+.sidebar-nav .nav-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.sidebar-nav .nav-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.35), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.sidebar-nav .nav-item.ripple::after {
+  opacity: 1;
+  animation: navRipple 0.6s ease-out;
+}
+
+@keyframes navRipple {
+  0% { opacity: 0.8; transform: scale(0.6); }
+  100% { opacity: 0; transform: scale(1.4); }
+}
+
+/* ============================================================
+   ✅ Tab aktif indicator — glow halus
+============================================================ */
+.sidebar-nav .nav-item.active {
+  transition: background 0.25s ease, box-shadow 0.25s ease, color 0.25s ease;
+  animation: activeNavGlow 0.5s ease;
+}
+
+@keyframes activeNavGlow {
+  0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.35); }
+  100% { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+}
   </style>
 </head>
 <body>
@@ -5992,10 +6092,20 @@ function getMapelSinkronDenganJurnal(guruId = null, kelas = null) {
 
 
   // ============================================================
-  // NAV ITEM CLICK
+  // NAV ITEM CLICK — dengan ripple effect
   // ============================================================
   document.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('click', () => {
+    item.addEventListener('click', function(e) {
+      // === Ripple effect ===
+      const rect = this.getBoundingClientRect();
+      this.style.setProperty('--x', `${e.clientX - rect.left}px`);
+      this.style.setProperty('--y', `${e.clientY - rect.top}px`);
+      this.classList.remove('ripple');
+      void this.offsetWidth; // force reflow
+      this.classList.add('ripple');
+      setTimeout(() => this.classList.remove('ripple'), 700);
+
+      // === Logika existing (tetap) ===
       if (item.classList.contains('hidden-tab')) {
         showToast("Akses Ditolak", "Tab ini tidak tersedia untuk role Anda!", "danger");
         return;
@@ -7524,250 +7634,322 @@ function renderNipVerificationPrompt(tabName) {
 
 
 // ============================================================
-// ✅ RENDER ACTIVE TAB — Versi Perbaikan
+// ✅ SMOOTH PAGE TRANSITION — versi baru
 // ============================================================
+let _isTransitioning = false;
+let _currentPageToken = 0;
+let _suppressTransition = false;
+
+
+function _wrapPageTransition(html, token) {
+  // Bungkus konten dengan wrapper animasi
+  return `<div class="page-transition" data-token="${token}">${html}</div>`;
+}
+
+function _runPageTransition(renderContentFn) {
+  const mainPanel = document.getElementById('mainPanel');
+  if (!mainPanel) return;
+
+    // === Skip animasi untuk realtime update ===
+  if (_suppressTransition) {
+    renderContentFn();
+    return;
+  }
+
+  const token = ++_currentPageToken;
+
+  // === Jika tidak ada konten lama / render pertama → langsung render ===
+  const hasExisting = mainPanel.querySelector('.page-transition');
+
+  const paint = () => {
+    // Panggil fungsi render konten (yang akan mengisi mainPanel.innerHTML)
+    renderContentFn();
+    // Bungkus hasil render dengan wrapper animasi
+    if (mainPanel.firstElementChild && !mainPanel.firstElementChild.classList.contains('page-transition')) {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'page-transition';
+      wrapper.dataset.token = String(token);
+      while (mainPanel.firstChild) {
+        wrapper.appendChild(mainPanel.firstChild);
+      }
+      mainPanel.appendChild(wrapper);
+    }
+  };
+
+  if (!hasExisting) {
+    // Render pertama → langsung tanpa fade out
+    paint();
+    return;
+  }
+
+  // Cegah double-trigger saat transisi berjalan
+  if (_isTransitioning) return;
+  _isTransitioning = true;
+
+  // === FASE 1: fade out ===
+  mainPanel.classList.add('is-leaving');
+
+  const onOutEnd = () => {
+    mainPanel.classList.remove('is-leaving');
+
+    // Pastikan token masih relevan (user mungkin klik tab lain)
+    if (token !== _currentPageToken) {
+      _isTransitioning = false;
+      return;
+    }
+
+    // === FASE 2: ganti konten ===
+    paint();
+    _isTransitioning = false;
+  };
+
+  // Pakai animationend agar sinkron dengan CSS, fallback setTimeout
+  const done = (e) => {
+    if (e && e.target !== mainPanel.firstElementChild) return;
+    mainPanel.removeEventListener('animationend', done);
+    onOutEnd();
+  };
+  mainPanel.addEventListener('animationend', done);
+  setTimeout(() => {
+    // safety net jika animationend tidak fire
+    mainPanel.removeEventListener('animationend', done);
+    if (_isTransitioning && token === _currentPageToken) onOutEnd();
+  }, 220);
+}
+
 function renderActiveTab() {
-    const mainPanel = document.getElementById('mainPanel');
-    
-    // ============================================================
-    // BELUM LOGIN → LANDING PAGE
-    // ============================================================
-    if (!isAuthorized) {
-        if (mainPanel) {
-            mainPanel.innerHTML = `
-              <div class="landing-page">
-                <div class="landing-hero">
-                  <div class="landing-logo">📚</div>
-                  <h1>e-<span>Nilai</span></h1>
-                  <p>
-                    Sistem Informasi Nilai Santri yang modern, cepat, dan terintegrasi. 
-                    Kelola nilai, absensi, jurnal mengajar, dan laporan akademik dalam satu platform.
-                  </p>
-                  <button class="btn btn-primary" onclick="document.getElementById('btnLoginHeader').click()">
-                    🔑 Masuk ke Sistem
-                  </button>
-                </div>
+  const mainPanel = document.getElementById('mainPanel');
 
-                <div class="landing-features">
-                  <div class="landing-feature-card">
-                    <span class="feature-icon">✏️</span>
-                    <h4>Input Nilai</h4>
-                    <p>Input nilai UH, PTS, dan PAS dengan mudah dan cepat.</p>
-                  </div>
-                  <div class="landing-feature-card">
-                    <span class="feature-icon">📊</span>
-                    <h4>Rekap Otomatis</h4>
-                    <p>Rekapitulasi nilai akhir dan deskripsi otomatis per santri.</p>
-                  </div>
-                  <div class="landing-feature-card">
-                    <span class="feature-icon">📅</span>
-                    <h4>Jadwal & Jurnal</h4>
-                    <p>Kelola jadwal pelajaran dan jurnal mengajar guru.</p>
-                  </div>
-                  <div class="landing-feature-card">
-                    <span class="feature-icon">✅</span>
-                    <h4>Absensi Digital</h4>
-                    <p>Absensi siswa dan guru dengan validasi lokasi (GPS).</p>
-                  </div>
-                </div>
+  // ============================================================
+  // BELUM LOGIN → LANDING PAGE
+  // ============================================================
+  if (!isAuthorized) {
+    _runPageTransition(() => {
+      mainPanel.innerHTML = `
+        <div class="landing-page">
+          <div class="landing-hero">
+            <div class="landing-logo">📚</div>
+            <h1>e-<span>Nilai</span></h1>
+            <p>
+              Sistem Informasi Nilai Santri yang modern, cepat, dan terintegrasi. 
+              Kelola nilai, absensi, jurnal mengajar, dan laporan akademik dalam satu platform.
+            </p>
+            <button class="btn btn-primary" onclick="document.getElementById('btnLoginHeader').click()">
+              🔑 Masuk ke Sistem
+            </button>
+          </div>
 
-                <div class="landing-footer">
-                  © ${new Date().getFullYear()} <strong>e-Nilai</strong> — Sistem Informasi Nilai Santri<br>
-                  <span style="font-size: 11px;">Dikelola oleh Administrator</span>
-                </div>
-              </div>
-            `;
-        }
-        updateTabsVisibility();
-        updateHeaderTitle('SETTING');
-        return;
-    }
-    
+          <div class="landing-features">
+            <div class="landing-feature-card">
+              <span class="feature-icon">✏️</span>
+              <h4>Input Nilai</h4>
+              <p>Input nilai UH, PTS, dan PAS dengan mudah dan cepat.</p>
+            </div>
+            <div class="landing-feature-card">
+              <span class="feature-icon">📊</span>
+              <h4>Rekap Otomatis</h4>
+              <p>Rekapitulasi nilai akhir dan deskripsi otomatis per santri.</p>
+            </div>
+            <div class="landing-feature-card">
+              <span class="feature-icon">📅</span>
+              <h4>Jadwal & Jurnal</h4>
+              <p>Kelola jadwal pelajaran dan jurnal mengajar guru.</p>
+            </div>
+            <div class="landing-feature-card">
+              <span class="feature-icon">✅</span>
+              <h4>Absensi Digital</h4>
+              <p>Absensi siswa dan guru dengan validasi lokasi (GPS).</p>
+            </div>
+          </div>
+
+          <div class="landing-footer">
+            © ${new Date().getFullYear()} <strong>e-Nilai</strong> — Sistem Informasi Nilai Santri<br>
+            <span style="font-size: 11px;">Dikelola oleh Administrator</span>
+          </div>
+        </div>
+      `;
+    });
+
     updateTabsVisibility();
+    updateHeaderTitle('SETTING');
+    return;
+  }
 
-    // ============================================================
-    // ROLE: USER (GURU)
-    // ============================================================
-    if (userRole === 'USER') {
-        const allowed = [
-            'INPUT', 'DASHBOARD', 'JURNAL', 'ABSENSI_SISWA', 'ABSENSI_GURU',
-            'RIWAYAT_ABSENSI_GURU',  // ✅ BARU
-            'TRANSAKSI', 'REKAP_SISWA', 'MONITORING', 'REKAP_KEHADIRAN',
-            'REKAP_PERTEMUAN', 'GURU_PENGGANTI',
-            'REKAP_ABSENSI_SISWA'
-        ];
-        if (!allowed.includes(activeTab)) activeTab = 'DASHBOARD';
+  updateTabsVisibility();
 
-        // ---------- DASHBOARD ----------
-        if (activeTab === 'DASHBOARD') {
-            renderDashboard();
-            updateHeaderTitle('DASHBOARD');
-        }
-        // ---------- INPUT NILAI ----------
-        else if (activeTab === 'INPUT') {
-            if (!isNipVerified) { renderNipVerificationPrompt('INPUT'); return; }
-            renderInputTab();
-            updateHeaderTitle('INPUT');
-        }
-        // ---------- JURNAL ----------
-        else if (activeTab === 'JURNAL') {
-            renderJurnalTab();
-            updateHeaderTitle('JURNAL');
-        }
-        // ---------- ABSENSI SISWA ----------
-        else if (activeTab === 'ABSENSI_SISWA') {
-            if (!isNipVerified) { renderNipVerificationPrompt('ABSENSI_SISWA'); return; }
-            absensiSiswaRekapSubTab = 'INPUT_ABSENSI';
-            renderAbsensiSiswaTab();
-            updateHeaderTitle('ABSENSI_SISWA');
-        }
-        // ---------- REKAP ABSENSI SISWA ----------
-        else if (activeTab === 'REKAP_ABSENSI_SISWA') {
-            if (!isNipVerified) { renderNipVerificationPrompt('REKAP_ABSENSI_SISWA'); return; }
-            absensiSiswaRekapSubTab = 'REKAP_ABSENSI';
-            renderAbsensiSiswaTab();
-            updateHeaderTitle('REKAP_ABSENSI_SISWA');
-        }
-        // ---------- ABSENSI GURU ----------
-        else if (activeTab === 'ABSENSI_GURU') {
-            if (!isNipVerified) { renderNipVerificationPrompt('ABSENSI_GURU'); return; }
-            renderAbsensiGuruTab();
-            updateHeaderTitle('ABSENSI_GURU');
-        }
-        // ---------- RIWAYAT ABSENSI GURU ----------  ✅ BARU
-        else if (activeTab === 'RIWAYAT_ABSENSI_GURU') {
-            if (!isNipVerified) { renderNipVerificationPrompt('RIWAYAT_ABSENSI_GURU'); return; }
-            renderRiwayatAbsensiGuruTab();
-            updateHeaderTitle('RIWAYAT_ABSENSI_GURU');
-        }
-        // ---------- REKAP KEHADIRAN ----------
-        else if (activeTab === 'REKAP_KEHADIRAN') {
-            if (!isNipVerified) { renderNipVerificationPrompt('REKAP_KEHADIRAN'); return; }
-            renderRekapKehadiranTab();
-            updateHeaderTitle('REKAP_KEHADIRAN');
-        }
-        // ---------- REKAP PERTEMUAN ----------
-        else if (activeTab === 'REKAP_PERTEMUAN') {
-            if (!isNipVerified) { renderNipVerificationPrompt('REKAP_PERTEMUAN'); return; }
-            renderRekapPertemuanTab();
-            updateHeaderTitle('REKAP_PERTEMUAN');
-        }
-        // ---------- GURU PENGGANTI ----------
-        else if (activeTab === 'GURU_PENGGANTI') {
-            if (!isNipVerified) { renderNipVerificationPrompt('GURU_PENGGANTI'); return; }
-            renderGuruPenggantiTab();
-            updateHeaderTitle('GURU_PENGGANTI');
-        }
-        // ---------- TRANSAKSI ----------
-        else if (activeTab === 'TRANSAKSI') {
-            if (!isNipVerified) { renderNipVerificationPrompt('TRANSAKSI'); return; }
-            renderTransaksiTab();
-            updateHeaderTitle('TRANSAKSI');
-        }
-        // ---------- REKAP SISWA ----------
-        else if (activeTab === 'REKAP_SISWA') {
-            if (!isNipVerified) { renderNipVerificationPrompt('REKAP_SISWA'); return; }
-            renderRekapSiswa();
-            updateHeaderTitle('REKAP_SISWA');
-        }
-        // ---------- MONITORING ----------
-        else if (activeTab === 'MONITORING') {
-            if (!isNipVerified) { renderNipVerificationPrompt('MONITORING'); return; }
-            renderMonitoringTab();
-            updateHeaderTitle('MONITORING');
-        }
+  // ============================================================
+  // Fungsi pembantu: cek apakah render function mengisi mainPanel
+  // ============================================================
+  const renderWithTransition = (fn) => _runPageTransition(fn);
 
-        // Update nav-item active
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.classList.toggle(
-                'active',
-                item.dataset.tab === activeTab && !item.classList.contains('hidden-tab')
-            );
-        });
-        return;
-    }
+  // ============================================================
+  // ROLE: USER (GURU)
+  // ============================================================
+  if (userRole === 'USER') {
+    const allowed = [
+      'INPUT', 'DASHBOARD', 'JURNAL', 'ABSENSI_SISWA', 'ABSENSI_GURU',
+      'RIWAYAT_ABSENSI_GURU',
+      'TRANSAKSI', 'REKAP_SISWA', 'MONITORING', 'REKAP_KEHADIRAN',
+      'REKAP_PERTEMUAN', 'GURU_PENGGANTI',
+      'REKAP_ABSENSI_SISWA'
+    ];
+    if (!allowed.includes(activeTab)) activeTab = 'DASHBOARD';
 
-    // ============================================================
-    // ROLE: ADMIN
-    // ============================================================
     if (activeTab === 'DASHBOARD') {
-        renderDashboard();
-        updateHeaderTitle('DASHBOARD');
+      renderWithTransition(renderDashboard);
+      updateHeaderTitle('DASHBOARD');
     }
     else if (activeTab === 'INPUT') {
-        renderInputTab();
-        updateHeaderTitle('INPUT');
-    }
-    else if (activeTab === 'DAFTAR') {
-        renderDaftarTab();
-        updateHeaderTitle('DAFTAR');
-    }
-    else if (activeTab === 'TRANSAKSI') {
-        renderTransaksiTab();
-        updateHeaderTitle('TRANSAKSI');
-    }
-    else if (activeTab === 'REKAP_SISWA') {
-        renderRekapSiswa();
-        updateHeaderTitle('REKAP_SISWA');
-    }
-    else if (activeTab === 'MONITORING') {
-        renderMonitoringTab();
-        updateHeaderTitle('MONITORING');
-    }
-    else if (activeTab === 'JADWAL') {
-        renderJadwalTab();
-        updateHeaderTitle('JADWAL');
+      if (!isNipVerified) { renderNipVerificationPrompt('INPUT'); return; }
+      renderWithTransition(renderInputTab);
+      updateHeaderTitle('INPUT');
     }
     else if (activeTab === 'JURNAL') {
-        renderJurnalTab();
-        updateHeaderTitle('JURNAL');
+      renderWithTransition(renderJurnalTab);
+      updateHeaderTitle('JURNAL');
     }
     else if (activeTab === 'ABSENSI_SISWA') {
-        absensiSiswaRekapSubTab = 'INPUT_ABSENSI';
-        renderAbsensiSiswaTab();
-        updateHeaderTitle('ABSENSI_SISWA');
+      if (!isNipVerified) { renderNipVerificationPrompt('ABSENSI_SISWA'); return; }
+      absensiSiswaRekapSubTab = 'INPUT_ABSENSI';
+      renderWithTransition(renderAbsensiSiswaTab);
+      updateHeaderTitle('ABSENSI_SISWA');
     }
     else if (activeTab === 'REKAP_ABSENSI_SISWA') {
-        absensiSiswaRekapSubTab = 'REKAP_ABSENSI';
-        renderAbsensiSiswaTab();
-        updateHeaderTitle('REKAP_ABSENSI_SISWA');
+      if (!isNipVerified) { renderNipVerificationPrompt('REKAP_ABSENSI_SISWA'); return; }
+      absensiSiswaRekapSubTab = 'REKAP_ABSENSI';
+      renderWithTransition(renderAbsensiSiswaTab);
+      updateHeaderTitle('REKAP_ABSENSI_SISWA');
     }
     else if (activeTab === 'ABSENSI_GURU') {
-        renderAbsensiGuruTab();
-        updateHeaderTitle('ABSENSI_GURU');
+      if (!isNipVerified) { renderNipVerificationPrompt('ABSENSI_GURU'); return; }
+      renderWithTransition(renderAbsensiGuruTab);
+      updateHeaderTitle('ABSENSI_GURU');
     }
-    else if (activeTab === 'RIWAYAT_ABSENSI_GURU') {  // ✅ BARU
-        renderRiwayatAbsensiGuruTab();
-        updateHeaderTitle('RIWAYAT_ABSENSI_GURU');
+    else if (activeTab === 'RIWAYAT_ABSENSI_GURU') {
+      if (!isNipVerified) { renderNipVerificationPrompt('RIWAYAT_ABSENSI_GURU'); return; }
+      renderWithTransition(renderRiwayatAbsensiGuruTab);
+      updateHeaderTitle('RIWAYAT_ABSENSI_GURU');
     }
     else if (activeTab === 'REKAP_KEHADIRAN') {
-        renderRekapKehadiranTab();
-        updateHeaderTitle('REKAP_KEHADIRAN');
+      if (!isNipVerified) { renderNipVerificationPrompt('REKAP_KEHADIRAN'); return; }
+      renderWithTransition(renderRekapKehadiranTab);
+      updateHeaderTitle('REKAP_KEHADIRAN');
     }
     else if (activeTab === 'REKAP_PERTEMUAN') {
-        renderRekapPertemuanTab();
-        updateHeaderTitle('REKAP_PERTEMUAN');
+      if (!isNipVerified) { renderNipVerificationPrompt('REKAP_PERTEMUAN'); return; }
+      renderWithTransition(renderRekapPertemuanTab);
+      updateHeaderTitle('REKAP_PERTEMUAN');
     }
     else if (activeTab === 'GURU_PENGGANTI') {
-        renderGuruPenggantiTab();
-        updateHeaderTitle('GURU_PENGGANTI');
+      if (!isNipVerified) { renderNipVerificationPrompt('GURU_PENGGANTI'); return; }
+      renderWithTransition(renderGuruPenggantiTab);
+      updateHeaderTitle('GURU_PENGGANTI');
     }
-    else if (activeTab === 'SETTING') {
-        renderSettingTab();
-        updateHeaderTitle('SETTING');
+    else if (activeTab === 'TRANSAKSI') {
+      if (!isNipVerified) { renderNipVerificationPrompt('TRANSAKSI'); return; }
+      renderWithTransition(renderTransaksiTab);
+      updateHeaderTitle('TRANSAKSI');
     }
-    else if (activeTab === 'KALENDER') {
-        renderKalenderTab();
-        updateHeaderTitle('KALENDER');
+    else if (activeTab === 'REKAP_SISWA') {
+      if (!isNipVerified) { renderNipVerificationPrompt('REKAP_SISWA'); return; }
+      renderWithTransition(renderRekapSiswa);
+      updateHeaderTitle('REKAP_SISWA');
+    }
+    else if (activeTab === 'MONITORING') {
+      if (!isNipVerified) { renderNipVerificationPrompt('MONITORING'); return; }
+      renderWithTransition(renderMonitoringTab);
+      updateHeaderTitle('MONITORING');
     }
 
-    // Update nav-item active
     document.querySelectorAll('.nav-item').forEach(item => {
-        item.classList.toggle(
-            'active',
-            item.dataset.tab === activeTab && !item.classList.contains('hidden-tab')
-        );
+      item.classList.toggle(
+        'active',
+        item.dataset.tab === activeTab && !item.classList.contains('hidden-tab')
+      );
     });
+    return;
+  }
+
+  // ============================================================
+  // ROLE: ADMIN
+  // ============================================================
+  if (activeTab === 'DASHBOARD') {
+    renderWithTransition(renderDashboard);
+    updateHeaderTitle('DASHBOARD');
+  }
+  else if (activeTab === 'INPUT') {
+    renderWithTransition(renderInputTab);
+    updateHeaderTitle('INPUT');
+  }
+  else if (activeTab === 'DAFTAR') {
+    renderWithTransition(renderDaftarTab);
+    updateHeaderTitle('DAFTAR');
+  }
+  else if (activeTab === 'TRANSAKSI') {
+    renderWithTransition(renderTransaksiTab);
+    updateHeaderTitle('TRANSAKSI');
+  }
+  else if (activeTab === 'REKAP_SISWA') {
+    renderWithTransition(renderRekapSiswa);
+    updateHeaderTitle('REKAP_SISWA');
+  }
+  else if (activeTab === 'MONITORING') {
+    renderWithTransition(renderMonitoringTab);
+    updateHeaderTitle('MONITORING');
+  }
+  else if (activeTab === 'JADWAL') {
+    renderWithTransition(renderJadwalTab);
+    updateHeaderTitle('JADWAL');
+  }
+  else if (activeTab === 'JURNAL') {
+    renderWithTransition(renderJurnalTab);
+    updateHeaderTitle('JURNAL');
+  }
+  else if (activeTab === 'ABSENSI_SISWA') {
+    absensiSiswaRekapSubTab = 'INPUT_ABSENSI';
+    renderWithTransition(renderAbsensiSiswaTab);
+    updateHeaderTitle('ABSENSI_SISWA');
+  }
+  else if (activeTab === 'REKAP_ABSENSI_SISWA') {
+    absensiSiswaRekapSubTab = 'REKAP_ABSENSI';
+    renderWithTransition(renderAbsensiSiswaTab);
+    updateHeaderTitle('REKAP_ABSENSI_SISWA');
+  }
+  else if (activeTab === 'ABSENSI_GURU') {
+    renderWithTransition(renderAbsensiGuruTab);
+    updateHeaderTitle('ABSENSI_GURU');
+  }
+  else if (activeTab === 'RIWAYAT_ABSENSI_GURU') {
+    renderWithTransition(renderRiwayatAbsensiGuruTab);
+    updateHeaderTitle('RIWAYAT_ABSENSI_GURU');
+  }
+  else if (activeTab === 'REKAP_KEHADIRAN') {
+    renderWithTransition(renderRekapKehadiranTab);
+    updateHeaderTitle('REKAP_KEHADIRAN');
+  }
+  else if (activeTab === 'REKAP_PERTEMUAN') {
+    renderWithTransition(renderRekapPertemuanTab);
+    updateHeaderTitle('REKAP_PERTEMUAN');
+  }
+  else if (activeTab === 'GURU_PENGGANTI') {
+    renderWithTransition(renderGuruPenggantiTab);
+    updateHeaderTitle('GURU_PENGGANTI');
+  }
+  else if (activeTab === 'SETTING') {
+    renderWithTransition(renderSettingTab);
+    updateHeaderTitle('SETTING');
+  }
+  else if (activeTab === 'KALENDER') {
+    renderWithTransition(renderKalenderTab);
+    updateHeaderTitle('KALENDER');
+  }
+
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.classList.toggle(
+      'active',
+      item.dataset.tab === activeTab && !item.classList.contains('hidden-tab')
+    );
+  });
 }
 window.renderActiveTab = renderActiveTab;
 // === BATAS AKHIR function renderActiveTab() { === //
