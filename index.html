@@ -2882,6 +2882,265 @@ select.form-control.error {
 #notifBadge {
     animation: notifPulse 2s ease-in-out infinite;
 }
+
+
+/* ============================================================
+   ✅ MOBILE-FRIENDLY: INPUT ABSENSI GURU
+============================================================ */
+
+/* Panel absen (masuk & keluar) */
+.absen-guru-panel {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-sm);
+}
+
+.absen-guru-panel-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--success);
+}
+
+.absen-guru-panel-header.keluar {
+    border-bottom-color: var(--danger);
+}
+
+.absen-guru-panel-header .icon {
+    font-size: 26px;
+    flex-shrink: 0;
+}
+
+.absen-guru-panel-header .title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--success);
+}
+
+.absen-guru-panel-header.keluar .title {
+    color: var(--danger);
+}
+
+.absen-guru-panel-header .subtitle {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+/* Grid responsif: 3 kolom desktop, 1 kolom mobile */
+.absen-guru-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+@media (max-width: 640px) {
+    .absen-guru-panel {
+        padding: 14px 12px;
+        border-radius: var(--radius-md);
+    }
+    .absen-guru-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+}
+
+/* Tombol absen besar - responsif */
+.absen-guru-btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: var(--radius-md);
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+@media (max-width: 640px) {
+    .absen-guru-btn {
+        padding: 16px 12px;
+        font-size: 16px;
+        letter-spacing: 0.3px;
+    }
+}
+
+/* Selector status (Hadir/Sakit/Izin) */
+.status-masuk-selector {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 6px;
+}
+
+@media (max-width: 640px) {
+    .status-masuk-selector {
+        gap: 6px;
+    }
+    .status-masuk-selector .absen-pill {
+        min-width: unset !important;
+        padding: 10px 6px !important;
+        font-size: 12px !important;
+        flex-direction: column;
+        gap: 2px;
+        text-align: center;
+        line-height: 1.2;
+    }
+}
+
+/* GPS Panel responsif */
+.geo-status-panel {
+    margin-top: 16px;
+    padding: 14px 18px;
+    border-radius: var(--radius-md);
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+    .geo-status-panel {
+        padding: 12px;
+        gap: 10px;
+    }
+    .geo-status-panel .geo-text {
+        flex: 1 1 100%;
+        order: 2;
+    }
+    .geo-status-panel .geo-icon {
+        font-size: 20px;
+    }
+    .geo-status-panel #btnCekLokasi {
+        width: 100%;
+        order: 3;
+    }
+}
+
+/* Kartu status absensi hari ini */
+.absen-status-card {
+    border-radius: var(--radius-md);
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+
+.absen-status-card .status-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.absen-status-card .status-badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+    .absen-status-card .status-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .absen-status-card .status-badges {
+        width: 100%;
+    }
+    .absen-status-card .status-badges .badge {
+        flex: 1;
+        justify-content: center;
+        padding: 6px 8px;
+        font-size: 11px;
+    }
+}
+
+/* Info guru field readonly */
+.guru-readonly-box {
+    background: var(--bg-primary);
+    cursor: not-allowed;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+/* Panel permohonan - scroll horizontal di mobile */
+@media (max-width: 768px) {
+    .permohonan-panel .table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .permohonan-panel .table-wrapper table {
+        min-width: 700px;
+    }
+    .permohonan-panel .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+}
+
+/* Panel header pada mobile */
+.absen-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+@media (max-width: 640px) {
+    .absen-page-header {
+        flex-direction: column;
+    }
+    .absen-page-header .page-badge {
+        align-self: flex-start;
+    }
+}
+
+/* Form group label pada mobile */
+@media (max-width: 640px) {
+    .absen-guru-panel .form-group label {
+        font-size: 11px;
+    }
+    .absen-guru-panel .form-control {
+        font-size: 14px;
+        padding: 10px 12px;
+    }
+    .absen-guru-panel .form-group input[readonly] {
+        font-size: 16px !important;
+    }
+}
+
+/* Jam masuk/keluar besar */
+.jam-display {
+    font-weight: 700;
+    font-size: 18px;
+    text-align: center;
+    background: var(--bg-primary);
+    cursor: not-allowed;
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border-color);
+    color: var(--success);
+}
+
+.jam-display.keluar {
+    color: var(--danger);
+}
+
+@media (max-width: 640px) {
+    .jam-display {
+        font-size: 20px;
+        padding: 12px;
+    }
+}
   </style>
 </head>
 <body>
@@ -3037,6 +3296,10 @@ select.form-control.error {
       <button class="nav-item" data-tab="ABSENSI_GURU">
         <span class="nav-icon">👨‍🏫</span>
         <span>Input Absensi Guru</span>
+      </button>
+      <button class="nav-item" data-tab="RIWAYAT_ABSENSI_GURU">
+        <span class="nav-icon">📋</span>
+        <span>Riwayat Absensi</span>
       </button>
       <button class="nav-item" data-tab="REKAP_KEHADIRAN">
         <span class="nav-icon">📊</span>
@@ -3760,7 +4023,6 @@ let jamAbsensiSetting = {
 
 let jurnalSubTab = 'INPUT_JURNAL';
 let absensiSiswaSubTab = 'INPUT_ABSENSI';
-let absensiGuruSubTab = 'INPUT_ABSENSI_GURU';
 
 // ============================================================
 // ✅ STATE REKAP ABSENSI SISWA (BARU)
@@ -5146,10 +5408,11 @@ function updateTabsVisibility() {
         if (userRole === 'USER') {
             const allowedForUser = [
                 'INPUT', 'DASHBOARD', 'JURNAL', 'ABSENSI_SISWA', 'ABSENSI_GURU',
+                'RIWAYAT_ABSENSI_GURU',  // ✅ BARU
                 'TRANSAKSI', 'REKAP_SISWA', 'MONITORING', 'REKAP_KEHADIRAN',
                 'REKAP_PERTEMUAN',
                 'GURU_PENGGANTI',
-                'REKAP_ABSENSI_SISWA'  // ✅ TAMBAHKAN
+                'REKAP_ABSENSI_SISWA'
             ];
             if (allowedForUser.includes(tabName)) {
                 item.classList.remove('hidden-tab');
@@ -5182,6 +5445,7 @@ function updateTabsVisibility() {
     // ============================================================
 if (isAuthorized && userRole === 'USER' && 
     !['INPUT', 'DASHBOARD', 'JURNAL', 'ABSENSI_SISWA', 'ABSENSI_GURU',
+      'RIWAYAT_ABSENSI_GURU',  // ✅ BARU
       'TRANSAKSI', 'REKAP_SISWA', 'MONITORING', 'REKAP_KEHADIRAN',
       'REKAP_PERTEMUAN',
       'GURU_PENGGANTI',
@@ -5223,8 +5487,9 @@ function updateHeaderTitle(tab) {
         'ABSENSI_SISWA': { title: 'Input Absensi Siswa', subtitle: 'Kehadiran Santri' },
         'REKAP_ABSENSI_SISWA': { title: 'Rekap Absensi Siswa', subtitle: 'Statistik Kehadiran per Siswa' },
         'ABSENSI_GURU': { title: 'Input Absensi Guru', subtitle: 'Kehadiran Guru' },
+        'RIWAYAT_ABSENSI_GURU': { title: 'Riwayat Absensi Guru', subtitle: 'Histori Kehadiran Guru' },  // ✅ BARU
         'REKAP_KEHADIRAN': { title: 'Rekap Kehadiran', subtitle: 'Statistik Per Semester' },
-        'REKAP_PERTEMUAN': { title: 'Rekap Pertemuan', subtitle: 'Realisasi Pertemuan per Mapel' },  // ✅ PASTIKAN ADA
+        'REKAP_PERTEMUAN': { title: 'Rekap Pertemuan', subtitle: 'Realisasi Pertemuan per Mapel' },
         'SETTING': { title: 'Selamat Datang', subtitle: 'Silakan login untuk melanjutkan' },
         'KALENDER': { title: 'Kalender Libur', subtitle: 'Kelola Hari Libur KBM' },
         'GURU_PENGGANTI': { title: 'Guru Pengganti', subtitle: 'Catatan Guru Pengganti' }
@@ -5340,11 +5605,24 @@ function updateHeaderTitle(tab) {
 onSnapshot(absensiGuruCol, snap => {
     absensiGuruCache = snap.docs.map(d => ({id: d.id, ...d.data()}));
     absensiGuruCache.sort((a, b) => {
-      const ta = a.createdAt?.toDate ? a.createdAt.toDate().getTime() : 0;
-      const tb = b.createdAt?.toDate ? b.createdAt.toDate().getTime() : 0;
-      return tb - ta;
+        const ta = a.createdAt?.toDate ? a.createdAt.toDate().getTime() : 0;
+        const tb = b.createdAt?.toDate ? b.createdAt.toDate().getTime() : 0;
+        return tb - ta;
     });
-    if (activeTab === 'ABSENSI_GURU') renderAbsensiGuruTab();
+    
+    if (activeTab === 'ABSENSI_GURU') {
+        // Update kartu status & hint di form input
+        const content = document.getElementById('absensiGuruContent');
+        if (content) {
+            const tanggalInput = document.getElementById('absGuruTanggal');
+            if (tanggalInput) {
+                tanggalInput.dispatchEvent(new Event('change'));
+            }
+        }
+    } else if (activeTab === 'RIWAYAT_ABSENSI_GURU') {  // ✅ BARU
+        renderAbsensiGuruStats();
+        renderAbsensiGuruList();
+    }
 }, (error) => {
     console.error('❌ Error absensi guru listener:', error);
 });
@@ -7200,8 +7478,37 @@ function exportGuruPenggantiExcel(data) {
 }
 
 
+// ============================================================
+// ✅ HELPER: Tampilkan prompt verifikasi NIP
+// (dipakai di banyak cabang USER)
+// ============================================================
+function renderNipVerificationPrompt(tabName) {
+    const mainPanel = document.getElementById('mainPanel');
+    if (mainPanel) {
+        mainPanel.innerHTML = `
+          <div style="text-align:center; padding:40px 20px;">
+            <div style="font-size: 40px; margin-bottom: 12px;">🔐</div>
+            <h4 style="font-weight: 600;">Verifikasi Password Diperlukan</h4>
+            <p style="color: var(--text-secondary);">Silakan verifikasi Password Anda.</p>
+            <button class="btn btn-primary" onclick="window.showNipVerificationModal()">
+                Verifikasi Password Sekarang
+            </button>
+          </div>
+        `;
+    }
+    updateHeaderTitle(tabName);
+}
+
+
+// ============================================================
+// ✅ RENDER ACTIVE TAB — Versi Perbaikan
+// ============================================================
 function renderActiveTab() {
     const mainPanel = document.getElementById('mainPanel');
+    
+    // ============================================================
+    // BELUM LOGIN → LANDING PAGE
+    // ============================================================
     if (!isAuthorized) {
         if (mainPanel) {
             mainPanel.innerHTML = `
@@ -7252,247 +7559,191 @@ function renderActiveTab() {
         updateHeaderTitle('SETTING');
         return;
     }
-    updateTabsVisibility();
     
+    updateTabsVisibility();
+
     // ============================================================
     // ROLE: USER (GURU)
     // ============================================================
     if (userRole === 'USER') {
         const allowed = [
             'INPUT', 'DASHBOARD', 'JURNAL', 'ABSENSI_SISWA', 'ABSENSI_GURU',
+            'RIWAYAT_ABSENSI_GURU',  // ✅ BARU
             'TRANSAKSI', 'REKAP_SISWA', 'MONITORING', 'REKAP_KEHADIRAN',
             'REKAP_PERTEMUAN', 'GURU_PENGGANTI',
-            'REKAP_ABSENSI_SISWA'   // ✅ TAMBAHKAN: agar tidak di-reset ke DASHBOARD
+            'REKAP_ABSENSI_SISWA'
         ];
         if (!allowed.includes(activeTab)) activeTab = 'DASHBOARD';
-        
+
+        // ---------- DASHBOARD ----------
         if (activeTab === 'DASHBOARD') {
-            renderDashboard(); 
+            renderDashboard();
             updateHeaderTitle('DASHBOARD');
         }
+        // ---------- INPUT NILAI ----------
         else if (activeTab === 'INPUT') {
-            if (!isNipVerified) {
-                mainPanel.innerHTML = `
-                  <div style="text-align:center; padding:40px 20px;">
-                    <div style="font-size: 40px; margin-bottom: 12px;">🔐</div>
-                    <h4 style="font-weight: 600;">Verifikasi Password Diperlukan</h4>
-                    <p style="color: var(--text-secondary);">Silakan verifikasi Password Anda.</p>
-                    <button class="btn btn-primary" onclick="window.showNipVerificationModal()">Verifikasi Password Sekarang</button>
-                  </div>
-                `;
-                updateHeaderTitle('INPUT');
-                return;
-            }
-            renderInputTab(); 
+            if (!isNipVerified) { renderNipVerificationPrompt('INPUT'); return; }
+            renderInputTab();
             updateHeaderTitle('INPUT');
         }
-        else if (activeTab === 'JURNAL') { 
-            renderJurnalTab(); 
-            updateHeaderTitle('JURNAL'); 
+        // ---------- JURNAL ----------
+        else if (activeTab === 'JURNAL') {
+            renderJurnalTab();
+            updateHeaderTitle('JURNAL');
         }
-        else if (activeTab === 'ABSENSI_SISWA') { 
+        // ---------- ABSENSI SISWA ----------
+        else if (activeTab === 'ABSENSI_SISWA') {
+            if (!isNipVerified) { renderNipVerificationPrompt('ABSENSI_SISWA'); return; }
             absensiSiswaRekapSubTab = 'INPUT_ABSENSI';
-            renderAbsensiSiswaTab(); 
-            updateHeaderTitle('ABSENSI_SISWA'); 
+            renderAbsensiSiswaTab();
+            updateHeaderTitle('ABSENSI_SISWA');
         }
-        // ✅ TAMBAHKAN: Cabang REKAP_ABSENSI_SISWA untuk USER
+        // ---------- REKAP ABSENSI SISWA ----------
         else if (activeTab === 'REKAP_ABSENSI_SISWA') {
-            if (!isNipVerified) {
-                mainPanel.innerHTML = `
-                  <div style="text-align:center; padding:40px 20px;">
-                    <div style="font-size: 40px; margin-bottom: 12px;">🔐</div>
-                    <h4 style="font-weight: 600;">Verifikasi Password Diperlukan</h4>
-                    <p style="color: var(--text-secondary);">Silakan verifikasi Password Anda.</p>
-                    <button class="btn btn-primary" onclick="window.showNipVerificationModal()">Verifikasi Password Sekarang</button>
-                  </div>
-                `;
-                updateHeaderTitle('REKAP_ABSENSI_SISWA');
-                return;
-            }
+            if (!isNipVerified) { renderNipVerificationPrompt('REKAP_ABSENSI_SISWA'); return; }
             absensiSiswaRekapSubTab = 'REKAP_ABSENSI';
-            renderAbsensiSiswaTab(); 
-            updateHeaderTitle('REKAP_ABSENSI_SISWA'); 
+            renderAbsensiSiswaTab();
+            updateHeaderTitle('REKAP_ABSENSI_SISWA');
         }
-        else if (activeTab === 'ABSENSI_GURU') { 
-            renderAbsensiGuruTab(); 
-            updateHeaderTitle('ABSENSI_GURU'); 
+        // ---------- ABSENSI GURU ----------
+        else if (activeTab === 'ABSENSI_GURU') {
+            if (!isNipVerified) { renderNipVerificationPrompt('ABSENSI_GURU'); return; }
+            renderAbsensiGuruTab();
+            updateHeaderTitle('ABSENSI_GURU');
         }
+        // ---------- RIWAYAT ABSENSI GURU ----------  ✅ BARU
+        else if (activeTab === 'RIWAYAT_ABSENSI_GURU') {
+            if (!isNipVerified) { renderNipVerificationPrompt('RIWAYAT_ABSENSI_GURU'); return; }
+            renderRiwayatAbsensiGuruTab();
+            updateHeaderTitle('RIWAYAT_ABSENSI_GURU');
+        }
+        // ---------- REKAP KEHADIRAN ----------
         else if (activeTab === 'REKAP_KEHADIRAN') {
-            if (!isNipVerified) {
-                mainPanel.innerHTML = `
-                  <div style="text-align:center; padding:40px 20px;">
-                    <div style="font-size: 40px; margin-bottom: 12px;">🔐</div>
-                    <h4 style="font-weight: 600;">Verifikasi Password Diperlukan</h4>
-                    <p style="color: var(--text-secondary);">Silakan verifikasi Password Anda.</p>
-                    <button class="btn btn-primary" onclick="window.showNipVerificationModal()">Verifikasi Password Sekarang</button>
-                  </div>
-                `;
-                updateHeaderTitle('REKAP_KEHADIRAN');
-                return;
-            }
+            if (!isNipVerified) { renderNipVerificationPrompt('REKAP_KEHADIRAN'); return; }
             renderRekapKehadiranTab();
             updateHeaderTitle('REKAP_KEHADIRAN');
         }
+        // ---------- REKAP PERTEMUAN ----------
         else if (activeTab === 'REKAP_PERTEMUAN') {
-            if (!isNipVerified) {
-                mainPanel.innerHTML = `
-                  <div style="text-align:center; padding:40px 20px;">
-                    <div style="font-size: 40px; margin-bottom: 12px;">🔐</div>
-                    <h4 style="font-weight: 600;">Verifikasi Password Diperlukan</h4>
-                    <p style="color: var(--text-secondary);">Silakan verifikasi Password Anda.</p>
-                    <button class="btn btn-primary" onclick="window.showNipVerificationModal()">Verifikasi Password Sekarang</button>
-                  </div>
-                `;
-                updateHeaderTitle('REKAP_PERTEMUAN');
-                return;
-            }
+            if (!isNipVerified) { renderNipVerificationPrompt('REKAP_PERTEMUAN'); return; }
             renderRekapPertemuanTab();
             updateHeaderTitle('REKAP_PERTEMUAN');
         }
-        // ✅ GURU PENGGANTI (USER)
+        // ---------- GURU PENGGANTI ----------
         else if (activeTab === 'GURU_PENGGANTI') {
-            if (!isNipVerified) {
-                mainPanel.innerHTML = `
-                  <div style="text-align:center; padding:40px 20px;">
-                    <div style="font-size: 40px; margin-bottom: 12px;">🔐</div>
-                    <h4 style="font-weight: 600;">Verifikasi Password Diperlukan</h4>
-                    <p style="color: var(--text-secondary);">Silakan verifikasi Password Anda.</p>
-                    <button class="btn btn-primary" onclick="window.showNipVerificationModal()">Verifikasi Password Sekarang</button>
-                  </div>
-                `;
-                updateHeaderTitle('GURU_PENGGANTI');
-                return;
-            }
+            if (!isNipVerified) { renderNipVerificationPrompt('GURU_PENGGANTI'); return; }
             renderGuruPenggantiTab();
             updateHeaderTitle('GURU_PENGGANTI');
         }
+        // ---------- TRANSAKSI ----------
         else if (activeTab === 'TRANSAKSI') {
-            if (!isNipVerified) {
-                mainPanel.innerHTML = `
-                  <div style="text-align:center; padding:40px 20px;">
-                    <div style="font-size: 40px; margin-bottom: 12px;">🔐</div>
-                    <h4 style="font-weight: 600;">Verifikasi Password Diperlukan</h4>
-                    <p style="color: var(--text-secondary);">Silakan verifikasi Password Anda.</p>
-                    <button class="btn btn-primary" onclick="window.showNipVerificationModal()">Verifikasi Password Sekarang</button>
-                  </div>
-                `;
-                updateHeaderTitle('TRANSAKSI');
-                return;
-            }
-            renderTransaksiTab(); 
+            if (!isNipVerified) { renderNipVerificationPrompt('TRANSAKSI'); return; }
+            renderTransaksiTab();
             updateHeaderTitle('TRANSAKSI');
         }
+        // ---------- REKAP SISWA ----------
         else if (activeTab === 'REKAP_SISWA') {
-            if (!isNipVerified) {
-                mainPanel.innerHTML = `
-                  <div style="text-align:center; padding:40px 20px;">
-                    <div style="font-size: 40px; margin-bottom: 12px;">🔐</div>
-                    <h4 style="font-weight: 600;">Verifikasi Password Diperlukan</h4>
-                    <p style="color: var(--text-secondary);">Silakan verifikasi Password Anda.</p>
-                    <button class="btn btn-primary" onclick="window.showNipVerificationModal()">Verifikasi Password Sekarang</button>
-                  </div>
-                `;
-                updateHeaderTitle('REKAP_SISWA');
-                return;
-            }
-            renderRekapSiswa(); 
+            if (!isNipVerified) { renderNipVerificationPrompt('REKAP_SISWA'); return; }
+            renderRekapSiswa();
             updateHeaderTitle('REKAP_SISWA');
         }
+        // ---------- MONITORING ----------
         else if (activeTab === 'MONITORING') {
-            if (!isNipVerified) {
-                mainPanel.innerHTML = `
-                  <div style="text-align:center; padding:40px 20px;">
-                    <div style="font-size: 40px; margin-bottom: 12px;">🔐</div>
-                    <h4 style="font-weight: 600;">Verifikasi Password Diperlukan</h4>
-                    <p style="color: var(--text-secondary);">Silakan verifikasi Password Anda.</p>
-                    <button class="btn btn-primary" onclick="window.showNipVerificationModal()">Verifikasi Password Sekarang</button>
-                  </div>
-                `;
-                updateHeaderTitle('MONITORING');
-                return;
-            }
-            renderMonitoringTab(); 
+            if (!isNipVerified) { renderNipVerificationPrompt('MONITORING'); return; }
+            renderMonitoringTab();
             updateHeaderTitle('MONITORING');
         }
-        
+
+        // Update nav-item active
         document.querySelectorAll('.nav-item').forEach(item => {
-            item.classList.toggle('active', item.dataset.tab === activeTab && !item.classList.contains('hidden-tab'));
+            item.classList.toggle(
+                'active',
+                item.dataset.tab === activeTab && !item.classList.contains('hidden-tab')
+            );
         });
         return;
     }
-    
+
     // ============================================================
     // ROLE: ADMIN
     // ============================================================
-    if (activeTab === 'DASHBOARD') { 
-        renderDashboard(); 
-        updateHeaderTitle('DASHBOARD'); 
+    if (activeTab === 'DASHBOARD') {
+        renderDashboard();
+        updateHeaderTitle('DASHBOARD');
     }
-    else if (activeTab === 'INPUT') { 
-        renderInputTab(); 
-        updateHeaderTitle('INPUT'); 
+    else if (activeTab === 'INPUT') {
+        renderInputTab();
+        updateHeaderTitle('INPUT');
     }
-    else if (activeTab === 'DAFTAR') { 
-        renderDaftarTab(); 
-        updateHeaderTitle('DAFTAR'); 
+    else if (activeTab === 'DAFTAR') {
+        renderDaftarTab();
+        updateHeaderTitle('DAFTAR');
     }
-    else if (activeTab === 'TRANSAKSI') { 
-        renderTransaksiTab(); 
-        updateHeaderTitle('TRANSAKSI'); 
+    else if (activeTab === 'TRANSAKSI') {
+        renderTransaksiTab();
+        updateHeaderTitle('TRANSAKSI');
     }
-    else if (activeTab === 'REKAP_SISWA') { 
-        renderRekapSiswa(); 
-        updateHeaderTitle('REKAP_SISWA'); 
+    else if (activeTab === 'REKAP_SISWA') {
+        renderRekapSiswa();
+        updateHeaderTitle('REKAP_SISWA');
     }
-    else if (activeTab === 'MONITORING') { 
-        renderMonitoringTab(); 
-        updateHeaderTitle('MONITORING'); 
+    else if (activeTab === 'MONITORING') {
+        renderMonitoringTab();
+        updateHeaderTitle('MONITORING');
     }
-    else if (activeTab === 'JADWAL') { 
-        renderJadwalTab(); 
-        updateHeaderTitle('JADWAL'); 
+    else if (activeTab === 'JADWAL') {
+        renderJadwalTab();
+        updateHeaderTitle('JADWAL');
     }
-    else if (activeTab === 'JURNAL') { 
-        renderJurnalTab(); 
-        updateHeaderTitle('JURNAL'); 
+    else if (activeTab === 'JURNAL') {
+        renderJurnalTab();
+        updateHeaderTitle('JURNAL');
     }
-    else if (activeTab === 'ABSENSI_SISWA') { 
+    else if (activeTab === 'ABSENSI_SISWA') {
         absensiSiswaRekapSubTab = 'INPUT_ABSENSI';
-        renderAbsensiSiswaTab(); 
-        updateHeaderTitle('ABSENSI_SISWA'); 
+        renderAbsensiSiswaTab();
+        updateHeaderTitle('ABSENSI_SISWA');
     }
-    else if (activeTab === 'REKAP_ABSENSI_SISWA') { 
+    else if (activeTab === 'REKAP_ABSENSI_SISWA') {
         absensiSiswaRekapSubTab = 'REKAP_ABSENSI';
-        renderAbsensiSiswaTab(); 
-        updateHeaderTitle('REKAP_ABSENSI_SISWA'); 
+        renderAbsensiSiswaTab();
+        updateHeaderTitle('REKAP_ABSENSI_SISWA');
     }
-    else if (activeTab === 'ABSENSI_GURU') { 
-        renderAbsensiGuruTab(); 
-        updateHeaderTitle('ABSENSI_GURU'); 
+    else if (activeTab === 'ABSENSI_GURU') {
+        renderAbsensiGuruTab();
+        updateHeaderTitle('ABSENSI_GURU');
     }
-    else if (activeTab === 'REKAP_KEHADIRAN') { 
-        renderRekapKehadiranTab(); 
-        updateHeaderTitle('REKAP_KEHADIRAN'); 
+    else if (activeTab === 'RIWAYAT_ABSENSI_GURU') {  // ✅ BARU
+        renderRiwayatAbsensiGuruTab();
+        updateHeaderTitle('RIWAYAT_ABSENSI_GURU');
     }
-    else if (activeTab === 'REKAP_PERTEMUAN') { 
-        renderRekapPertemuanTab(); 
-        updateHeaderTitle('REKAP_PERTEMUAN'); 
+    else if (activeTab === 'REKAP_KEHADIRAN') {
+        renderRekapKehadiranTab();
+        updateHeaderTitle('REKAP_KEHADIRAN');
     }
-    else if (activeTab === 'GURU_PENGGANTI') { 
-        renderGuruPenggantiTab(); 
-        updateHeaderTitle('GURU_PENGGANTI'); 
+    else if (activeTab === 'REKAP_PERTEMUAN') {
+        renderRekapPertemuanTab();
+        updateHeaderTitle('REKAP_PERTEMUAN');
     }
-    else if (activeTab === 'SETTING') { 
-        renderSettingTab(); 
-        updateHeaderTitle('SETTING'); 
+    else if (activeTab === 'GURU_PENGGANTI') {
+        renderGuruPenggantiTab();
+        updateHeaderTitle('GURU_PENGGANTI');
     }
-    else if (activeTab === 'KALENDER') { 
-        renderKalenderTab(); 
-        updateHeaderTitle('KALENDER'); 
+    else if (activeTab === 'SETTING') {
+        renderSettingTab();
+        updateHeaderTitle('SETTING');
     }
-    
+    else if (activeTab === 'KALENDER') {
+        renderKalenderTab();
+        updateHeaderTitle('KALENDER');
+    }
+
+    // Update nav-item active
     document.querySelectorAll('.nav-item').forEach(item => {
-        item.classList.toggle('active', item.dataset.tab === activeTab && !item.classList.contains('hidden-tab'));
+        item.classList.toggle(
+            'active',
+            item.dataset.tab === activeTab && !item.classList.contains('hidden-tab')
+        );
     });
 }
 window.renderActiveTab = renderActiveTab;
@@ -13132,7 +13383,7 @@ function renderPermohonanIzinLuarJamAdmin() {
     };
     
     return `
-        <div class="card" style="margin-bottom: 16px; border-left: 4px solid var(--warning);">
+        <div class="card permohonan-panel" style="margin-bottom: 16px; border-left: 4px solid var(--warning);">
             <div class="card-header" style="background: var(--warning-50);">
                 <h3>⏰ Permohonan Izin Absen (Masuk/Keluar)</h3>
                 <div class="flex" style="gap:8px; flex-wrap:wrap;">
@@ -13671,7 +13922,7 @@ function renderPermohonanAbsensiAdmin() {
     }
     
     return `
-        <div class="card" style="margin-bottom: 16px; border-left: 4px solid var(--warning);">
+        <div class="card permohonan-panel" style="margin-bottom: 16px; border-left: 4px solid var(--warning);">
             <div class="card-header" style="background: var(--warning-50);">
                 <h3>📩 Permohonan Absensi Guru</h3>
                 <div class="flex" style="gap:8px; flex-wrap:wrap;">
@@ -15094,14 +15345,99 @@ window.ajukanUlangPermohonanLuarJam = function(permohonanId) {
 };
 
 
+// ============================================================
+// ✅ WRAPPER: Render Absensi Guru (dengan Sub-Tab)
+// ============================================================
+// ============================================================
+// ✅ RENDER TAB: ABSENSI GURU (LANGSUNG INPUT, TANPA SUB-TAB)
+// ============================================================
 function renderAbsensiGuruTab() {
     const mainPanel = document.getElementById('mainPanel');
     if (!mainPanel) return;
-    
+
     const today = getTodayWIB();
     const todayIsLibur = isTanggalLibur(today);
     const todayKeterangan = todayIsLibur ? getKeteranganLibur(today) : '';
     const isUser = userRole === 'USER';
+
+    // ============================================================
+    // HEADER + INFO LIBUR
+    // ============================================================
+    mainPanel.innerHTML = `
+<div class="absen-page-header">
+    <div>
+        <h3 style="font-size: 16px; font-weight: 600; margin: 0;">👨‍🏫 Absensi Guru</h3>
+        <p style="color: var(--text-secondary); font-size: 12px; margin-top: 4px;">
+            Input absensi masuk/keluar Anda.
+        </p>
+    </div>
+    <span class="badge badge-primary page-badge" style="font-size: 12px; padding: 6px 14px;">
+        📅 ${formatTanggalIndo(today)}
+    </span>
+</div>
+
+        ${todayIsLibur ? `
+            <div style="background: var(--danger-50); padding: 14px 18px; 
+                        border-radius: var(--radius-md); border-left: 4px solid var(--danger); 
+                        margin-bottom: 16px; display: flex; align-items: center; gap: 12px;">
+                <span style="font-size: 24px;">⛔</span>
+                <div>
+                    <strong style="color: var(--danger); font-size: 14px;">Hari Ini Libur KBM</strong>
+                    <div style="font-size: 12px; color: var(--text-secondary); margin-top: 2px;">
+                        ${formatTanggalIndo(today)} — <strong>${escapeHtml(todayKeterangan)}</strong>.
+                    </div>
+                </div>
+            </div>
+        ` : ''}
+
+        <div id="absensiGuruContent"></div>
+    `;
+
+    const content = mainPanel.querySelector('#absensiGuruContent');
+    if (!content) return;
+
+    renderInputAbsensiGuruContent(content, { isUser, today, todayIsLibur, todayKeterangan });
+}
+
+
+// ============================================================
+// ✅ RENDER TAB: RIWAYAT ABSENSI GURU (SUB-TAB MANDIRI)
+// ============================================================
+function renderRiwayatAbsensiGuruTab() {
+    const mainPanel = document.getElementById('mainPanel');
+    if (!mainPanel) return;
+
+    const isUser = userRole === 'USER';
+
+    mainPanel.innerHTML = `
+        <div class="flex-between" style="margin-bottom: 16px; flex-wrap: wrap; gap: 8px;">
+            <div>
+                <h3 style="font-size: 16px; font-weight: 600; margin: 0;">📋 Riwayat Absensi Guru</h3>
+                <p style="color: var(--text-secondary); font-size: 12px; margin-top: 4px;">
+                    Histori kehadiran guru (masuk & keluar).
+                </p>
+            </div>
+            <span class="badge badge-primary" style="font-size: 12px; padding: 6px 14px;">
+                📅 ${formatTanggalIndo(getTodayWIB())}
+            </span>
+        </div>
+
+        <div id="absensiGuruContent"></div>
+    `;
+
+    const content = mainPanel.querySelector('#absensiGuruContent');
+    if (!content) return;
+
+    renderRiwayatAbsensiGuruContent(content, { isUser });
+}
+
+
+// ============================================================
+// ✅ KONTEN SUB-TAB: INPUT ABSENSI
+// (form absen masuk/keluar, panel permohonan, kartu status)
+// ============================================================
+function renderInputAbsensiGuruContent(mainPanel, ctx) {
+    const { isUser, today, todayIsLibur } = ctx;
 
     // ============================================================
     // LOGIKA: Tentukan tampilan field Guru
@@ -15109,12 +15445,11 @@ function renderAbsensiGuruTab() {
     let guruFieldHtml = '';
     if (isUser && isNipVerified) {
         const hariMengajar = getHariMengajarGuru(verifiedGuruId);
-        // ✅ Tambahan: cek penggantian hari ini
         const listPenggantiHariIni = (guruPenggantiCache || []).filter(gp =>
             String(gp.guruPenggantiId || '').trim() === String(verifiedGuruId).trim() &&
             gp.tanggal === today
         );
-        
+
         let infoHari;
         if (listPenggantiHariIni.length > 0) {
             infoHari = `🔄 <strong>Hari ini Anda bertugas sebagai guru pengganti</strong> (${listPenggantiHariIni.length} kelas/mapel)`;
@@ -15152,30 +15487,9 @@ function renderAbsensiGuruTab() {
     }
 
     // ============================================================
-    // RENDER HTML UTAMA
+    // RENDER HTML
     // ============================================================
     mainPanel.innerHTML = `
-        <div style="margin-bottom:16px;">
-            <h3 style="font-size:16px; font-weight:600; margin:0;">👨‍🏫 Input Absensi Guru</h3>
-            <p style="color: var(--text-secondary); font-size: 12px; margin-top: 4px;">
-                Absensi 2 tahap: <strong>Absen Masuk</strong> & <strong>Absen Keluar</strong>. 
-                Jam otomatis dari sistem. Untuk absen susulan (tanggal lampau), wajib izin Admin.
-                <br><strong>Status Sakit/Izin</strong> tidak memerlukan absen keluar.
-            </p>
-        </div>
-
-        ${todayIsLibur ? `
-            <div style="background: var(--danger-50); padding: 14px 18px; border-radius: var(--radius-md); border-left: 4px solid var(--danger); margin-bottom: 16px; display: flex; align-items: center; gap: 12px;">
-                <span style="font-size: 24px;">⛔</span>
-                <div>
-                    <strong style="color: var(--danger); font-size: 14px;">Hari Ini Libur KBM</strong>
-                    <div style="font-size: 12px; color: var(--text-secondary); margin-top: 2px;">
-                        ${formatTanggalIndo(today)} — <strong>${escapeHtml(todayKeterangan)}</strong>.
-                    </div>
-                </div>
-            </div>
-        ` : ''}
-
         <!-- ===== PANEL PERMOHONAN (khusus USER) ===== -->
         ${isUser && isNipVerified ? renderPermohonanStatusGuru() : ''}
 
@@ -15183,172 +15497,138 @@ function renderAbsensiGuruTab() {
         <div id="absenGuruStatusCard" style="margin-bottom: 16px;"></div>
 
         <!-- ===== PANEL ABSEN MASUK ===== -->
-        <div class="input-field-group" id="panelAbsenMasuk"
-             style="${todayIsLibur ? 'opacity: 0.5; pointer-events: none;' : ''}">
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 2px solid var(--success);">
-                <span style="font-size: 24px;">🟢</span>
-                <div>
-                    <strong style="font-size: 15px; color: var(--success);">ABSEN MASUK</strong>
-                    <div style="font-size: 11px; color: var(--text-muted);">
-                        Pilih status kehadiran. Untuk Sakit/Izin, jam masuk tidak wajib.
-                    </div>
-                </div>
-            </div>
-
-            <div class="field-row">
-                <div class="form-group">
-                    <label>📅 Tanggal</label>
-                    <input type="date" id="absGuruTanggal" class="form-control" value="${today}" max="${today}">
-                    <small class="field-hint" id="absGuruTanggalHint"></small>
-                    <div id="permohonanActionContainer" style="margin-top: 8px;"></div>
-                </div>
-                <div class="form-group">
-                    <label>👨‍🏫 Guru</label>
-                    ${guruFieldHtml}
-                </div>
-                <div class="form-group">
-                    <label>🕐 Jam Masuk (Otomatis)</label>
-                    <input type="text" id="absGuruJamMasuk" class="form-control"
-                           readonly placeholder="--:--"
-                           style="background: var(--bg-primary); cursor: not-allowed; font-weight: 700; font-size: 18px; text-align: center; color: var(--success);">
-                    <small class="field-hint" id="jamMasukHint">Klik "Absen Masuk" untuk mengisi</small>
-                </div>
-            </div>
-
-            <!-- PILIHAN STATUS KEHADIRAN -->
-            <div class="form-group" style="margin-top: 12px;">
-                <label>📋 Status Kehadiran</label>
-                <div id="statusMasukSelector" style="display:flex; gap:8px; flex-wrap:wrap; margin-top:4px;">
-                    <label class="absen-pill selected-H" data-status="H" style="min-width:100px; padding:8px 16px; font-size:13px;">
-                        <input type="radio" name="statusMasukGuru" value="H" checked>
-                        ✅ Hadir
-                    </label>
-                    <label class="absen-pill" data-status="S" style="min-width:100px; padding:8px 16px; font-size:13px;">
-                        <input type="radio" name="statusMasukGuru" value="S">
-                        🤒 Sakit
-                    </label>
-                    <label class="absen-pill" data-status="I" style="min-width:100px; padding:8px 16px; font-size:13px;">
-                        <input type="radio" name="statusMasukGuru" value="I">
-                        📝 Izin
-                    </label>
-                </div>
-                <small class="field-hint" id="statusMasukHint" style="margin-top:6px; display:block;">
-                    💡 <strong>Hadir</strong> = jam masuk otomatis + validasi jadwal.
-                    <strong>Sakit/Izin</strong> = tanpa validasi jam, tanpa absen keluar.
-                </small>
-            </div>
-
-            <div class="field-row" style="margin-top:12px;">
-                <div class="form-group">
-                    <label>📋 Status Masuk (Terkonfirmasi)</label>
-                    <input type="text" id="absGuruStatusMasuk" class="form-control"
-                           readonly placeholder="Otomatis"
-                           style="background: var(--bg-primary); cursor: not-allowed; font-weight: 600;">
-                </div>
-                <div class="form-group">
-                    <label>Keterangan Masuk (wajib)</label>
-                    <input type="text" id="absGuruKeteranganMasuk" class="form-control"
-                           placeholder="Contoh: Sakit demam, Izin acara keluarga" ${todayIsLibur ? 'disabled' : ''}>
-                </div>
-                <div class="form-group">
-                    <label>&nbsp;</label>
-                    <button class="btn btn-success" id="btnAbsenMasuk" style="width:100%; padding: 14px; font-size: 15px; font-weight: 700;">
-                        🟢 ABSEN MASUK
-                    </button>
-                </div>
-            </div>
-
-            <!-- Panel GPS (khusus user, jika geofencing aktif) -->
-            ${(geoConfig.enabled && isUser) ? `
-                <div id="geoStatusPanel" style="
-                    margin-top: 16px; padding: 14px 18px;
-                    border-radius: var(--radius-md);
-                    background: var(--bg-primary);
-                    border: 1px solid var(--border-color);
-                    border-left: 4px solid var(--text-muted);
-                    display: flex; align-items: center; gap: 12px;
-                ">
-                    <span id="geoStatusIcon" style="font-size: 24px;">📍</span>
-                    <div style="flex:1; min-width:0;">
-                        <div id="geoStatusTitle" style="font-weight:600; font-size:14px;">Lokasi Belum Dicek</div>
-                        <div id="geoStatusMessage" style="font-size:12px; color: var(--text-secondary); margin-top:2px;">
-                            Klik "Cek Lokasi" untuk verifikasi posisi sebelum absen.
-                            <em>(Tidak diperlukan untuk Sakit/Izin)</em>
-                        </div>
-                    </div>
-                    <button class="btn btn-primary btn-sm" id="btnCekLokasi" type="button" style="flex-shrink:0;">
-                        📍 Cek Lokasi
-                    </button>
-                </div>
-            ` : ''}
+<div class="absen-guru-panel" id="panelAbsenMasuk"
+     style="${todayIsLibur ? 'opacity: 0.5; pointer-events: none;' : ''}">
+    <div class="absen-guru-panel-header">
+        <span class="icon">🟢</span>
+        <div>
+            <div class="title">ABSEN MASUK</div>
+            <div class="subtitle">Pilih status kehadiran. Untuk Sakit/Izin, jam masuk tidak wajib.</div>
         </div>
+    </div>
+
+    <div class="absen-guru-grid">
+        <div class="form-group" style="margin-bottom:0;">
+            <label>📅 Tanggal</label>
+            <input type="date" id="absGuruTanggal" class="form-control" value="${today}" max="${today}">
+            <small class="field-hint" id="absGuruTanggalHint"></small>
+            <div id="permohonanActionContainer" style="margin-top: 8px;"></div>
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+            <label>👨‍🏫 Guru</label>
+            ${guruFieldHtml}
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+            <label>🕐 Jam Masuk</label>
+            <input type="text" id="absGuruJamMasuk" class="form-control jam-display"
+                   readonly placeholder="--:--">
+            <small class="field-hint" id="jamMasukHint">Klik "Absen Masuk" untuk mengisi</small>
+        </div>
+    </div>
+
+    <!-- PILIHAN STATUS -->
+    <div class="form-group" style="margin-top: 14px;">
+        <label>📋 Status Kehadiran</label>
+        <div id="statusMasukSelector" class="status-masuk-selector">
+            <label class="absen-pill selected-H" data-status="H">
+                <input type="radio" name="statusMasukGuru" value="H" checked>
+                ✅ Hadir
+            </label>
+            <label class="absen-pill" data-status="S">
+                <input type="radio" name="statusMasukGuru" value="S">
+                🤒 Sakit
+            </label>
+            <label class="absen-pill" data-status="I">
+                <input type="radio" name="statusMasukGuru" value="I">
+                📝 Izin
+            </label>
+        </div>
+        <small class="field-hint" id="statusMasukHint" style="margin-top:6px; display:block;">
+            💡 <strong>Hadir</strong> = jam masuk otomatis + validasi jadwal.
+            <strong>Sakit/Izin</strong> = tanpa validasi jam, tanpa absen keluar.
+        </small>
+    </div>
+
+    <div class="absen-guru-grid" style="margin-top: 14px;">
+        <div class="form-group" style="margin-bottom:0;">
+            <label>📋 Status Masuk</label>
+            <input type="text" id="absGuruStatusMasuk" class="form-control"
+                   readonly placeholder="Otomatis"
+                   style="background: var(--bg-primary); cursor: not-allowed; font-weight: 600;">
+        </div>
+        <div class="form-group" style="margin-bottom:0; grid-column: span 2;">
+            <label>Keterangan Masuk (wajib untuk Sakit/Izin)</label>
+            <input type="text" id="absGuruKeteranganMasuk" class="form-control"
+                   placeholder="Contoh: Sakit demam, Izin acara keluarga" ${todayIsLibur ? 'disabled' : ''}>
+        </div>
+    </div>
+
+    <div style="margin-top: 14px;">
+        <button class="btn btn-success absen-guru-btn" id="btnAbsenMasuk">
+            🟢 ABSEN MASUK
+        </button>
+    </div>
+
+    <!-- GPS Panel -->
+    ${(geoConfig.enabled && isUser) ? `
+        <div id="geoStatusPanel" class="geo-status-panel">
+            <span id="geoStatusIcon" class="geo-icon">📍</span>
+            <div class="geo-text" style="flex:1; min-width:0;">
+                <div id="geoStatusTitle" style="font-weight:600; font-size:14px;">Lokasi Belum Dicek</div>
+                <div id="geoStatusMessage" style="font-size:12px; color: var(--text-secondary); margin-top:2px;">
+                    Klik "Cek Lokasi" untuk verifikasi posisi sebelum absen.
+                    <em>(Tidak diperlukan untuk Sakit/Izin)</em>
+                </div>
+            </div>
+            <button class="btn btn-primary btn-sm" id="btnCekLokasi" type="button">
+                📍 Cek Lokasi
+            </button>
+        </div>
+    ` : ''}
+</div>
 
         <!-- ===== PANEL ABSEN KELUAR ===== -->
-        <div class="input-field-group" id="panelAbsenKeluar"
-             style="${todayIsLibur ? 'opacity: 0.5; pointer-events: none;' : ''}">
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 2px solid var(--danger);">
-                <span style="font-size: 24px;">🔴</span>
-                <div>
-                    <strong style="font-size: 15px; color: var(--danger);">ABSEN KELUAR</strong>
-                    <div style="font-size: 11px; color: var(--text-muted);">
-                        Hanya bisa dilakukan setelah absen masuk (status Hadir/Terlambat)
-                    </div>
-                </div>
-            </div>
-
-            <div class="field-row">
-                <div class="form-group">
-                    <label>🕐 Jam Keluar (Otomatis)</label>
-                    <input type="text" id="absGuruJamKeluar" class="form-control"
-                           readonly placeholder="--:--"
-                           style="background: var(--bg-primary); cursor: not-allowed; font-weight: 700; font-size: 18px; text-align: center; color: var(--danger);">
-                    <small class="field-hint" id="jamKeluarHint">Klik "Absen Keluar" untuk mengisi</small>
-                </div>
-                <div class="form-group">
-                    <label>📋 Status Keluar</label>
-                    <input type="text" id="absGuruStatusKeluar" class="form-control"
-                           readonly placeholder="Otomatis"
-                           style="background: var(--bg-primary); cursor: not-allowed; font-weight: 600;">
-                </div>
-                <div class="form-group">
-                    <label>Keterangan Keluar (opsional)</label>
-                    <input type="text" id="absGuruKeteranganKeluar" class="form-control"
-                           placeholder="Contoh: Ada acara keluarga" ${todayIsLibur ? 'disabled' : ''}>
-                </div>
-            </div>
-
-            <div style="margin-top:12px;">
-                <button class="btn btn-danger" id="btnAbsenKeluar" style="width:100%; padding: 14px; font-size: 15px; font-weight: 700;">
-                    🔴 ABSEN KELUAR
-                </button>
-            </div>
+<div class="absen-guru-panel" id="panelAbsenKeluar"
+     style="${todayIsLibur ? 'opacity: 0.5; pointer-events: none;' : ''}">
+    <div class="absen-guru-panel-header keluar">
+        <span class="icon">🔴</span>
+        <div>
+            <div class="title">ABSEN KELUAR</div>
+            <div class="subtitle">Hanya bisa dilakukan setelah absen masuk (status Hadir/Terlambat)</div>
         </div>
+    </div>
 
-        <!-- ===== FILTER & RIWAYAT ===== -->
-        <div class="filter-section">
-            <div class="filter-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr;">
-                <div class="filter-item">
-                    <label>🔍 Cari Guru</label>
-                    <input type="text" id="absGuruSearch" class="form-control" placeholder="Nama guru...">
-                </div>
-                <div class="filter-item">
-                    <label>📅 Filter Tanggal</label>
-                    <input type="date" id="absGuruFilterTanggal" class="form-control">
-                </div>
-                <div class="filter-item" style="display:flex; align-items:end;">
-                    <button class="btn btn-ghost btn-sm" id="btnResetFilterAbsGuru" style="width:100%;">🔄 Reset</button>
-                </div>
-                <div class="filter-item" style="display:flex; align-items:end;">
-                    <button class="btn btn-success btn-sm" id="btnExportAbsGuru" style="width:100%;">📗 Export Excel</button>
-                </div>
-            </div>
+    <div class="absen-guru-grid">
+        <div class="form-group" style="margin-bottom:0;">
+            <label>🕐 Jam Keluar</label>
+            <input type="text" id="absGuruJamKeluar" class="form-control jam-display keluar"
+                   readonly placeholder="--:--">
+            <small class="field-hint" id="jamKeluarHint">Klik "Absen Keluar" untuk mengisi</small>
         </div>
+        <div class="form-group" style="margin-bottom:0;">
+            <label>📋 Status Keluar</label>
+            <input type="text" id="absGuruStatusKeluar" class="form-control"
+                   readonly placeholder="Otomatis"
+                   style="background: var(--bg-primary); cursor: not-allowed; font-weight: 600;">
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+            <label>Keterangan Keluar (opsional)</label>
+            <input type="text" id="absGuruKeteranganKeluar" class="form-control"
+                   placeholder="Contoh: Ada acara keluarga" ${todayIsLibur ? 'disabled' : ''}>
+        </div>
+    </div>
 
-${renderPermohonanIzinLuarJamAdmin()}
-${renderPermohonanAbsensiAdmin()}
-${renderPengecualianAlpaAdmin()}
-<div id="absGuruStatsContainer"></div>
-<div id="absGuruListContainer"></div>
+    <div style="margin-top: 14px;">
+        <button class="btn btn-danger absen-guru-btn" id="btnAbsenKeluar">
+            🔴 ABSEN KELUAR
+        </button>
+    </div>
+</div>
+
+        <!-- ===== PANEL ADMIN (permohonan & pengecualian) ===== -->
+        ${renderPermohonanIzinLuarJamAdmin()}
+        ${renderPermohonanAbsensiAdmin()}
+        ${renderPengecualianAlpaAdmin()}
     `;
 
     // ============================================================
@@ -15370,9 +15650,7 @@ ${renderPengecualianAlpaAdmin()}
     const statusMasukHint = mainPanel.querySelector('#statusMasukHint');
     const statusSelector = mainPanel.querySelector('#statusMasukSelector');
 
-    // ============================================================
-    // Helper: ambil status pilihan dari radio
-    // ============================================================
+    // Helper: ambil status pilihan
     function getStatusMasukPilihan() {
         return mainPanel.querySelector('input[name="statusMasukGuru"]:checked')?.value || 'H';
     }
@@ -15406,256 +15684,237 @@ ${renderPengecualianAlpaAdmin()}
         });
     }
 
-
-// ============================================================
-// REFRESH KARTU STATUS & TOMBOL
-// ✅ DIPERBARUI: Banner info guru pengganti + batas waktu kontekstual
-// ============================================================
-function refreshAbsenGuruStatus() {
-    const guruId = isUser ? verifiedGuruId : (absGuruSelect?.value || '');
-    const tgl = tanggalInput.value;
-    const todayWIB = getTodayWIB();
-
     // ============================================================
-    // ✅ BARU: Deteksi status guru pengganti
+    // REFRESH KARTU STATUS & TOMBOL
     // ============================================================
-    const statusPengganti = (guruId && tgl)
-        ? cekStatusGuruPengganti(guruId, tgl)
-        : { isPengganti: false };
+    function refreshAbsenGuruStatus() {
+        const guruId = isUser ? verifiedGuruId : (absGuruSelect?.value || '');
+        const tgl = tanggalInput.value;
+        const todayWIB = getTodayWIB();
 
-    // Reset UI
-    jamMasukInput.value = '';
-    jamKeluarInput.value = '';
-    statusMasukInput.value = '';
-    statusKeluarInput.value = '';
-    jamMasukHint.textContent = 'Klik "Absen Masuk" untuk mengisi';
-    jamMasukHint.style.color = 'var(--text-muted)';
-    jamKeluarHint.textContent = 'Klik "Absen Keluar" untuk mengisi';
-    jamKeluarHint.style.color = 'var(--text-muted)';
-    btnAbsenMasuk.disabled = false;
-    btnAbsenMasuk.innerHTML = '🟢 ABSEN MASUK';
-    btnAbsenKeluar.disabled = true;
-    btnAbsenKeluar.innerHTML = '🔴 ABSEN KELUAR';
-    statusMasukInput.classList.remove('error');
+        const statusPengganti = (guruId && tgl)
+            ? cekStatusGuruPengganti(guruId, tgl)
+            : { isPengganti: false };
 
-    if (!guruId || !tgl) return;
+        // Reset UI
+        jamMasukInput.value = '';
+        jamKeluarInput.value = '';
+        statusMasukInput.value = '';
+        statusKeluarInput.value = '';
+        jamMasukHint.textContent = 'Klik "Absen Masuk" untuk mengisi';
+        jamMasukHint.style.color = 'var(--text-muted)';
+        jamKeluarHint.textContent = 'Klik "Absen Keluar" untuk mengisi';
+        jamKeluarHint.style.color = 'var(--text-muted)';
+        btnAbsenMasuk.disabled = false;
+        btnAbsenMasuk.innerHTML = '🟢 ABSEN MASUK';
+        btnAbsenKeluar.disabled = true;
+        btnAbsenKeluar.innerHTML = '🔴 ABSEN KELUAR';
+        statusMasukInput.classList.remove('error');
 
-    const existing = absensiGuruCache.find(a => a.tanggal === tgl && a.guruId === guruId);
+        if (!guruId || !tgl) return;
 
-    // ============================================================
-    // ✅ BARU: Banner info pengganti (jika guru pengganti)
-    // ============================================================
-    const penggantiBannerHtml = statusPengganti.isPengganti ? `
-        <div style="background: var(--info-50); border-left: 4px solid var(--info); 
-                    padding: 10px 14px; border-radius: 6px; margin-bottom: 12px; 
-                    font-size: 12px; color: var(--info); line-height: 1.5;">
-            🔄 <strong>Mode Guru Pengganti</strong><br>
-            Anda menggantikan <strong>${escapeHtml(statusPengganti.guruAsliName)}</strong> pada 
-            <strong>${formatTanggalIndo(tgl)}</strong>.
-            <br>
-            <small style="opacity: 0.85;">
-                ⏰ Batas absen masuk & keluar mengikuti <strong>jadwal guru asli</strong>, 
-                bukan setting global.
-            </small>
-        </div>
-    ` : '';
+        const existing = absensiGuruCache.find(a => a.tanggal === tgl && a.guruId === guruId);
 
-    // ============================================================
-    // KARTU STATUS
-    // ============================================================
-    const statusCard = mainPanel.querySelector('#absenGuruStatusCard');
-    if (statusCard) {
-        let cardHtml = '';
-        
-        if (existing) {
-            const sudahMasuk = !!existing.jamMasuk;
-            const sudahKeluar = !!existing.jamKeluar;
-            const isSakitIzin = existing.status === 'S' || existing.status === 'I';
-            
-            const statusMasukLabel = 
-                existing.status === 'T' ? '⏰ Terlambat'
-                : existing.status === 'H' ? '✅ Hadir'
-                : existing.status === 'S' ? '🤒 Sakit'
-                : existing.status === 'I' ? '📝 Izin'
-                : existing.status === 'A' ? '❌ Alpa' : '-';
-            
-            const statusMasukCls = 
-                existing.status === 'H' ? 'badge-success'
-                : existing.status === 'T' ? 'badge-warning'
-                : existing.status === 'S' ? 'badge-info'
-                : existing.status === 'I' ? 'badge-primary'
-                : existing.status === 'A' ? 'badge-danger'
-                : 'badge-info';
+        const penggantiBannerHtml = statusPengganti.isPengganti ? `
+            <div style="background: var(--info-50); border-left: 4px solid var(--info); 
+                        padding: 10px 14px; border-radius: 6px; margin-bottom: 12px; 
+                        font-size: 12px; color: var(--info); line-height: 1.5;">
+                🔄 <strong>Mode Guru Pengganti</strong><br>
+                Anda menggantikan <strong>${escapeHtml(statusPengganti.guruAsliName)}</strong> pada 
+                <strong>${formatTanggalIndo(tgl)}</strong>.
+                <br>
+                <small style="opacity: 0.85;">
+                    ⏰ Batas absen masuk & keluar mengikuti <strong>jadwal guru asli</strong>, 
+                    bukan setting global.
+                </small>
+            </div>
+        ` : '';
 
-            let borderColor, statusIcon, statusTitle;
-            if (isSakitIzin) {
-                borderColor = existing.status === 'S' ? 'var(--info)' : 'var(--primary)';
-                statusIcon = existing.status === 'S' ? '🤒' : '📝';
-                statusTitle = existing.status === 'S' 
-                    ? 'Sakit — Tidak Perlu Absen Keluar' 
-                    : 'Izin — Tidak Perlu Absen Keluar';
-            } else if (sudahKeluar) {
-                borderColor = 'var(--success)';
-                statusIcon = '✅';
-                statusTitle = 'Absensi LENGKAP';
-            } else if (sudahMasuk) {
-                borderColor = 'var(--warning)';
-                statusIcon = '🟡';
-                statusTitle = 'Sudah Absen Masuk — Menunggu Absen Keluar';
-            } else {
-                borderColor = 'var(--danger)';
-                statusIcon = '⚪';
-                statusTitle = 'Belum Absen';
-            }
+        // KARTU STATUS
+        const statusCard = mainPanel.querySelector('#absenGuruStatusCard');
+        if (statusCard) {
+            let cardHtml = '';
 
-            cardHtml = `
-                <div class="card" style="border-left: 4px solid ${borderColor}; margin-bottom: 12px;">
-                    <div class="card-body">
-                        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-                            <div style="display:flex; align-items:center; gap:12px;">
-                                <span style="font-size: 36px;">${statusIcon}</span>
-                                <div>
-                                    <div style="font-size: 14px; font-weight: 700;">${statusTitle}</div>
-                                    <div style="font-size: 12px; color: var(--text-secondary); margin-top:2px;">
-                                        ${formatTanggalIndo(tgl)}
-                                        ${tgl < todayWIB ? ' <span class="badge badge-warning" style="font-size:10px;">📅 Tanggal Lampau</span>' : ''}
-                                        ${statusPengganti.isPengganti 
-                                            ? ' <span class="badge badge-info" style="font-size:10px;">🔄 Pengganti</span>' 
-                                            : ''}
+            if (existing) {
+                const sudahMasuk = !!existing.jamMasuk;
+                const sudahKeluar = !!existing.jamKeluar;
+                const isSakitIzin = existing.status === 'S' || existing.status === 'I';
+
+                const statusMasukLabel =
+                    existing.status === 'T' ? '⏰ Terlambat'
+                    : existing.status === 'H' ? '✅ Hadir'
+                    : existing.status === 'S' ? '🤒 Sakit'
+                    : existing.status === 'I' ? '📝 Izin'
+                    : existing.status === 'A' ? '❌ Alpa' : '-';
+
+                const statusMasukCls =
+                    existing.status === 'H' ? 'badge-success'
+                    : existing.status === 'T' ? 'badge-warning'
+                    : existing.status === 'S' ? 'badge-info'
+                    : existing.status === 'I' ? 'badge-primary'
+                    : existing.status === 'A' ? 'badge-danger'
+                    : 'badge-info';
+
+                let borderColor, statusIcon, statusTitle;
+                if (isSakitIzin) {
+                    borderColor = existing.status === 'S' ? 'var(--info)' : 'var(--primary)';
+                    statusIcon = existing.status === 'S' ? '🤒' : '📝';
+                    statusTitle = existing.status === 'S'
+                        ? 'Sakit — Tidak Perlu Absen Keluar'
+                        : 'Izin — Tidak Perlu Absen Keluar';
+                } else if (sudahKeluar) {
+                    borderColor = 'var(--success)';
+                    statusIcon = '✅';
+                    statusTitle = 'Absensi LENGKAP';
+                } else if (sudahMasuk) {
+                    borderColor = 'var(--warning)';
+                    statusIcon = '🟡';
+                    statusTitle = 'Sudah Absen Masuk — Menunggu Absen Keluar';
+                } else {
+                    borderColor = 'var(--danger)';
+                    statusIcon = '⚪';
+                    statusTitle = 'Belum Absen';
+                }
+
+                cardHtml = `
+                    <div class="card" style="border-left: 4px solid ${borderColor}; margin-bottom: 12px;">
+                        <div class="card-body">
+                            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                                <div style="display:flex; align-items:center; gap:12px;">
+                                    <span style="font-size: 36px;">${statusIcon}</span>
+                                    <div>
+                                        <div style="font-size: 14px; font-weight: 700;">${statusTitle}</div>
+                                        <div style="font-size: 12px; color: var(--text-secondary); margin-top:2px;">
+                                            ${formatTanggalIndo(tgl)}
+                                            ${tgl < todayWIB ? ' <span class="badge badge-warning" style="font-size:10px;">📅 Tanggal Lampau</span>' : ''}
+                                            ${statusPengganti.isPengganti
+                                                ? ' <span class="badge badge-info" style="font-size:10px;">🔄 Pengganti</span>'
+                                                : ''}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                                <span class="badge ${existing.jamMasuk || isSakitIzin ? statusMasukCls : 'badge-gray'}">
-                                    🟢 Masuk: ${existing.jamMasuk || (isSakitIzin ? '—' : '-')} ${existing.jamMasuk || isSakitIzin ? `(${statusMasukLabel})` : ''}
-                                </span>
-                                <span class="badge ${isSakitIzin ? 'badge-gray' : sudahKeluar ? 'badge-success' : 'badge-gray'}">
-                                    🔴 Keluar: ${isSakitIzin ? 'N/A' : (existing.jamKeluar || '-')}
-                                </span>
+                                <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                                    <span class="badge ${existing.jamMasuk || isSakitIzin ? statusMasukCls : 'badge-gray'}">
+                                        🟢 Masuk: ${existing.jamMasuk || (isSakitIzin ? '—' : '-')} ${existing.jamMasuk || isSakitIzin ? `(${statusMasukLabel})` : ''}
+                                    </span>
+                                    <span class="badge ${isSakitIzin ? 'badge-gray' : sudahKeluar ? 'badge-success' : 'badge-gray'}">
+                                        🔴 Keluar: ${isSakitIzin ? 'N/A' : (existing.jamKeluar || '-')}
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            `;
+                `;
+            } else {
+                cardHtml = `
+                    <div class="card" style="border-left: 4px solid var(--text-muted); margin-bottom: 12px;">
+                        <div class="card-body" style="text-align:center; padding: 16px;">
+                            <span style="font-size: 28px;">⚪</span>
+                            <div style="font-weight:600; margin-top:6px;">Belum ada absensi untuk tanggal ini</div>
+                            <div style="font-size:12px; color:var(--text-muted);">
+                                ${tgl === todayWIB ? 'Pilih status & klik "Absen Masuk"' : 'Tanggal lampau — perlu izin Admin'}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            statusCard.innerHTML = penggantiBannerHtml + cardHtml;
+        }
+
+        // ISI FORM JIKA ADA EXISTING
+        if (existing) {
+            const isSakitIzin = existing.status === 'S' || existing.status === 'I';
+
+            if (existing.status === 'H' || existing.status === 'T') {
+                const radioH = mainPanel.querySelector('input[name="statusMasukGuru"][value="H"]');
+                if (radioH) { radioH.checked = true; radioH.dispatchEvent(new Event('change')); }
+            } else if (existing.status === 'S') {
+                const radioS = mainPanel.querySelector('input[name="statusMasukGuru"][value="S"]');
+                if (radioS) { radioS.checked = true; radioS.dispatchEvent(new Event('change')); }
+            } else if (existing.status === 'I') {
+                const radioI = mainPanel.querySelector('input[name="statusMasukGuru"][value="I"]');
+                if (radioI) { radioI.checked = true; radioI.dispatchEvent(new Event('change')); }
+            }
+
+            if (existing.jamMasuk) {
+                jamMasukInput.value = existing.jamMasuk;
+                statusMasukInput.value =
+                    existing.status === 'T' ? '⏰ Terlambat'
+                    : existing.status === 'H' ? '✅ Hadir'
+                    : existing.status === 'S' ? '🤒 Sakit'
+                    : existing.status === 'I' ? '📝 Izin'
+                    : existing.status === 'A' ? '❌ Alpa' : '-';
+                jamMasukHint.textContent = `✅ Sudah absen masuk pukul ${existing.jamMasuk}`;
+                jamMasukHint.style.color = 'var(--success)';
+                btnAbsenMasuk.disabled = true;
+                btnAbsenMasuk.innerHTML = '✅ SUDAH ABSEN MASUK';
+                const ketMasuk = mainPanel.querySelector('#absGuruKeteranganMasuk');
+                if (ketMasuk && existing.keterangan) ketMasuk.value = existing.keterangan;
+            } else if (isSakitIzin) {
+                statusMasukInput.value = existing.status === 'S' ? '🤒 Sakit' : '📝 Izin';
+                jamMasukHint.textContent = `✅ Status ${existing.status === 'S' ? 'Sakit' : 'Izin'} tercatat`;
+                jamMasukHint.style.color = 'var(--info)';
+                btnAbsenMasuk.disabled = true;
+                btnAbsenMasuk.innerHTML = '✅ SUDAH ABSEN';
+                const ketMasuk = mainPanel.querySelector('#absGuruKeteranganMasuk');
+                if (ketMasuk && existing.keterangan) ketMasuk.value = existing.keterangan;
+            }
+
+            if (existing.jamKeluar) {
+                jamKeluarInput.value = existing.jamKeluar;
+                statusKeluarInput.value = '✅ Sudah Pulang';
+                jamKeluarHint.textContent = `✅ Sudah absen keluar pukul ${existing.jamKeluar}`;
+                jamKeluarHint.style.color = 'var(--success)';
+                btnAbsenKeluar.disabled = true;
+                btnAbsenKeluar.innerHTML = '✅ SUDAH ABSEN KELUAR';
+                const ketKeluar = mainPanel.querySelector('#absGuruKeteranganKeluar');
+                if (ketKeluar && existing.keteranganKeluar) ketKeluar.value = existing.keteranganKeluar;
+            } else if (isSakitIzin) {
+                btnAbsenKeluar.disabled = true;
+                btnAbsenKeluar.innerHTML = '🚫 Tidak Perlu (Sakit/Izin)';
+                jamKeluarHint.textContent = '🚫 Status Sakit/Izin tidak memerlukan absen keluar';
+                jamKeluarHint.style.color = 'var(--info)';
+            } else if (existing.jamMasuk) {
+                btnAbsenKeluar.disabled = false;
+                jamKeluarHint.textContent = 'Klik "Absen Keluar" untuk mengisi jam pulang';
+                jamKeluarHint.style.color = 'var(--text-muted)';
+            }
         } else {
-            cardHtml = `
-                <div class="card" style="border-left: 4px solid var(--text-muted); margin-bottom: 12px;">
-                    <div class="card-body" style="text-align:center; padding: 16px;">
-                        <span style="font-size: 28px;">⚪</span>
-                        <div style="font-weight:600; margin-top:6px;">Belum ada absensi untuk tanggal ini</div>
-                        <div style="font-size:12px; color:var(--text-muted);">
-                            ${tgl === todayWIB ? 'Pilih status & klik "Absen Masuk"' : 'Tanggal lampau — perlu izin Admin'}
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-        
-        // ✅ Gabungkan banner pengganti + kartu status
-        statusCard.innerHTML = penggantiBannerHtml + cardHtml;
-    }
-
-    // ============================================================
-    // ISI FORM JIKA ADA EXISTING
-    // ============================================================
-    if (existing) {
-        const isSakitIzin = existing.status === 'S' || existing.status === 'I';
-        
-        if (existing.status === 'H' || existing.status === 'T') {
-            const radioH = mainPanel.querySelector('input[name="statusMasukGuru"][value="H"]');
-            if (radioH) { radioH.checked = true; radioH.dispatchEvent(new Event('change')); }
-        } else if (existing.status === 'S') {
-            const radioS = mainPanel.querySelector('input[name="statusMasukGuru"][value="S"]');
-            if (radioS) { radioS.checked = true; radioS.dispatchEvent(new Event('change')); }
-        } else if (existing.status === 'I') {
-            const radioI = mainPanel.querySelector('input[name="statusMasukGuru"][value="I"]');
-            if (radioI) { radioI.checked = true; radioI.dispatchEvent(new Event('change')); }
-        }
-        
-        if (existing.jamMasuk) {
-            jamMasukInput.value = existing.jamMasuk;
-            statusMasukInput.value = 
-                existing.status === 'T' ? '⏰ Terlambat'
-                : existing.status === 'H' ? '✅ Hadir'
-                : existing.status === 'S' ? '🤒 Sakit'
-                : existing.status === 'I' ? '📝 Izin'
-                : existing.status === 'A' ? '❌ Alpa' : '-';
-            jamMasukHint.textContent = `✅ Sudah absen masuk pukul ${existing.jamMasuk}`;
-            jamMasukHint.style.color = 'var(--success)';
-            btnAbsenMasuk.disabled = true;
-            btnAbsenMasuk.innerHTML = '✅ SUDAH ABSEN MASUK';
-            const ketMasuk = mainPanel.querySelector('#absGuruKeteranganMasuk');
-            if (ketMasuk && existing.keterangan) ketMasuk.value = existing.keterangan;
-        } else if (isSakitIzin) {
-            statusMasukInput.value = existing.status === 'S' ? '🤒 Sakit' : '📝 Izin';
-            jamMasukHint.textContent = `✅ Status ${existing.status === 'S' ? 'Sakit' : 'Izin'} tercatat`;
-            jamMasukHint.style.color = 'var(--info)';
-            btnAbsenMasuk.disabled = true;
-            btnAbsenMasuk.innerHTML = '✅ SUDAH ABSEN';
-            const ketMasuk = mainPanel.querySelector('#absGuruKeteranganMasuk');
-            if (ketMasuk && existing.keterangan) ketMasuk.value = existing.keterangan;
-        }
-        
-        if (existing.jamKeluar) {
-            jamKeluarInput.value = existing.jamKeluar;
-            statusKeluarInput.value = '✅ Sudah Pulang';
-            jamKeluarHint.textContent = `✅ Sudah absen keluar pukul ${existing.jamKeluar}`;
-            jamKeluarHint.style.color = 'var(--success)';
             btnAbsenKeluar.disabled = true;
-            btnAbsenKeluar.innerHTML = '✅ SUDAH ABSEN KELUAR';
-            const ketKeluar = mainPanel.querySelector('#absGuruKeteranganKeluar');
-            if (ketKeluar && existing.keteranganKeluar) ketKeluar.value = existing.keteranganKeluar;
-        } else if (isSakitIzin) {
-            btnAbsenKeluar.disabled = true;
-            btnAbsenKeluar.innerHTML = '🚫 Tidak Perlu (Sakit/Izin)';
-            jamKeluarHint.textContent = '🚫 Status Sakit/Izin tidak memerlukan absen keluar';
-            jamKeluarHint.style.color = 'var(--info)';
-        } else if (existing.jamMasuk) {
-            btnAbsenKeluar.disabled = false;
-            jamKeluarHint.textContent = 'Klik "Absen Keluar" untuk mengisi jam pulang';
-            jamKeluarHint.style.color = 'var(--text-muted)';
         }
-    } else {
-        btnAbsenKeluar.disabled = true;
-    }
-    
-    // ============================================================
-    // ✅ BARU: Update hint "jamMasukHint" & "jamKeluarHint"
-    // dengan info batas waktu dari jadwal (guru asli untuk pengganti)
-    // ============================================================
-    if (!existing && statusPengganti.isPengganti) {
-        // Info batas masuk dari jadwal guru asli
-        const infoMasuk = cekWaktuAbsenMasuk(guruId, tgl, getStatusMasukPilihan());
-        if (infoMasuk.valid && infoMasuk.batasTerlambatInfo) {
-            const bt = infoMasuk.batasTerlambatInfo;
-            jamMasukHint.innerHTML = `⏰ Mapel pertama guru asli: <strong>${bt.jamMulaiPertama}</strong> ` +
-                                     `+ toleransi ${bt.toleransiMenit} menit = batas <strong>${bt.batasTerlambat}</strong>`;
-            jamMasukHint.style.color = 'var(--info)';
-        } else if (infoMasuk.valid) {
-            jamMasukHint.innerHTML = `✅ Waktu absen valid`;
-            jamMasukHint.style.color = 'var(--success)';
-        }
-        
-        // Info batas keluar dari jadwal guru asli
-        const infoKeluar = cekWaktuAbsenKeluar(guruId, tgl);
-        if (infoKeluar.reason === 'too_early') {
-            jamKeluarHint.innerHTML = `⏰ ${infoKeluar.message}`;
-            jamKeluarHint.style.color = 'var(--warning)';
-        } else if (infoKeluar.valid) {
-            jamKeluarHint.innerHTML = `✅ ${infoKeluar.message}`;
-            jamKeluarHint.style.color = 'var(--success)';
+
+        // Info pengganti (batas jam)
+        if (!existing && statusPengganti.isPengganti) {
+            const infoMasuk = cekWaktuAbsenMasuk(guruId, tgl, getStatusMasukPilihan());
+            if (infoMasuk.valid && infoMasuk.batasTerlambatInfo) {
+                const bt = infoMasuk.batasTerlambatInfo;
+                jamMasukHint.innerHTML = `⏰ Mapel pertama guru asli: <strong>${bt.jamMulaiPertama}</strong> ` +
+                                         `+ toleransi ${bt.toleransiMenit} menit = batas <strong>${bt.batasTerlambat}</strong>`;
+                jamMasukHint.style.color = 'var(--info)';
+            } else if (infoMasuk.valid) {
+                jamMasukHint.innerHTML = `✅ Waktu absen valid`;
+                jamMasukHint.style.color = 'var(--success)';
+            }
+
+            const infoKeluar = cekWaktuAbsenKeluar(guruId, tgl);
+            if (infoKeluar.reason === 'too_early') {
+                jamKeluarHint.innerHTML = `⏰ ${infoKeluar.message}`;
+                jamKeluarHint.style.color = 'var(--warning)';
+            } else if (infoKeluar.valid) {
+                jamKeluarHint.innerHTML = `✅ ${infoKeluar.message}`;
+                jamKeluarHint.style.color = 'var(--success)';
+            }
         }
     }
-}
-
 
     // ============================================================
-    // VALIDASI TANGGAL (DIPERBAIKI: MENGHORMATI GURU PENGGANTI)
+    // VALIDASI TANGGAL
     // ============================================================
     function validateTanggalAbsensi() {
         const tgl = tanggalInput.value;
         const todayWIB = getTodayWIB();
-        
+
         tanggalHint.textContent = '';
         tanggalHint.className = 'field-hint';
         tanggalHint.style.color = '';
@@ -15663,7 +15922,7 @@ function refreshAbsenGuruStatus() {
         if (permohonanContainer) permohonanContainer.innerHTML = '';
         const oldBtn = mainPanel.querySelector('#btnAjukanPermohonan');
         if (oldBtn) oldBtn.remove();
-        
+
         if (!tgl) return true;
 
         if (isTanggalLibur(tgl)) {
@@ -15688,19 +15947,14 @@ function refreshAbsenGuruStatus() {
             : (absGuruSelect?.value || '');
 
         if (guruIdUntukValidasi) {
-            // ============================================================
-            // ✅ BARU: Cek jadwal EFEKTIF (pribadi + penggantian)
-            // ============================================================
             const jadwalEfektif = getJadwalEfektifGuru(guruIdUntukValidasi, tgl);
-            
+
             if (jadwalEfektif.length === 0) {
-                // Tidak ada jadwal pribadi & tidak ada penggantian → blokir
                 const cekJadwal = cekHariMengajarGuru(guruIdUntukValidasi, tgl);
                 const statusPengganti = cekStatusGuruPengganti(guruIdUntukValidasi, tgl);
-                
+
                 let msg = '';
                 if (statusPengganti.isPengganti) {
-                    // Ada data pengganti tapi jadwal guru asli tidak ditemukan
                     msg = `⚠️ Anda tercatat sebagai guru pengganti untuk <strong>${escapeHtml(statusPengganti.guruAsliName)}</strong>, ` +
                           `tetapi jadwal guru asli tidak ditemukan pada hari <strong>${getNamaHariDariTanggal(tgl)}</strong>.<br>` +
                           `<small>Hubungi Admin untuk melengkapi jadwal.</small>`;
@@ -15718,8 +15972,7 @@ function refreshAbsenGuruStatus() {
                 tanggalInput.classList.add('error');
                 return false;
             }
-            
-            // ✅ Ada jadwal efektif → jika pengganti, tampilkan info
+
             const statusPengganti = cekStatusGuruPengganti(guruIdUntukValidasi, tgl);
             if (statusPengganti.isPengganti) {
                 tanggalHint.innerHTML = `
@@ -15732,19 +15985,18 @@ function refreshAbsenGuruStatus() {
                 `;
                 tanggalHint.className = 'field-hint success';
                 tanggalHint.style.color = '';
-                // Lanjut cek izin tanggal lampau
             }
         }
 
         if (isUser && isNipVerified && verifiedGuruId && tgl < todayWIB) {
             const izin = cekIzinAbsensiTanggal(verifiedGuruId, tgl);
-            
+
             if (!izin.allowed) {
                 let msg = '';
                 let showAjukanBtn = false;
                 let warnaBorder = 'var(--danger)';
                 let warnaBg = 'var(--danger-50)';
-                
+
                 if (izin.reason === 'no_permission') {
                     msg = `🔒 <strong>Belum ada izin dari Admin</strong> untuk mengisi absen pada tanggal ini.<br>
                            <small>Ajukan permohonan terlebih dahulu agar Admin dapat menyetujui.</small>`;
@@ -15767,7 +16019,7 @@ function refreshAbsenGuruStatus() {
                     warnaBorder = 'var(--warning)';
                     warnaBg = 'var(--warning-50)';
                 }
-                
+
                 tanggalHint.innerHTML = `
                     <div style="background: ${warnaBg}; border-left: 4px solid ${warnaBorder}; 
                                 padding: 10px 14px; border-radius: 6px; margin-top: 8px; 
@@ -15778,7 +16030,7 @@ function refreshAbsenGuruStatus() {
                 tanggalHint.className = 'field-hint';
                 tanggalHint.style.color = '';
                 tanggalInput.classList.add('error');
-                
+
                 if (showAjukanBtn) {
                     const ajukanBtn = document.createElement('button');
                     ajukanBtn.id = 'btnAjukanPermohonan';
@@ -15795,22 +16047,21 @@ function refreshAbsenGuruStatus() {
                         tanggalHint.parentNode.appendChild(ajukanBtn);
                     }
                 }
-                
+
                 return false;
             } else {
                 const sisa = hitungSisaWaktuIzin(izin.permohonan?.berlakuSampai);
-                const tglBerlaku = izin.permohonan?.berlakuSampai 
-                    ? formatTanggalIndo(izin.permohonan.berlakuSampai) 
+                const tglBerlaku = izin.permohonan?.berlakuSampai
+                    ? formatTanggalIndo(izin.permohonan.berlakuSampai)
                     : '-';
-                
+
                 let badgeColor = 'var(--success)';
                 if (sisa) {
                     if (sisa.expired) badgeColor = 'var(--danger)';
                     else if (sisa.urgent) badgeColor = 'var(--danger)';
                     else if (sisa.warning) badgeColor = 'var(--warning)';
                 }
-                
-                // ✅ Jika pengganti, jangan timpa info pengganti
+
                 const statusPengganti = cekStatusGuruPengganti(verifiedGuruId, tgl);
                 const penggantiInfo = statusPengganti.isPengganti ? `
                     <div style="background: var(--info-50); border-left: 4px solid var(--info); 
@@ -15818,7 +16069,7 @@ function refreshAbsenGuruStatus() {
                         🔄 <strong>Mode Guru Pengganti</strong> — menggantikan <strong>${escapeHtml(statusPengganti.guruAsliName)}</strong>
                     </div>
                 ` : '';
-                
+
                 tanggalHint.innerHTML = `
                     ${penggantiInfo}
                     <div style="background: var(--success-50); border-left: 4px solid var(--success); 
@@ -15844,10 +16095,9 @@ function refreshAbsenGuruStatus() {
                 return true;
             }
         }
-        
+
         if (tgl === todayWIB) {
-            // ✅ Jika pengganti, hint sudah ditampilkan di atas
-            const statusPengganti = guruIdUntukValidasi 
+            const statusPengganti = guruIdUntukValidasi
                 ? cekStatusGuruPengganti(guruIdUntukValidasi, tgl)
                 : { isPengganti: false };
             if (!statusPengganti.isPengganti) {
@@ -15856,12 +16106,12 @@ function refreshAbsenGuruStatus() {
                 tanggalHint.style.color = 'var(--success)';
             }
         }
-        
+
         return true;
     }
 
     // ============================================================
-    // HANDLER: ABSEN MASUK (DENGAN STATUS S/I)
+    // HANDLER: ABSEN MASUK
     // ============================================================
     btnAbsenMasuk.onclick = async () => {
         const tanggal = tanggalInput.value;
@@ -15872,7 +16122,6 @@ function refreshAbsenGuruStatus() {
         const todayWIB = getTodayWIB();
         const statusPilihan = getStatusMasukPilihan();
 
-        // ===== 1. Validasi dasar =====
         if (isTanggalLibur(tanggal)) {
             const ket = getKeteranganLibur(tanggal);
             showToast("⛔ Hari Libur", `Tanggal <strong>${formatTanggalIndo(tanggal)}</strong> adalah <strong>${escapeHtml(ket)}</strong>.`, "danger");
@@ -15887,14 +16136,11 @@ function refreshAbsenGuruStatus() {
             return;
         }
 
-        // ============================================================
-        // ✅ 2. Validasi jadwal — DIPERBAIKI: cek jadwal EFEKTIF
-        // ============================================================
         const jadwalEfektif = getJadwalEfektifGuru(guruId, tanggal);
         if (jadwalEfektif.length === 0) {
             const cekJadwal = cekHariMengajarGuru(guruId, tanggal);
             const statusPengganti = cekStatusGuruPengganti(guruId, tanggal);
-            
+
             let msg;
             if (statusPengganti.isPengganti) {
                 msg = `Anda tercatat sebagai guru pengganti, tetapi jadwal guru asli pada hari <strong>${getNamaHariDariTanggal(tanggal)}</strong> tidak ditemukan. Hubungi Admin.`;
@@ -15906,26 +16152,23 @@ function refreshAbsenGuruStatus() {
             showToast("⛔ Tidak Ada Jadwal", msg, "danger");
             return;
         }
-        
-        // Jika pengganti → tampilkan info sukses
+
         const statusPengganti = cekStatusGuruPengganti(guruId, tanggal);
         if (statusPengganti.isPengganti) {
-            showToast("🔄 Mode Guru Pengganti", 
-                `Anda menggantikan <strong>${escapeHtml(statusPengganti.guruAsliName)}</strong> pada ${formatTanggalIndo(tanggal)}. Status absen mengikuti jadwal guru asli.`, 
+            showToast("🔄 Mode Guru Pengganti",
+                `Anda menggantikan <strong>${escapeHtml(statusPengganti.guruAsliName)}</strong> pada ${formatTanggalIndo(tanggal)}. Status absen mengikuti jadwal guru asli.`,
                 "info");
         }
 
-        // ============================================================
-        // 3. CABANG: STATUS SAKIT / IZIN
-        // ============================================================
+        // CABANG: STATUS SAKIT / IZIN
         if (statusPilihan === 'S' || statusPilihan === 'I') {
             const statusLabel = statusPilihan === 'S' ? 'Sakit' : 'Izin';
 
             if (!keteranganMasuk || keteranganMasuk.trim() === '') {
                 showToast(
-                    "⚠️ Alasan Wajib Diisi", 
+                    "⚠️ Alasan Wajib Diisi",
                     `Silakan isi <strong>alasan ${statusLabel}</strong> pada kolom <strong>Keterangan Masuk</strong> terlebih dahulu!<br>` +
-                    `<small>Contoh: "Sakit demam", "Izin acara keluarga", dll.</small>`, 
+                    `<small>Contoh: "Sakit demam", "Izin acara keluarga", dll.</small>`,
                     "danger"
                 );
                 const ketInput = mainPanel.querySelector('#absGuruKeteranganMasuk');
@@ -15940,7 +16183,7 @@ function refreshAbsenGuruStatus() {
                 }
                 return;
             }
-            
+
             if (!confirm(
                 `Tandai absensi sebagai ${statusLabel}?\n\n` +
                 `📅 Tanggal: ${formatTanggalIndo(tanggal)}\n` +
@@ -15962,7 +16205,6 @@ function refreshAbsenGuruStatus() {
                     jamKeluar: '',
                     status: statusPilihan,
                     keterangan: keteranganMasuk,
-                    // ✅ Penanda pengganti
                     isGuruPengganti: statusPengganti.isPengganti,
                     guruAsliId: statusPengganti.isPengganti ? statusPengganti.guruAsliId : '',
                     guruAsliName: statusPengganti.isPengganti ? statusPengganti.guruAsliName : '',
@@ -15984,8 +16226,6 @@ function refreshAbsenGuruStatus() {
                 );
 
                 refreshAbsenGuruStatus();
-                renderAbsensiGuruStats();
-                renderAbsensiGuruList();
             } catch (e) {
                 console.error(e);
                 showToast("Gagal", "Gagal menyimpan status: " + e.message, "danger");
@@ -15995,32 +16235,29 @@ function refreshAbsenGuruStatus() {
             return;
         }
 
-        // ============================================================
-        // LANJUT: STATUS HADIR (H) / TERLAMBAT (T)
-        // ============================================================
-        
+        // STATUS HADIR (H) / TERLAMBAT (T)
         if (tanggal === todayWIB) {
             const cekJam = cekWaktuAbsenMasuk(guruId, tanggal, statusPilihan);
-            
+
             if (!cekJam.valid) {
                 let izinLuarJam = { allowed: false };
                 if (isUser && isNipVerified && verifiedGuruId) {
                     izinLuarJam = cekIzinAbsenLuarJam(verifiedGuruId, tanggal, 'MASUK');
                 }
-                
+
                 if (cekJam.reason === 'expired_alpa_after_last_schedule' && cekJam.isAlpa) {
                     if (izinLuarJam.allowed) {
-                        showToast("✅ Izin Diterima", 
-                            `Anda memiliki izin dari admin untuk absen di luar jam.<br><small>Alasan: ${escapeHtml(izinLuarJam.permohonan?.alasan || '-')}</small>`, 
+                        showToast("✅ Izin Diterima",
+                            `Anda memiliki izin dari admin untuk absen di luar jam.<br><small>Alasan: ${escapeHtml(izinLuarJam.permohonan?.alasan || '-')}</small>`,
                             "info");
                     } else if (izinLuarJam.reason === 'pending') {
-                        showToast("⏳ Menunggu Persetujuan", 
-                            "Permohonan izin Anda masih diproses admin. Silakan tunggu.", 
+                        showToast("⏳ Menunggu Persetujuan",
+                            "Permohonan izin Anda masih diproses admin. Silakan tunggu.",
                             "warning");
                         return;
                     } else if (izinLuarJam.reason === 'expired') {
-                        showToast("⛔ Izin Kadaluarsa", 
-                            "Izin Anda sudah kadaluarsa. Silakan ajukan permohonan baru.", 
+                        showToast("⛔ Izin Kadaluarsa",
+                            "Izin Anda sudah kadaluarsa. Silakan ajukan permohonan baru.",
                             "danger");
                         if (isUser && isNipVerified && verifiedGuruId) {
                             setTimeout(() => {
@@ -16035,7 +16272,7 @@ function refreshAbsenGuruStatus() {
                         const existingAlpa = absensiGuruCache.find(a =>
                             a.tanggal === tanggal && a.guruId === guruId && a.isAutoAlpa === true
                         );
-                        
+
                         if (!existingAlpa) {
                             try {
                                 await addDoc(absensiGuruCol, {
@@ -16050,13 +16287,13 @@ function refreshAbsenGuruStatus() {
                                     resolved: false,
                                     createdAt: serverTimestamp()
                                 });
-                                
+
                                 const infoJadwal = getJamSelesaiTerakhirGuru(guruId, tanggal);
                                 const batasAkhir = infoJadwal?.jamSelesai || jamAbsensiSetting.jamMasukSelesai;
                                 const alasanAlpa = infoJadwal?.jamSelesai
                                     ? `lewat jam pelajaran terakhir (${infoJadwal.jamSelesai} WIB)`
                                     : `lewat batas absen masuk (${jamAbsensiSetting.jamMasukSelesai} WIB)`;
-                                
+
                                 await kirimNotifikasiAdmin({
                                     tipe: 'AUTO_ALPA',
                                     judul: `⛔ Guru Auto Alpa: ${guruName || verifiedGuruName || 'Guru'}`,
@@ -16071,11 +16308,9 @@ function refreshAbsenGuruStatus() {
                                         adaJadwal: !!infoJadwal
                                     }
                                 });
-                                
+
                                 showToast("⛔ ALPA Tercatat", cekJam.message, "danger");
                                 refreshAbsenGuruStatus();
-                                renderAbsensiGuruStats();
-                                renderAbsensiGuruList();
                             } catch (e) {
                                 console.error(e);
                                 showToast("Gagal", "Gagal menyimpan status Alpa: " + e.message, "danger");
@@ -16083,7 +16318,7 @@ function refreshAbsenGuruStatus() {
                         } else {
                             showToast("⛔ Waktu Habis", cekJam.message, "danger");
                         }
-                        
+
                         if (isUser && isNipVerified && verifiedGuruId) {
                             setTimeout(() => {
                                 const ajukan = confirm(
@@ -16105,22 +16340,22 @@ function refreshAbsenGuruStatus() {
                         return;
                     }
                 } else if (izinLuarJam.allowed) {
-                    showToast("✅ Izin Diterima", 
-                        `Anda memiliki izin dari admin untuk absen di luar jam.<br><small>Alasan: ${escapeHtml(izinLuarJam.permohonan?.alasan || '-')}</small>`, 
+                    showToast("✅ Izin Diterima",
+                        `Anda memiliki izin dari admin untuk absen di luar jam.<br><small>Alasan: ${escapeHtml(izinLuarJam.permohonan?.alasan || '-')}</small>`,
                         "info");
                 } else if (izinLuarJam.reason === 'pending') {
-                    showToast("⏳ Menunggu Persetujuan", 
-                        "Permohonan izin Anda masih diproses admin. Silakan tunggu.", 
+                    showToast("⏳ Menunggu Persetujuan",
+                        "Permohonan izin Anda masih diproses admin. Silakan tunggu.",
                         "warning");
                     return;
                 } else if (izinLuarJam.reason === 'expired') {
-                    showToast("⛔ Izin Kadaluarsa", 
-                        "Izin Anda sudah kadaluarsa. Silakan ajukan permohonan baru.", 
+                    showToast("⛔ Izin Kadaluarsa",
+                        "Izin Anda sudah kadaluarsa. Silakan ajukan permohonan baru.",
                         "danger");
                     return;
                 } else {
-                    showToast("⛔ Di Luar Jam Absen Masuk", 
-                        `${cekJam.message}<br><br>Anda dapat mengajukan <strong>permohonan izin</strong> ke Admin.`, 
+                    showToast("⛔ Di Luar Jam Absen Masuk",
+                        `${cekJam.message}<br><br>Anda dapat mengajukan <strong>permohonan izin</strong> ke Admin.`,
                         "danger");
                     if (isUser && isNipVerified && verifiedGuruId) {
                         openAjukanIzinLuarJamModal(verifiedGuruId, verifiedGuruName, tanggal, 'MASUK', cekJam.reason);
@@ -16128,11 +16363,11 @@ function refreshAbsenGuruStatus() {
                     return;
                 }
             }
-        } 
+        }
         else if (tanggal < todayWIB) {
             if (isUser && isNipVerified && verifiedGuruId) {
                 const izin = cekIzinAbsensiTanggal(verifiedGuruId, tanggal);
-                
+
                 if (!izin.allowed) {
                     let msg = '';
                     if (izin.reason === 'no_permission') {
@@ -16144,22 +16379,22 @@ function refreshAbsenGuruStatus() {
                     } else if (izin.reason === 'rejected') {
                         msg = `❌ <strong>Permohonan Anda ditolak Admin.</strong><br>Silakan hubungi admin untuk informasi lebih lanjut.`;
                     }
-                    
+
                     showToast("⛔ Tidak Dapat Input Absen Susulan", msg, "danger");
-                    
+
                     if (izin.reason === 'no_permission' || izin.reason === 'expired' || izin.reason === 'rejected') {
                         openAjukanPermohonanModal(verifiedGuruId, verifiedGuruName, tanggal, izin.reason);
                     }
                     return;
                 }
-                
-                showToast("✅ Izin Diterima", 
-                    `Anda memiliki izin admin untuk mengisi absen masuk susulan tanggal <strong>${formatTanggalIndo(tanggal)}</strong>.`, 
+
+                showToast("✅ Izin Diterima",
+                    `Anda memiliki izin admin untuk mengisi absen masuk susulan tanggal <strong>${formatTanggalIndo(tanggal)}</strong>.`,
                     "info");
             }
         }
 
-        // ===== 4. Validasi GPS =====
+        // Validasi GPS
         let lokasiData = null;
         if (geoConfig.enabled && isUser) {
             btnAbsenMasuk.disabled = true;
@@ -16181,41 +16416,24 @@ function refreshAbsenGuruStatus() {
             };
         }
 
-        // ===== 5. Tentukan jam & status =====
+        // Tentukan jam & status
         const now = new Date();
         const wib = new Date(now.getTime() + (7 * 60 * 60 * 1000));
-        const jamMasuk = String(wib.getUTCHours()).padStart(2, '0') + ':' + 
+        const jamMasuk = String(wib.getUTCHours()).padStart(2, '0') + ':' +
                          String(wib.getUTCMinutes()).padStart(2, '0');
 
         let statusMasuk;
         if (tanggal < todayWIB) {
             statusMasuk = 'H';
-            console.log('📅 Input susulan tanggal', tanggal, '→ status: H (Hadir)');
         } else {
             const infoBatas = getBatasTerlambatGuru(guruId, tanggal);
-            
+
             if (infoBatas.valid) {
                 const menitSekarang = wib.getUTCHours() * 60 + wib.getUTCMinutes();
-                const selisih = menitSekarang - infoBatas.batasTerlambatMenit;
                 statusMasuk = menitSekarang > infoBatas.batasTerlambatMenit ? 'T' : 'H';
-                
-                console.log('🎯 [ABSEN MASUK] Status dari JADWAL:', {
-                    'Jam sekarang': jamMasuk,
-                    'Mapel pertama': infoBatas.jadwalPertama?.mapelName || '-',
-                    'Jam mulai mapel': infoBatas.jamMulaiPertama,
-                    'Toleransi': `${infoBatas.toleransiMenit} menit`,
-                    'Batas terlambat': infoBatas.batasTerlambat,
-                    'Selisih (menit)': selisih,
-                    'STATUS': statusMasuk === 'T' ? '⏰ TERLAMBAT' : '✅ HADIR',
-                    'Sumber Jadwal': infoBatas.isJadwalPengganti ? 'GURU ASLI (pengganti)' : 'PRIBADI',
-                    'Alasan': statusMasuk === 'T' 
-                        ? `Lewat ${selisih} menit dari batas ${infoBatas.batasTerlambat}`
-                        : `Masih dalam batas (${Math.abs(selisih)} menit sebelum batas)`
-                });
-                
                 if (statusMasuk === 'T') {
                     showToast(
-                        "⏰ Terlambat", 
+                        "⏰ Terlambat",
                         `Anda absen pukul <strong>${jamMasuk}</strong>, melewati batas <strong>${infoBatas.batasTerlambat}</strong> ` +
                         `(mapel <strong>${escapeHtml(infoBatas.jadwalPertama?.mapelName || '-')}</strong> mulai ${infoBatas.jamMulaiPertama} + toleransi ${infoBatas.toleransiMenit} menit).`,
                         "warning"
@@ -16225,18 +16443,8 @@ function refreshAbsenGuruStatus() {
                 const menitSekarang = wib.getUTCHours() * 60 + wib.getUTCMinutes();
                 const menitBatasLama = parseJamKeMenit(jamAbsensiSetting.batasTerlambat || '07:15');
                 statusMasuk = menitSekarang > menitBatasLama ? 'T' : 'H';
-                
-                console.warn('⚠️ [ABSEN MASUK] FALLBACK ke batasTerlambat setting:', {
-                    'Alasan': infoBatas.reason,
-                    'Message': infoBatas.message,
-                    'Jam sekarang': jamMasuk,
-                    'Batas lama': jamAbsensiSetting.batasTerlambat,
-                    'STATUS': statusMasuk === 'T' ? '⏰ TERLAMBAT' : '✅ HADIR',
-                    'PERINGATAN': 'Status mungkin tidak akurat karena jadwal tidak ditemukan!'
-                });
-                
                 showToast(
-                    "⚠️ Peringatan", 
+                    "⚠️ Peringatan",
                     `Jadwal mengajar Anda pada hari ini tidak ditemukan di sistem. Status absen menggunakan batas default <strong>${jamAbsensiSetting.batasTerlambat}</strong>. ` +
                     `Hubungi Admin jika ini tidak sesuai.`,
                     "warning"
@@ -16244,7 +16452,7 @@ function refreshAbsenGuruStatus() {
             }
         }
 
-        // ===== 6. Cek existing =====
+        // Cek existing
         const existing = absensiGuruCache.find(a => a.tanggal === tanggal && a.guruId === guruId);
         if (existing && (existing.jamMasuk || ['S','I'].includes(existing.status))) {
             showToast("Info", "Sudah ada absen masuk untuk tanggal ini!", "warning");
@@ -16260,7 +16468,6 @@ function refreshAbsenGuruStatus() {
                 const updateData = {
                     jamMasuk, status: statusMasuk,
                     keterangan: keteranganMasuk,
-                    // ✅ Penanda pengganti
                     isGuruPengganti: statusPengganti.isPengganti,
                     guruAsliId: statusPengganti.isPengganti ? statusPengganti.guruAsliId : (existing.guruAsliId || ''),
                     guruAsliName: statusPengganti.isPengganti ? statusPengganti.guruAsliName : (existing.guruAsliName || ''),
@@ -16273,7 +16480,6 @@ function refreshAbsenGuruStatus() {
                     tanggal, guruId, guruName,
                     jamMasuk, status: statusMasuk,
                     keterangan: keteranganMasuk,
-                    // ✅ Penanda pengganti
                     isGuruPengganti: statusPengganti.isPengganti,
                     guruAsliId: statusPengganti.isPengganti ? statusPengganti.guruAsliId : '',
                     guruAsliName: statusPengganti.isPengganti ? statusPengganti.guruAsliName : '',
@@ -16286,16 +16492,14 @@ function refreshAbsenGuruStatus() {
                 }
                 await addDoc(absensiGuruCol, payload);
             }
-            
+
             const statusLabel = statusMasuk === 'T' ? 'Terlambat' : 'Hadir';
             const susulanLabel = (tanggal < todayWIB) ? ' <span class="badge badge-warning">📅 Susulan</span>' : '';
             const penggantiLabel = statusPengganti.isPengganti ? ' <span class="badge badge-info">🔄 Pengganti</span>' : '';
-            showToast("✅ Absen Masuk Berhasil", 
-                `Jam masuk: <strong>${jamMasuk}</strong> — Status: <strong>${statusLabel}</strong>${susulanLabel}${penggantiLabel}`, 
+            showToast("✅ Absen Masuk Berhasil",
+                `Jam masuk: <strong>${jamMasuk}</strong> — Status: <strong>${statusLabel}</strong>${susulanLabel}${penggantiLabel}`,
                 "success");
             refreshAbsenGuruStatus();
-            renderAbsensiGuruStats();
-            renderAbsensiGuruList();
         } catch (e) {
             console.error(e);
             showToast("Gagal", "Gagal menyimpan absen masuk: " + e.message, "danger");
@@ -16320,14 +16524,14 @@ function refreshAbsenGuruStatus() {
         }
 
         const existing = absensiGuruCache.find(a => a.tanggal === tanggal && a.guruId === guruId);
-        
+
         if (existing && ['S', 'I'].includes(existing.status)) {
-            showToast("Info", 
-                `Status <strong>${existing.status === 'S' ? 'Sakit' : 'Izin'}</strong> tidak memerlukan absen keluar.`, 
+            showToast("Info",
+                `Status <strong>${existing.status === 'S' ? 'Sakit' : 'Izin'}</strong> tidak memerlukan absen keluar.`,
                 "info");
             return;
         }
-        
+
         if (!existing || !existing.jamMasuk) {
             showToast("⛔ Belum Absen Masuk", "Anda harus absen masuk terlebih dahulu sebelum absen keluar.", "danger");
             return;
@@ -16340,42 +16544,36 @@ function refreshAbsenGuruStatus() {
         let isSusulanKeluar = false;
 
         if (tanggal === todayWIB) {
-            // ============================================================
-            // ✅ Untuk guru pengganti, cek absen keluar pakai jadwal EFEKTIF
-            // (cekWaktuAbsenKeluar sudah fallback via getJamSelesaiTerakhirGuru)
-            // ============================================================
             const cekJam = cekWaktuAbsenKeluar(guruId, tanggal);
-            
+
             if (!cekJam.valid) {
                 if (cekJam.reason === 'too_late' && cekJam.bolehSusulan) {
                     const sudahAbsenMasuk = !!(existing && existing.jamMasuk);
-                    
+
                     if (!sudahAbsenMasuk) {
-                        showToast("⛔ Tidak Boleh Susulan", 
-                            "Anda belum absen masuk. Absen keluar susulan hanya untuk guru yang sudah absen masuk.", 
+                        showToast("⛔ Tidak Boleh Susulan",
+                            "Anda belum absen masuk. Absen keluar susulan hanya untuk guru yang sudah absen masuk.",
                             "danger");
                         return;
                     }
-                    
+
                     const konfirmasi = confirm(
                         `⏰ Anda terlewat absen keluar\n\n` +
                         `📅 Tanggal: ${formatTanggalIndo(tanggal)}\n` +
                         `🕐 Jam masuk: ${existing.jamMasuk}\n` +
                         `🕐 Batas absen keluar: ${cekJam.jamBatas || '-'}\n\n` +
-                        `✅ Karena Anda <strong>sudah absen masuk</strong>, Anda dapat mengisi\n` +
-                        `   jam keluar susulan TANPA perlu izin Admin.\n\n` +
-                        `Jam keluar akan tercatat sebagai "<strong>susulan</strong>" untuk audit.\n\n` +
+                        `✅ Karena Anda sudah absen masuk, Anda dapat mengisi jam keluar susulan TANPA perlu izin Admin.\n\n` +
                         `Lanjutkan isi jam keluar susulan?`
                     );
-                    
+
                     if (!konfirmasi) {
                         showToast("Info", "Absen keluar susulan dibatalkan.", "info");
                         return;
                     }
-                    
+
                     isSusulanKeluar = true;
-                    showToast("✅ Susulan Diizinkan", 
-                        "Silakan isi jam keluar. Data akan ditandai sebagai susulan.", 
+                    showToast("✅ Susulan Diizinkan",
+                        "Silakan isi jam keluar. Data akan ditandai sebagai susulan.",
                         "info");
                 }
                 else if (cekJam.reason === 'pending_permission') {
@@ -16383,17 +16581,17 @@ function refreshAbsenGuruStatus() {
                     return;
                 }
                 else {
-                    showToast("⛔ Di Luar Jam Absen Keluar", 
-                        `${cekJam.message}<br><br>Anda <strong>wajib mengajukan izin</strong> ke Admin untuk absen keluar susulan.`, 
+                    showToast("⛔ Di Luar Jam Absen Keluar",
+                        `${cekJam.message}<br><br>Anda <strong>wajib mengajukan izin</strong> ke Admin untuk absen keluar susulan.`,
                         "danger");
-                    
+
                     if (isUser && isNipVerified && verifiedGuruId) {
                         setTimeout(() => {
                             openAjukanIzinLuarJamModal(
-                                verifiedGuruId, 
-                                verifiedGuruName, 
-                                tanggal, 
-                                'KELUAR', 
+                                verifiedGuruId,
+                                verifiedGuruName,
+                                tanggal,
+                                'KELUAR',
                                 cekJam.reason
                             );
                         }, 500);
@@ -16401,9 +16599,9 @@ function refreshAbsenGuruStatus() {
                     return;
                 }
             }
-            
+
             if (cekJam.valid && cekJam.reason === 'override_by_permission') {
-                showToast("✅ Izin Diterima", 
+                showToast("✅ Izin Diterima",
                     "Anda memiliki izin admin untuk absen keluar susulan.", "info");
             }
         }
@@ -16441,31 +16639,29 @@ function refreshAbsenGuruStatus() {
                 keteranganKeluar,
                 updatedAt: serverTimestamp()
             };
-            
+
             if (isSusulanKeluar) {
                 updateData.jamKeluarSusulan = true;
                 updateData.susulanAt = serverTimestamp();
                 updateData.susulanReason = 'Lewat jam keluar, sudah absen masuk';
                 updateData.susulanMode = 'TANPA_IZIN';
             }
-            
+
             if (lokasiData) {
                 updateData.lokasiKeluar = lokasiData;
             }
-            
+
             await updateDoc(doc(db, 'absensiGuru', existing.id), updateData);
-            
-            const susulanLabel = isSusulanKeluar 
-                ? ' <span class="badge badge-warning">📅 Susulan</span>' 
+
+            const susulanLabel = isSusulanKeluar
+                ? ' <span class="badge badge-warning">📅 Susulan</span>'
                 : '';
-            
-            showToast("✅ Absen Keluar Berhasil", 
-                `Jam keluar: <strong>${jamKeluar}</strong>${susulanLabel}`, 
+
+            showToast("✅ Absen Keluar Berhasil",
+                `Jam keluar: <strong>${jamKeluar}</strong>${susulanLabel}`,
                 "success");
-            
+
             refreshAbsenGuruStatus();
-            renderAbsensiGuruStats();
-            renderAbsensiGuruList();
         } catch (e) {
             console.error(e);
             showToast("Gagal", "Gagal menyimpan absen keluar: " + e.message, "danger");
@@ -16523,7 +16719,7 @@ function refreshAbsenGuruStatus() {
                 String(gp.guruPenggantiId || '').trim() === String(guruId).trim() &&
                 gp.tanggal === tgl
             );
-            
+
             if (listPengganti.length > 0) {
                 guruHariHint.innerHTML = `🔄 <strong style="color:var(--info);">Guru pengganti pada ${formatTanggalIndo(tgl)}</strong> — ${listPengganti.length} penugasan`;
             } else if (hariMengajar.length > 0) {
@@ -16542,7 +16738,6 @@ function refreshAbsenGuruStatus() {
     tanggalInput.addEventListener('change', () => {
         validateTanggalAbsensi();
         refreshAbsenGuruStatus();
-        // ✅ Update hint guru saat tanggal berubah
         if (absGuruSelect && guruHariHint && !isUser) {
             absGuruSelect.dispatchEvent(new Event('change'));
         }
@@ -16555,25 +16750,12 @@ function refreshAbsenGuruStatus() {
     // ============================================================
     // RENDER AWAL
     // ============================================================
-    renderAbsensiGuruStats();
-    renderAbsensiGuruList();
     refreshAbsenGuruStatus();
     validateTanggalAbsensi();
 
     // ============================================================
-    // FILTER & EXPORT
+    // HANDLER: Hapus semua rejected permohonan (di panel admin)
     // ============================================================
-    const searchEl = mainPanel.querySelector('#absGuruSearch');
-    const filterTgl = mainPanel.querySelector('#absGuruFilterTanggal');
-    if (searchEl) searchEl.addEventListener('input', () => renderAbsensiGuruList());
-    if (filterTgl) filterTgl.addEventListener('change', () => renderAbsensiGuruList());
-    mainPanel.querySelector('#btnResetFilterAbsGuru').onclick = () => {
-        if (searchEl) searchEl.value = '';
-        if (filterTgl) filterTgl.value = '';
-        renderAbsensiGuruList();
-    };
-    mainPanel.querySelector('#btnExportAbsGuru').onclick = () => exportAbsensiGuruExcel();
-
     const btnHapusSemuaRejected = mainPanel.querySelector('#btnHapusSemuaRejected');
     if (btnHapusSemuaRejected) {
         btnHapusSemuaRejected.onclick = () => window.hapusSemuaRejected();
@@ -16586,7 +16768,7 @@ function refreshAbsenGuruStatus() {
                 const rejected = permohonanAbsenLuarJamCache.filter(p => p.status === 'rejected');
                 if (rejected.length === 0) return;
                 if (!confirm(`Hapus SEMUA ${rejected.length} riwayat ditolak/dicabut?`)) return;
-                
+
                 try {
                     const batch = writeBatch(db);
                     rejected.forEach(p => {
@@ -16601,12 +16783,81 @@ function refreshAbsenGuruStatus() {
         }
     }, 100);
 
-    // ✅ Sweep ALPA saat admin/guru buka tab ini
+    // Sweep ALPA saat buka tab ini
     setTimeout(() => {
         sweepAutoAlpaGuru().catch(e => console.error('Sweep error:', e));
     }, 1000);
 }
-// === BATAS AKHIR function renderAbsensiGuruTab() { === //
+
+
+// ============================================================
+// ✅ KONTEN SUB-TAB: RIWAYAT ABSENSI
+// (filter, statistik, tabel riwayat)
+// ============================================================
+function renderRiwayatAbsensiGuruContent(mainPanel, ctx) {
+    const { isUser } = ctx;
+
+    mainPanel.innerHTML = `
+        ${isUser ? `
+            <div class="periode-info" style="border-left-color: var(--primary); margin-bottom: 16px;">
+                <div class="periode-icon">🔒</div>
+                <div class="periode-text">
+                    <strong>Data Terfilter:</strong> Menampilkan riwayat absensi Anda 
+                    (<strong>${escapeHtml(verifiedGuruName || '-')}</strong>)
+                </div>
+            </div>
+        ` : ''}
+        
+        <!-- Filter -->
+        <div class="filter-section" style="margin-bottom: 16px;">
+            <div class="filter-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr;">
+                <div class="filter-item">
+                    <label>🔍 Cari Guru</label>
+                    <input type="text" id="absGuruSearch" class="form-control" placeholder="Nama guru...">
+                </div>
+                <div class="filter-item">
+                    <label>📅 Filter Tanggal</label>
+                    <input type="date" id="absGuruFilterTanggal" class="form-control">
+                </div>
+                <div class="filter-item" style="display:flex; align-items:end;">
+                    <button class="btn btn-ghost btn-sm" id="btnResetFilterAbsGuru" style="width:100%;">🔄 Reset</button>
+                </div>
+                <div class="filter-item" style="display:flex; align-items:end;">
+                    <button class="btn btn-success btn-sm" id="btnExportAbsGuru" style="width:100%;">📗 Export Excel</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Statistik -->
+        <div id="absGuruStatsContainer"></div>
+        
+        <!-- Tabel Riwayat -->
+        <div id="absGuruListContainer"></div>
+    `;
+
+    const searchEl = mainPanel.querySelector('#absGuruSearch');
+    const filterTgl = mainPanel.querySelector('#absGuruFilterTanggal');
+
+    if (searchEl) searchEl.addEventListener('input', () => renderAbsensiGuruList());
+    if (filterTgl) filterTgl.addEventListener('change', () => renderAbsensiGuruList());
+
+    mainPanel.querySelector('#btnResetFilterAbsGuru').onclick = () => {
+        if (searchEl) searchEl.value = '';
+        if (filterTgl) filterTgl.value = '';
+        renderAbsensiGuruList();
+    };
+    mainPanel.querySelector('#btnExportAbsGuru').onclick = () => exportAbsensiGuruExcel();
+
+    // Render data
+    renderAbsensiGuruStats();
+    renderAbsensiGuruList();
+
+    // Handler tombol hapus riwayat rejected (di panel admin yg sudah tidak ada disini)
+    const btnHapusSemuaRejected = mainPanel.querySelector('#btnHapusSemuaRejected');
+    if (btnHapusSemuaRejected) {
+        btnHapusSemuaRejected.onclick = () => window.hapusSemuaRejected();
+    }
+}
 
 
 // ============================================================
@@ -23714,56 +23965,61 @@ function renderMonitoringTab() {
     const allSantri = santriCache || [];
     
     // ============================================================
-    // ✅ BARU: Filter data berdasarkan role (guru yang login)
+    // ✅ FIX 1: Filter data dasar berdasarkan role
     // ============================================================
     let guruList = allGuru;
     let mapelList = allMapel;
     let santriList = allSantri;
     
     if (isUser && verifiedGuruId) {
-        // USER: hanya guru sendiri
         guruList = allGuru.filter(g => g.id === verifiedGuruId);
-        
-        // ✅ FIX: Mapel hanya yang diampu guru ini
         mapelList = allMapel.filter(m => m.guruId === verifiedGuruId);
-        
-        // ✅ FIX: Santri hanya dari kelas yang diajar guru ini
         const kelasGuru = [...new Set(mapelList.map(m => m.kelas).filter(k => k))];
         santriList = allSantri.filter(s => kelasGuru.includes(String(s.kelas)));
     }
     
-    let totalGuru = guruList.length;
+    // ============================================================
+    // ✅ FIX 2: Daftar Kelas untuk dropdown — ambil dari SUMBER TERPERCAYA
+    // (mapelList, bukan dari guruData yang mungkin kosong)
+    // ============================================================
+    const daftarKelas = [...new Set(
+        mapelList.map(m => m.kelas).filter(k => k && k !== 'undefined' && k !== 'null')
+    )].sort((a, b) => (parseInt(a) || 0) - (parseInt(b) || 0));
+    
+    // ============================================================
+    // ✅ FIX 3: Validasi filter HANYA jika daftarKelas TIDAK kosong
+    // ============================================================
+    let filterKelas = monitoringFilterKelas || 'SEMUA';
+    if (filterKelas !== 'SEMUA' && daftarKelas.length > 0 && !daftarKelas.includes(String(filterKelas))) {
+        console.warn('⚠️ Filter kelas tidak valid, reset ke SEMUA:', filterKelas);
+        monitoringFilterKelas = filterKelas = 'SEMUA';
+    }
+    
+    // ============================================================
+    // ✅ FIX 4: Hitung guruData (logika sama seperti sebelumnya)
+    // ============================================================
     let totalGuruWithMapel = 0;
     let totalGuruComplete = 0;
     let totalGuruPartial = 0;
     let totalGuruEmpty = 0;
     
-    // ============================================================
-    // ✅ FIX: Hitung statistik HANYA dari guru & mapel yang relevan
-    // ============================================================
     const guruData = guruList.map(guru => {
-        // Mapel guru — untuk USER sudah terfilter, untuk ADMIN tetap semua
         const mapelGuru = mapelList.filter(m => m.guruId === guru.id);
         const kelasGuru = [...new Set(mapelGuru.map(m => m.kelas).filter(k => k))];
         
         const mapelDetails = mapelGuru.map(m => {
-            // ✅ FIX: santri per kelas dari santriList (sudah terfilter untuk USER)
             const santriKelas = santriList.filter(s => String(s.kelas) === String(m.kelas));
             const totalSantri = santriKelas.length;
             
-            // ✅ FIX: filter nilai berdasarkan guruId juga (bukan hanya mapel+kelas)
-            // agar konsisten dengan data yang diampu guru
             const uhData = allNilai.filter(n => 
-                n.mapel === m.name && 
-                n.type === 'UH' && 
+                n.mapel === m.name && n.type === 'UH' && 
                 String(n.kelas) === String(m.kelas) &&
                 (n.guruId === guru.id || !n.guruId)
             );
             const uhUnique = new Set(uhData.map(n => n.santriName));
             
             const ptsData = allNilai.filter(n => 
-                n.mapel === m.name && 
-                n.type === 'PTS' && 
+                n.mapel === m.name && n.type === 'PTS' && 
                 String(n.kelas) === String(m.kelas) &&
                 (n.guruId === guru.id || !n.guruId)
             );
@@ -23771,7 +24027,7 @@ function renderMonitoringTab() {
             
             const pasData = allNilai.filter(n => 
                 n.mapel === m.name && 
-                (n.type === 'PAS_LISAN' || n.type === 'PAS_TULIS' || n.type === 'PAS_PRAKTEK' || n.type === 'PAS') &&
+                ['PAS_LISAN', 'PAS_TULIS', 'PAS_PRAKTEK', 'PAS'].includes(n.type) &&
                 String(n.kelas) === String(m.kelas) &&
                 (n.guruId === guru.id || !n.guruId)
             );
@@ -23787,9 +24043,7 @@ function renderMonitoringTab() {
             };
         });
         
-        let uhTotal = 0, uhDone = 0;
-        let ptsTotal = 0, ptsDone = 0;
-        let pasTotal = 0, pasDone = 0;
+        let uhTotal = 0, uhDone = 0, ptsTotal = 0, ptsDone = 0, pasTotal = 0, pasDone = 0;
         mapelDetails.forEach(m => {
             uhTotal += m.uh.total;   uhDone += m.uh.done;
             ptsTotal += m.pts.total; ptsDone += m.pts.done;
@@ -23816,81 +24070,79 @@ function renderMonitoringTab() {
             mapelCount: mapelGuru.length,
             kelas: kelasGuru,
             mapelDetails,
-            uhTotal, uhDone,
-            ptsTotal, ptsDone,
-            pasTotal, pasDone,
+            uhTotal, uhDone, ptsTotal, ptsDone, pasTotal, pasDone,
             uhStatus: Math.round(uhStatus),
             ptsStatus: Math.round(ptsStatus),
             pasStatus: Math.round(pasStatus),
-            isComplete,
-            isPartial,
-            isEmpty,
+            isComplete, isPartial, isEmpty,
             totalProgress: Math.round(totalProgress)
         };
     });
     
     // ============================================================
-    // ✅ BARU: Daftar unik untuk dropdown (dari data yang relevan)
+    // ✅ FIX 5: Daftar Mapel untuk filter — cascade dari kelas
     // ============================================================
-    const daftarKelas = [...new Set(
-        guruData.flatMap(g => g.kelas)
-    )].sort((a, b) => (parseInt(a) || 0) - (parseInt(b) || 0));
-    
-    const daftarGuru = guruData
-        .map(g => ({ id: g.id, name: g.name }))
-        .sort((a, b) => a.name.localeCompare(b.name));
-    
-    // ✅ BARU: Daftar mapel — cascade dari kelas (jika kelas dipilih)
     let mapelUntukFilter = mapelList;
-    if (monitoringFilterKelas && monitoringFilterKelas !== 'SEMUA') {
-        mapelUntukFilter = mapelList.filter(m => String(m.kelas) === String(monitoringFilterKelas));
+    if (filterKelas !== 'SEMUA') {
+        mapelUntukFilter = mapelList.filter(m => String(m.kelas) === String(filterKelas));
     }
     const daftarMapel = [...new Set(
         mapelUntukFilter.map(m => m.name).filter(n => n)
     )].sort();
     
     // ============================================================
-    // State filter
+    // ✅ FIX 6: State filter
     // ============================================================
     let filterStatus = monitoringFilterStatus || 'SEMUA';
-    let filterKelas = monitoringFilterKelas || 'SEMUA';
     let filterGuruId = isUser ? (verifiedGuruId || 'SEMUA') : (monitoringFilterGuru || 'SEMUA');
     let filterMapelName = monitoringFilterMapel || 'SEMUA';
     
-    // ✅ FIX: Validasi filter mapel jika kelas berubah
     if (filterMapelName !== 'SEMUA' && !daftarMapel.includes(filterMapelName)) {
         monitoringFilterMapel = filterMapelName = 'SEMUA';
     }
-    // ✅ FIX: Validasi filter kelas
-    if (filterKelas !== 'SEMUA' && !daftarKelas.includes(filterKelas)) {
-        monitoringFilterKelas = filterKelas = 'SEMUA';
-    }
     
     // ============================================================
-    // Terapkan filter
+    // ✅ FIX 7: Terapkan filter (URUTAN PENTING: Guru → Kelas → Mapel → Status)
     // ============================================================
     let filteredData = guruData;
     
-    if (filterStatus === 'COMPLETE')  filteredData = filteredData.filter(g => g.isComplete);
-    else if (filterStatus === 'PARTIAL') filteredData = filteredData.filter(g => g.isPartial);
-    else if (filterStatus === 'EMPTY')   filteredData = filteredData.filter(g => g.isEmpty);
-    else if (filterStatus === 'NO_MAPEL') filteredData = filteredData.filter(g => g.mapelCount === 0);
-    
-    // ✅ FIX: Filter kelas
-    if (filterKelas !== 'SEMUA') {
-        filteredData = filteredData.filter(g => g.kelas.includes(filterKelas));
-    }
-    
-    // ✅ FIX: Filter guru
+    // Filter Guru
     if (filterGuruId !== 'SEMUA' && filterGuruId !== '') {
         filteredData = filteredData.filter(g => g.id === filterGuruId);
     }
     
-    // ✅ FIX: Filter mapel — cek mapelDetails ATAU kelas
+    // ✅ FIX KRITIS: Filter Kelas — cek apakah guru punya mapel di kelas ini
+    if (filterKelas !== 'SEMUA') {
+        filteredData = filteredData
+            .map(g => {
+                // Cek mapelDetails yang cocok dengan kelas
+                const mapelDiKelas = g.mapelDetails.filter(m => String(m.kelas) === String(filterKelas));
+                
+                // Jika guru tidak punya mapel di kelas ini → keluarkan dari hasil
+                if (mapelDiKelas.length === 0) return null;
+                
+                // Jika guru punya, tampilkan HANYA mapel di kelas ini
+                // (kecuali jika tidak ada filter mapel lain, tampilkan semua)
+                return {
+                    ...g,
+                    mapelDetails: mapelDiKelas,
+                    mapelCount: mapelDiKelas.length,
+                    // ✅ Update statistik sesuai mapel yang ditampilkan
+                    uhDone: mapelDiKelas.reduce((s, m) => s + m.uh.done, 0),
+                    uhTotal: mapelDiKelas.reduce((s, m) => s + m.uh.total, 0),
+                    ptsDone: mapelDiKelas.reduce((s, m) => s + m.pts.done, 0),
+                    ptsTotal: mapelDiKelas.reduce((s, m) => s + m.pts.total, 0),
+                    pasDone: mapelDiKelas.reduce((s, m) => s + m.pas.done, 0),
+                    pasTotal: mapelDiKelas.reduce((s, m) => s + m.pas.total, 0)
+                };
+            })
+            .filter(Boolean);
+    }
+    
+    // Filter Mapel
     if (filterMapelName !== 'SEMUA' && filterMapelName !== '') {
         filteredData = filteredData
             .map(g => {
-                // Jika filter mapel aktif, hanya tampilkan mapel yang cocok di detail
                 const mapelFiltered = g.mapelDetails.filter(m => 
                     m.name === filterMapelName &&
                     (filterKelas === 'SEMUA' || String(m.kelas) === String(filterKelas))
@@ -23905,7 +24157,13 @@ function renderMonitoringTab() {
             .filter(Boolean);
     }
     
-    // Sort: yang belum selesai di atas
+    // Filter Status
+    if (filterStatus === 'COMPLETE')       filteredData = filteredData.filter(g => g.isComplete);
+    else if (filterStatus === 'PARTIAL')   filteredData = filteredData.filter(g => g.isPartial);
+    else if (filterStatus === 'EMPTY')     filteredData = filteredData.filter(g => g.isEmpty);
+    else if (filterStatus === 'NO_MAPEL')  filteredData = filteredData.filter(g => g.mapelCount === 0);
+    
+    // Sort
     filteredData.sort((a, b) => {
         if (a.isComplete && !b.isComplete) return 1;
         if (!a.isComplete && b.isComplete) return -1;
@@ -23913,14 +24171,22 @@ function renderMonitoringTab() {
     });
     
     // ============================================================
-    // RENDER HTML
+    // ✅ FIX 8: Daftar guru untuk dropdown (dari data yang sudah difilter)
+    // ============================================================
+    const daftarGuru = guruData
+        .map(g => ({ id: g.id, name: g.name }))
+        .sort((a, b) => a.name.localeCompare(b.name));
+    
+    // ============================================================
+    // RENDER (sama seperti sebelumnya, hanya pastikan `filterKelas` 
+    // yang dipakai untuk `selected` di dropdown)
     // ============================================================
     const mainPanel = document.getElementById('mainPanel');
     let html = `
         <div class="flex-between" style="margin-bottom: 16px;">
             <h3 style="font-size: 16px; font-weight: 600; margin: 0;">👀 Monitoring Input Nilai Guru</h3>
             <span class="badge badge-primary" style="font-size: 13px; padding: 6px 14px;">
-                ${isUser ? '1 Guru' : totalGuru + ' Guru'}
+                ${isUser ? '1 Guru' : daftarGuru.length + ' Guru'}
             </span>
         </div>
         
@@ -23960,11 +24226,11 @@ function renderMonitoringTab() {
                 🔗 <strong>Filter Cascade:</strong> 
                 ${isUser 
                   ? 'Pilih <strong>Kelas</strong> → dropdown <strong>Mapel</strong> otomatis menyesuaikan.'
-                  : 'Pilih <strong>Kelas</strong> → <strong>Mapel</strong> → <strong>Guru</strong> secara bertingkat.'
+                  : 'Pilih <strong>Guru</strong> → <strong>Kelas</strong> → <strong>Mapel</strong> secara bertingkat.'
                 }
             </div>
             
-            <div class="filter-grid" style="grid-template-columns: ${isUser ? '1fr 1fr 1fr 1fr' : '1fr 1fr 1fr 1fr'};">
+            <div class="filter-grid" style="grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));">
                 ${!isUser ? `
                 <div class="filter-item">
                     <label>① 👨‍🏫 Guru</label>
@@ -23986,8 +24252,13 @@ function renderMonitoringTab() {
                     <label>${isUser ? '①' : '②'} 📚 Kelas</label>
                     <select id="monitoringFilterKelas" class="form-control">
                         <option value="SEMUA" ${filterKelas === 'SEMUA' ? 'selected' : ''}>📚 Semua Kelas</option>
-                        ${daftarKelas.map(k => `<option value="${k}" ${String(filterKelas) === String(k) ? 'selected' : ''}>Kelas ${k}</option>`).join('')}
+                        ${daftarKelas.map(k => 
+                            `<option value="${k}" ${String(filterKelas) === String(k) ? 'selected' : ''}>Kelas ${k}</option>`
+                        ).join('')}
                     </select>
+                    <small class="field-hint" style="color: var(--text-muted);">
+                        ${daftarKelas.length} kelas tersedia
+                    </small>
                 </div>
                 
                 <div class="filter-item">
@@ -24020,7 +24291,9 @@ function renderMonitoringTab() {
             </div>
             <div class="filter-actions">
                 <button class="btn btn-ghost btn-sm" id="btnResetMonitoringFilter">🔄 Reset Filter</button>
-                <span class="badge badge-primary" style="font-size:13px; padding:6px 14px;">${filteredData.length} Guru</span>
+                <span class="badge badge-primary" style="font-size:13px; padding:6px 14px;">
+                    ${filteredData.length} Guru ${filterKelas !== 'SEMUA' ? `(Kelas ${filterKelas})` : ''}
+                </span>
             </div>
         </div>
         
@@ -24028,7 +24301,8 @@ function renderMonitoringTab() {
             ${filteredData.length === 0 ? `
                 <div style="text-align:center; padding:40px; color: var(--text-muted);">
                     <div style="font-size:32px; margin-bottom:8px;">📭</div>
-                    Tidak ada data guru yang ditemukan dengan filter saat ini.
+                    <strong>Tidak ada guru yang cocok dengan filter</strong>
+                    ${filterKelas !== 'SEMUA' ? `<br><small>Tidak ada guru yang mengajar di Kelas ${filterKelas}</small>` : ''}
                 </div>
             ` : filteredData.map(g => `
                 <div class="monitoring-card ${g.isComplete ? 'status-complete' : g.isPartial ? 'status-partial' : 'status-empty'}">
@@ -24049,21 +24323,21 @@ function renderMonitoringTab() {
                             <span class="count">${g.uhDone}/${g.uhTotal}</span>
                             <span class="label">📝 UH</span>
                             <div class="progress-bar">
-                                <div class="fill ${g.uhStatus >= 100 ? 'green' : g.uhStatus > 0 ? 'yellow' : 'red'}" style="width:${g.uhStatus}%"></div>
+                                <div class="fill ${g.uhStatus >= 100 ? 'green' : g.uhStatus > 0 ? 'yellow' : 'red'}" style="width:${Math.min(g.uhStatus, 100)}%"></div>
                             </div>
                         </div>
                         <div class="progress-item ${g.ptsStatus >= 100 ? 'complete' : g.ptsStatus > 0 ? 'partial' : 'empty'}">
                             <span class="count">${g.ptsDone}/${g.ptsTotal}</span>
                             <span class="label">📊 PTS</span>
                             <div class="progress-bar">
-                                <div class="fill ${g.ptsStatus >= 100 ? 'green' : g.ptsStatus > 0 ? 'yellow' : 'red'}" style="width:${g.ptsStatus}%"></div>
+                                <div class="fill ${g.ptsStatus >= 100 ? 'green' : g.ptsStatus > 0 ? 'yellow' : 'red'}" style="width:${Math.min(g.ptsStatus, 100)}%"></div>
                             </div>
                         </div>
                         <div class="progress-item ${g.pasStatus >= 100 ? 'complete' : g.pasStatus > 0 ? 'partial' : 'empty'}">
                             <span class="count">${g.pasDone}/${g.pasTotal}</span>
                             <span class="label">📋 PAS</span>
                             <div class="progress-bar">
-                                <div class="fill ${g.pasStatus >= 100 ? 'green' : g.pasStatus > 0 ? 'yellow' : 'red'}" style="width:${g.pasStatus}%"></div>
+                                <div class="fill ${g.pasStatus >= 100 ? 'green' : g.pasStatus > 0 ? 'yellow' : 'red'}" style="width:${Math.min(g.pasStatus, 100)}%"></div>
                             </div>
                         </div>
                     </div>
@@ -24086,7 +24360,7 @@ function renderMonitoringTab() {
                                             <span style="margin-left:auto; font-weight:700;">${statusLabel} ${avgPct}%</span>
                                         </div>
                                         <div class="progress-bar">
-                                            <div class="fill ${statusColor}" style="width:${avgPct}%"></div>
+                                            <div class="fill ${statusColor}" style="width:${Math.min(avgPct, 100)}%"></div>
                                         </div>
                                     </div>
                                 `;
@@ -24100,15 +24374,15 @@ function renderMonitoringTab() {
     mainPanel.innerHTML = html;
     
     // ============================================================
-    // ✅ EVENT LISTENERS CASCADE
+    // ✅ FIX 9: EVENT LISTENERS — pastikan re-render dengan state yang benar
     // ============================================================
     
-    // Guru filter (ADMIN only)
     if (!isUser) {
         const filterGuruSelect = document.getElementById('monitoringFilterGuru');
         if (filterGuruSelect) {
             filterGuruSelect.addEventListener('change', function() {
                 monitoringFilterGuru = this.value;
+                // Reset downstream
                 monitoringFilterKelas = 'SEMUA';
                 monitoringFilterMapel = 'SEMUA';
                 renderMonitoringTab();
@@ -24116,17 +24390,22 @@ function renderMonitoringTab() {
         }
     }
     
-    // ✅ FIX: Kelas berubah → RESET mapel (cascade)
+    // ✅ FIX KRITIS: Kelas berubah → RESET mapel, tapi JANGAN reset kelas
     const filterKelasSelect = document.getElementById('monitoringFilterKelas');
     if (filterKelasSelect) {
         filterKelasSelect.addEventListener('change', function() {
-            monitoringFilterKelas = this.value;
-            monitoringFilterMapel = 'SEMUA'; // ✅ reset mapel
+            const newKelas = this.value;
+            console.log('🔄 Filter kelas berubah:', newKelas);
+            
+            // Simpan nilai kelas SEBELUM render
+            monitoringFilterKelas = newKelas;
+            monitoringFilterMapel = 'SEMUA';  // reset mapel (cascade)
+            
+            // Re-render
             renderMonitoringTab();
         });
     }
     
-    // Mapel berubah
     const filterMapelSelect = document.getElementById('monitoringFilterMapel');
     if (filterMapelSelect) {
         filterMapelSelect.addEventListener('change', function() {
@@ -24135,7 +24414,6 @@ function renderMonitoringTab() {
         });
     }
     
-    // Status berubah
     const filterStatusSelect = document.getElementById('monitoringFilterStatus');
     if (filterStatusSelect) {
         filterStatusSelect.addEventListener('change', function() {
@@ -24144,7 +24422,6 @@ function renderMonitoringTab() {
         });
     }
     
-    // Reset
     const resetBtn = document.getElementById('btnResetMonitoringFilter');
     if (resetBtn) {
         resetBtn.addEventListener('click', function() {
