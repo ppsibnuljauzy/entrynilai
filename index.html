@@ -4455,6 +4455,1302 @@ select.form-control.error {
         transition-duration: 0.01s !important;
     }
 }
+
+
+/* ============================================================
+   ✅ PREMIUM NAV ITEM — Brimo/Livin Style (Mobile-First)
+   Fokus: menu Pembelajaran (Input Nilai, Transaksi, Rekap Nilai)
+   ============================================================ */
+
+/* ---------- 1. BASE: Semua nav item premium ---------- */
+.sidebar-nav .nav-item {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* ---------- 2. ICON dengan background gradient (seperti Brimo) ---------- */
+.sidebar-nav .nav-item .nav-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 1;
+}
+
+/* ---------- 3. HOVER STATE (desktop) ---------- */
+@media (hover: hover) and (min-width: 769px) {
+    .sidebar-nav .nav-item:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(4px);
+    }
+    
+    .sidebar-nav .nav-item:hover .nav-icon {
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.08) rotate(-3deg);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+}
+
+/* ---------- 4. ACTIVE STATE — GLOW + GRADIENT (premium) ---------- */
+.sidebar-nav .nav-item.active {
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.28) 0%,
+        rgba(255, 255, 255, 0.14) 100%);
+    color: #ffffff;
+    font-weight: 700;
+    box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    animation: premiumActivePulse 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-nav .nav-item.active .nav-icon {
+    background: linear-gradient(135deg, #ffffff, #e0f2f1);
+    color: var(--primary-dark);
+    box-shadow:
+        0 4px 12px rgba(255, 255, 255, 0.35),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.08);
+    transform: scale(1.05);
+    border-color: transparent;
+}
+
+@keyframes premiumActivePulse {
+    0% {
+        box-shadow:
+            0 0 0 0 rgba(255, 255, 255, 0.5),
+            0 4px 16px rgba(0, 0, 0, 0.2);
+    }
+    100% {
+        box-shadow:
+            0 0 0 14px rgba(255, 255, 255, 0),
+            0 4px 16px rgba(0, 0, 0, 0.2);
+    }
+}
+
+/* Garis aksen kiri (indikator aktif) */
+.sidebar-nav .nav-item.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 70%;
+    background: linear-gradient(180deg, #ffffff, #a7f3d0);
+    border-radius: 0 4px 4px 0;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+    z-index: 2;
+}
+
+/* ---------- 5. HALUS: Text alignment ---------- */
+.sidebar-nav .nav-item > span:last-child {
+    font-size: 13.5px;
+    letter-spacing: -0.1px;
+    line-height: 1.3;
+    flex: 1;
+    min-width: 0;
+}
+
+/* ============================================================
+   ✅ KHUSUS: REKAP NILAI (item premium highlight)
+   Beri sentuhan khusus agar tampil beda dari item lain
+   ============================================================ */
+.sidebar-nav .nav-item[data-tab="REKAP_SISWA"] .nav-icon {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(139, 92, 246, 0.15));
+    border-color: rgba(168, 85, 247, 0.3);
+}
+
+.sidebar-nav .nav-item[data-tab="REKAP_SISWA"]:hover .nav-icon {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.4), rgba(139, 92, 246, 0.3));
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+.sidebar-nav .nav-item[data-tab="REKAP_SISWA"].active .nav-icon {
+    background: linear-gradient(135deg, #c084fc, #a855f7);
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(168, 85, 247, 0.5);
+}
+
+/* ✅ Transaksi & Input Nilai — sentuhan warna masing-masing */
+.sidebar-nav .nav-item[data-tab="INPUT"] .nav-icon {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(37, 99, 235, 0.15));
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.sidebar-nav .nav-item[data-tab="TRANSAKSI"] .nav-icon {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(217, 119, 6, 0.15));
+    border-color: rgba(245, 158, 11, 0.3);
+}
+
+.sidebar-nav .nav-item[data-tab="JURNAL"] .nav-icon {
+    background: linear-gradient(135deg, rgba(20, 184, 166, 0.25), rgba(13, 148, 136, 0.15));
+    border-color: rgba(20, 184, 166, 0.3);
+}
+
+/* ============================================================
+   ✅ MOBILE: Touch-optimized (48px height sesuai aksesibilitas)
+   ============================================================ */
+@media (max-width: 768px) {
+    .sidebar-nav .nav-item {
+        padding: 12px 16px;
+        border-radius: 14px;
+        gap: 14px;
+        min-height: 56px;
+        transition:
+            background 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+            transform 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+            box-shadow 0.25s ease;
+    }
+    
+    .sidebar-nav .nav-item .nav-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 19px;
+        border-radius: 12px;
+    }
+    
+    .sidebar-nav .nav-item > span:last-child {
+        font-size: 14.5px;
+        font-weight: 600;
+    }
+    
+    /* Active state lebih tegas di mobile */
+    .sidebar-nav .nav-item.active {
+        background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.32) 0%,
+            rgba(255, 255, 255, 0.16) 100%);
+        box-shadow:
+            0 6px 20px rgba(0, 0, 0, 0.25),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+    
+    .sidebar-nav .nav-item.active .nav-icon {
+        transform: scale(1.1);
+    }
+    
+    /* Press effect (tap feedback) */
+    .sidebar-nav .nav-item:active {
+        transform: scale(0.97);
+        transition: transform 0.08s ease;
+    }
+    
+    /* Tap highlight halus */
+    .sidebar-nav .nav-item::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.25), transparent 70%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+        border-radius: inherit;
+    }
+    
+    .sidebar-nav .nav-item:active::before {
+        opacity: 1;
+        transition: opacity 0.1s ease;
+    }
+}
+
+/* ============================================================
+   ✅ XL: iPad / Tablet (≥ 769px s/d 1024px)
+   ============================================================ */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .sidebar-nav .nav-item {
+        padding: 11px 14px;
+        gap: 12px;
+        border-radius: 12px;
+    }
+    
+    .sidebar-nav .nav-item .nav-icon {
+        width: 34px;
+        height: 34px;
+        font-size: 16px;
+        border-radius: 9px;
+    }
+}
+
+/* ============================================================
+   ✅ NAV GROUP TITLE — seperti section header di Brimo
+   ============================================================ */
+.nav-group-title {
+    padding: 10px 16px 6px;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    color: rgba(255, 255, 255, 0.55);
+    text-transform: uppercase;
+    position: relative;
+    margin-top: 4px;
+}
+
+.nav-group-title:hover {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* ============================================================
+   ✅ DIVIDER antar grup (lebih rapi)
+   ============================================================ */
+.nav-group + .nav-group {
+    margin-top: 4px;
+    padding-top: 4px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ============================================================
+   ✅ SMOOTH TRANSITION untuk collapse/expand group
+   ============================================================ */
+.nav-group-items {
+    transition:
+        max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.3s ease,
+        padding 0.3s ease;
+}
+
+.nav-group.collapsed .nav-group-items {
+    max-height: 0 !important;
+    opacity: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    overflow: hidden;
+}
+
+/* ============================================================
+   ✅ REDUCED MOTION (aksesibilitas)
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+    .sidebar-nav .nav-item,
+    .sidebar-nav .nav-item .nav-icon,
+    .nav-group-items {
+        transition-duration: 0.01s !important;
+        animation-duration: 0.01s !important;
+    }
+}
+
+
+/* ============================================================
+   ✅ REKAP NILAI — MOBILE-FRIENDLY (Brimo/Livin/JKN Style)
+   ============================================================ */
+
+/* ---------- 1. CARD REKAP NILAI ---------- */
+.rekap-card {
+    background: var(--bg-secondary);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: box-shadow 0.2s ease, transform 0.15s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.rekap-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--success);
+}
+
+.rekap-card.belum-tuntas::before {
+    background: var(--danger);
+}
+
+.rekap-card:active {
+    transform: scale(0.985);
+}
+
+/* ---------- 2. HEADER CARD (Nama + Kelas + Status) ---------- */
+.rekap-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.rekap-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 800;
+    flex-shrink: 0;
+    box-shadow: 0 3px 10px rgba(5, 150, 105, 0.25);
+    letter-spacing: -0.5px;
+}
+
+.rekap-card.belum-tuntas .rekap-avatar {
+    background: linear-gradient(135deg, var(--danger), #b91c1c);
+    box-shadow: 0 3px 10px rgba(220, 38, 38, 0.25);
+}
+
+.rekap-header-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.rekap-nama {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.3;
+    margin-bottom: 4px;
+    word-break: break-word;
+}
+
+.rekap-meta {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    font-size: 11px;
+    color: var(--text-secondary);
+    align-items: center;
+}
+
+.rekap-meta .badge {
+    font-size: 10px;
+    padding: 2px 8px;
+}
+
+/* ---------- 3. STATUS BADGE (TUNTAS / BELUM) ---------- */
+.rekap-status-badge {
+    flex-shrink: 0;
+    padding: 5px 12px;
+    border-radius: 50px;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    align-self: flex-start;
+}
+
+.rekap-status-badge.tuntas {
+    background: var(--success-50);
+    color: var(--success);
+    border: 1.5px solid var(--success);
+}
+
+.rekap-status-badge.belum {
+    background: var(--danger-50);
+    color: var(--danger);
+    border: 1.5px solid var(--danger);
+}
+
+/* ---------- 4. NILAI GRID (2 kolom) ---------- */
+.rekap-nilai-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.rekap-nilai-item {
+    background: var(--bg-primary);
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.rekap-nilai-label {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.rekap-nilai-value {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+}
+
+.rekap-nilai-value.empty {
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 12px;
+}
+
+/* Warna khusus per nilai */
+.rekap-nilai-item.nilai-uh .rekap-nilai-value { color: var(--primary); }
+.rekap-nilai-item.nilai-pts .rekap-nilai-value { color: var(--warning); }
+.rekap-nilai-item.nilai-pas .rekap-nilai-value { color: var(--info); }
+
+/* ---------- 5. NA (NILAI AKHIR) BOX — Highlight ---------- */
+.rekap-na-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--success), var(--primary-dark));
+    color: #fff;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25);
+    position: relative;
+    overflow: hidden;
+}
+
+.rekap-na-box::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -30%;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+}
+
+.rekap-card.belum-tuntas .rekap-na-box {
+    background: linear-gradient(135deg, var(--danger), #991b1b);
+    box-shadow: 0 4px 14px rgba(220, 38, 38, 0.25);
+}
+
+.rekap-na-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    opacity: 0.9;
+}
+
+.rekap-na-value {
+    font-size: 26px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -1px;
+    font-variant-numeric: tabular-nums;
+}
+
+.rekap-na-kkm {
+    font-size: 10px;
+    opacity: 0.8;
+    margin-top: 2px;
+    font-weight: 600;
+}
+
+/* ---------- 6. DESKRIPSI (collapsible) ---------- */
+.rekap-deskripsi-wrapper {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border-color);
+}
+
+.rekap-deskripsi-toggle {
+    width: 100%;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    font-family: 'Inter', sans-serif;
+    text-align: left;
+}
+
+.rekap-deskripsi-toggle:active {
+    transform: scale(0.98);
+}
+
+.rekap-deskripsi-toggle .arrow {
+    transition: transform 0.3s ease;
+    font-size: 10px;
+}
+
+.rekap-deskripsi-toggle.open .arrow {
+    transform: rotate(180deg);
+}
+
+.rekap-deskripsi-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.rekap-deskripsi-content.open {
+    max-height: 500px;
+    padding: 10px 4px 0;
+}
+
+/* ---------- 7. FILTER COLLAPSIBLE (MOBILE) ---------- */
+.rekap-filter-toggle {
+    display: none;
+    width: 100%;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.rekap-filter-toggle .filter-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--primary-50);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+.rekap-filter-toggle .arrow {
+    transition: transform 0.3s ease;
+}
+
+.rekap-filter-toggle.open .arrow {
+    transform: rotate(180deg);
+}
+
+/* ---------- 8. SUMMARY BAR (Sticky Top) ---------- */
+.rekap-summary-bar {
+    display: flex;
+    justify-content: space-around;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 12px 8px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.rekap-summary-item {
+    text-align: center;
+    flex: 1;
+    padding: 0 6px;
+    position: relative;
+}
+
+.rekap-summary-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 15%;
+    height: 70%;
+    width: 1px;
+    background: var(--border-color);
+}
+
+.rekap-summary-number {
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.5px;
+}
+
+.rekap-summary-label {
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 4px;
+}
+
+.rekap-summary-item.green .rekap-summary-number { color: var(--success); }
+.rekap-summary-item.red .rekap-summary-number { color: var(--danger); }
+.rekap-summary-item.blue .rekap-summary-number { color: var(--primary); }
+.rekap-summary-item.yellow .rekap-summary-number { color: var(--warning); }
+
+/* ---------- 9. EMPTY STATE ---------- */
+.rekap-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+}
+
+.rekap-empty-icon {
+    font-size: 56px;
+    margin-bottom: 16px;
+    opacity: 0.6;
+}
+
+.rekap-empty-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+}
+
+.rekap-empty-text {
+    font-size: 12px;
+    line-height: 1.5;
+    max-width: 280px;
+    margin: 0 auto;
+}
+
+/* ---------- 10. PAGINATION MOBILE ---------- */
+.rekap-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 10px;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.rekap-page-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.rekap-page-btn:active {
+    transform: scale(0.92);
+}
+
+.rekap-page-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.rekap-page-info {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    min-width: 80px;
+    text-align: center;
+}
+
+/* ============================================================
+   ✅ RESPONSIVE — MOBILE (≤ 768px)
+   ============================================================ */
+@media (max-width: 768px) {
+    /* Sembunyikan tabel, tampilkan card */
+    .rekap-table-desktop {
+        display: none !important;
+    }
+    
+    /* Tampilkan filter toggle */
+    .rekap-filter-toggle {
+        display: flex;
+    }
+    
+    /* Filter section collapsible */
+    .rekap-filter-section {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), margin 0.3s ease;
+        margin-bottom: 0 !important;
+    }
+    
+    .rekap-filter-section.open {
+        max-height: 1200px;
+        margin-bottom: 14px !important;
+    }
+    
+    /* Card list */
+    .rekap-card-list {
+        display: block !important;
+    }
+    
+    /* Filter grid jadi 1 kolom */
+    .rekap-filter-section .filter-grid {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
+    
+    /* Sembunyikan tabel wrapper lama */
+    .rekap-scroll-wrapper .table-wrapper {
+        display: none !important;
+    }
+    
+    /* Summary bar tetap terlihat, tapi lebih compact */
+    .rekap-summary-bar {
+        padding: 10px 6px;
+        margin-bottom: 12px;
+    }
+    
+    .rekap-summary-number {
+        font-size: 16px;
+    }
+    
+    .rekap-summary-label {
+        font-size: 8px;
+    }
+}
+
+/* ============================================================
+   ✅ RESPONSIVE — DESKTOP (> 768px)
+   ============================================================ */
+@media (min-width: 769px) {
+    /* Sembunyikan card list, tampilkan tabel */
+    .rekap-card-list {
+        display: none !important;
+    }
+    
+    /* Filter selalu tampil */
+    .rekap-filter-section {
+        display: block !important;
+        max-height: none !important;
+    }
+}
+
+/* ============================================================
+   ✅ SMALL PHONE (≤ 380px)
+   ============================================================ */
+@media (max-width: 380px) {
+    .rekap-card {
+        padding: 12px;
+    }
+    
+    .rekap-avatar {
+        width: 38px;
+        height: 38px;
+        font-size: 15px;
+    }
+    
+    .rekap-nama {
+        font-size: 13.5px;
+    }
+    
+    .rekap-na-value {
+        font-size: 22px;
+    }
+    
+    .rekap-nilai-item {
+        padding: 8px 10px;
+    }
+    
+    .rekap-nilai-label {
+        font-size: 9.5px;
+    }
+    
+    .rekap-nilai-value {
+        font-size: 13px;
+    }
+}
+
+/* ============================================================
+   ✅ DARK MODE ADJUSTMENT
+   ============================================================ */
+[data-theme="dark"] .rekap-card {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .rekap-na-box {
+    box-shadow: 0 4px 16px rgba(5, 150, 105, 0.4);
+}
+
+[data-theme="dark"] .rekap-card.belum-tuntas .rekap-na-box {
+    box-shadow: 0 4px 16px rgba(220, 38, 38, 0.4);
+}
+
+[data-theme="dark"] .rekap-nilai-item {
+    background: var(--bg-input);
+}
+
+
+@media (max-width: 640px) {
+  /* ✅ Tombol aksi di mobile: full width, mudah di-tap */
+  #jurnalListContainer tbody td[data-label="Aksi"] {
+    padding-top: 12px !important;
+    margin-top: 8px;
+    border-top: 1px solid var(--border-color) !important;
+  }
+  
+  #jurnalListContainer tbody td[data-label="Aksi"] .flex {
+    width: 100%;
+    gap: 8px !important;
+  }
+  
+  #jurnalListContainer tbody td[data-label="Aksi"] .btn {
+    flex: 1;
+    padding: 10px 12px !important;
+    font-size: 13px !important;
+    font-weight: 600;
+    border-radius: 8px;
+    justify-content: center;
+    min-height: 42px;
+  }
+  
+  /* Sembunyikan teks "Aksi" di label karena sudah jelas dari tombol */
+  #jurnalListContainer tbody td[data-label="Aksi"]::before {
+    content: '' !important;
+    display: none !important;
+  }
+}
+
+
+/* ============================================================
+   ✅ TRANSAKSI — MOBILE-FRIENDLY & PROFESSIONAL
+   Mengikuti style "Input Nilai" (card-based + filter collapse)
+   ============================================================ */
+
+/* ---------- 1. SUB-TABS TRANSAKSI: pill modern ---------- */
+.trans-sub-tabs {
+    display: flex;
+    gap: 4px;
+    padding: 5px;
+    background: var(--bg-secondary);
+    border: 1.5px solid var(--border-color);
+    border-radius: 14px;
+    box-shadow: var(--shadow-sm);
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin-bottom: 16px;
+}
+.trans-sub-tabs::-webkit-scrollbar { display: none; }
+
+.trans-sub-tab {
+    flex: 1;
+    min-width: max-content;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 13.5px;
+    font-weight: 600;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    white-space: nowrap;
+    font-family: 'Inter', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.trans-sub-tab:hover:not(.active) {
+    background: var(--primary-50);
+    color: var(--primary-dark);
+}
+
+.trans-sub-tab.active {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35),
+                0 2px 6px rgba(5, 150, 105, 0.2);
+    transform: translateY(-1px);
+}
+
+.trans-sub-tab:active { transform: scale(0.97); }
+
+/* ---------- 2. FILTER TOGGLE (mobile only) ---------- */
+.trans-filter-toggle {
+    display: none;
+    width: 100%;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: box-shadow 0.2s ease;
+}
+.trans-filter-toggle:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.trans-filter-toggle .filter-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: var(--primary-50);
+    color: var(--primary);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+}
+.trans-filter-toggle .arrow {
+    transition: transform 0.3s ease;
+    font-size: 10px;
+}
+.trans-filter-toggle.open .arrow { transform: rotate(180deg); }
+
+/* ---------- 3. FILTER SECTION COLLAPSIBLE ---------- */
+.trans-filter-section {
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.3s ease,
+                margin 0.3s ease;
+}
+
+/* ---------- 4. CARD LIST MOBILE ---------- */
+.trans-card-list { display: none; }
+
+.trans-card {
+    background: var(--bg-secondary);
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease, transform 0.15s ease;
+}
+.trans-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: var(--success);
+}
+.trans-card.belum-tuntas::before { background: var(--danger); }
+.trans-card:active { transform: scale(0.985); }
+
+/* Card Header */
+.trans-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed var(--border-color);
+}
+.trans-avatar {
+    width: 42px; height: 42px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px; font-weight: 800;
+    flex-shrink: 0;
+    box-shadow: 0 3px 10px rgba(5, 150, 105, 0.25);
+    letter-spacing: -0.5px;
+}
+.trans-card.belum-tuntas .trans-avatar {
+    background: linear-gradient(135deg, var(--danger), #b91c1c);
+    box-shadow: 0 3px 10px rgba(220, 38, 38, 0.25);
+}
+.trans-header-info { flex: 1; min-width: 0; }
+.trans-nama {
+    font-size: 15px; font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.3;
+    margin-bottom: 4px;
+    word-break: break-word;
+}
+.trans-meta {
+    display: flex; gap: 6px; flex-wrap: wrap;
+    font-size: 11px; color: var(--text-secondary);
+    align-items: center;
+}
+.trans-meta .badge { font-size: 10px; padding: 2px 8px; }
+
+.trans-status-badge {
+    flex-shrink: 0;
+    padding: 5px 12px;
+    border-radius: 50px;
+    font-size: 10px; font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    align-self: flex-start;
+}
+.trans-status-badge.tuntas {
+    background: var(--success-50); color: var(--success);
+    border: 1.5px solid var(--success);
+}
+.trans-status-badge.belum {
+    background: var(--danger-50); color: var(--danger);
+    border: 1.5px solid var(--danger);
+}
+
+/* Grid Nilai 2x2 */
+.trans-nilai-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+.trans-nilai-item {
+    background: var(--bg-primary);
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 8px;
+}
+.trans-nilai-label {
+    font-size: 10px; font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+.trans-nilai-value {
+    font-size: 15px; font-weight: 800;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+}
+.trans-nilai-value.unggul { color: var(--success); }
+.trans-nilai-value.kurang { color: var(--danger); }
+.trans-nilai-value.empty { color: var(--text-muted); font-weight: 500; font-size: 12px; }
+
+/* NA Box */
+.trans-na-box {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--success), var(--primary-dark));
+    color: #fff;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25);
+    position: relative; overflow: hidden;
+}
+.trans-na-box::after {
+    content: '';
+    position: absolute;
+    top: -50%; right: -30%;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    pointer-events: none;
+}
+.trans-card.belum-tuntas .trans-na-box {
+    background: linear-gradient(135deg, var(--danger), #991b1b);
+    box-shadow: 0 4px 14px rgba(220, 38, 38, 0.25);
+}
+.trans-na-label {
+    font-size: 11px; font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px; opacity: 0.9;
+}
+.trans-na-value {
+    font-size: 24px; font-weight: 900;
+    line-height: 1; letter-spacing: -1px;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Aksi tombol di card */
+.trans-card-actions {
+    display: flex; gap: 8px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border-color);
+}
+.trans-card-actions .btn {
+    flex: 1;
+    padding: 10px 12px;
+    font-size: 12.5px;
+    font-weight: 600;
+    border-radius: 8px;
+    justify-content: center;
+    min-height: 42px;
+}
+
+/* Materi & PH row */
+.trans-materi-row {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-bottom: 10px;
+    font-size: 11px;
+}
+.trans-materi-row span {
+    padding: 3px 10px;
+    border-radius: 50px;
+    background: var(--bg-primary);
+    color: var(--text-secondary);
+    font-weight: 600;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ---------- 5. PAGINATION MOBILE ---------- */
+.trans-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 10px;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+.trans-page-btn {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    font-size: 14px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s ease;
+}
+.trans-page-btn:active { transform: scale(0.92); }
+.trans-page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.trans-page-info {
+    font-size: 12px; font-weight: 600;
+    color: var(--text-secondary);
+    min-width: 80px; text-align: center;
+}
+
+/* ---------- 6. EMPTY STATE ---------- */
+.trans-empty {
+    text-align: center; padding: 50px 20px;
+    color: var(--text-muted);
+}
+.trans-empty-icon { font-size: 56px; margin-bottom: 14px; opacity: 0.6; }
+.trans-empty-title {
+    font-size: 15px; font-weight: 700;
+    color: var(--text-primary); margin-bottom: 6px;
+}
+.trans-empty-text { font-size: 12px; line-height: 1.5; max-width: 280px; margin: 0 auto; }
+
+/* ============================================================
+   RESPONSIVE — MOBILE (≤ 768px)
+   ============================================================ */
+@media (max-width: 768px) {
+    /* Sembunyikan tabel desktop, tampilkan card */
+    .trans-table-desktop { display: none !important; }
+    .trans-card-list { display: block !important; }
+
+    /* Filter toggle muncul */
+    .trans-filter-toggle { display: flex; }
+
+    /* Filter section collapsible */
+    .trans-filter-section {
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        margin-bottom: 0 !important;
+    }
+    .trans-filter-section.open {
+        max-height: 2000px;
+        opacity: 1;
+        margin-bottom: 14px !important;
+    }
+
+    /* Filter grid jadi 1 kolom */
+    .trans-filter-section .filter-grid {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
+    .trans-filter-section .filter-item[style*="grid-column: span 2"] {
+        grid-column: 1 !important;
+    }
+
+    /* Sub-tab lebih compact */
+    .trans-sub-tab {
+        padding: 9px 14px;
+        font-size: 12.5px;
+    }
+
+    /* Filter actions stack */
+    .trans-filter-section .filter-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .trans-filter-section .filter-actions .flex {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .trans-filter-section .filter-actions .btn {
+        flex: 1;
+        justify-content: center;
+    }
+}
+
+/* ============================================================
+   RESPONSIVE — DESKTOP (> 768px)
+   ============================================================ */
+@media (min-width: 769px) {
+    .trans-card-list { display: none !important; }
+    .trans-filter-toggle { display: none !important; }
+    .trans-filter-section { display: block !important; max-height: none !important; opacity: 1 !important; }
+}
+
+/* ============================================================
+   SMALL PHONE (≤ 380px)
+   ============================================================ */
+@media (max-width: 380px) {
+    .trans-card { padding: 12px; }
+    .trans-avatar { width: 38px; height: 38px; font-size: 15px; }
+    .trans-nama { font-size: 13.5px; }
+    .trans-na-value { font-size: 22px; }
+    .trans-nilai-item { padding: 8px 10px; }
+    .trans-nilai-label { font-size: 9.5px; }
+    .trans-nilai-value { font-size: 13px; }
+    .trans-sub-tab { padding: 8px 12px; font-size: 12px; }
+}
+
+/* ============================================================
+   DARK MODE
+   ============================================================ */
+[data-theme="dark"] .trans-card {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+[data-theme="dark"] .trans-na-box {
+    box-shadow: 0 4px 16px rgba(5, 150, 105, 0.4);
+}
+[data-theme="dark"] .trans-card.belum-tuntas .trans-na-box {
+    box-shadow: 0 4px 16px rgba(220, 38, 38, 0.4);
+}
+[data-theme="dark"] .trans-nilai-item {
+    background: var(--bg-input);
+}
   </style>
 </head>
 <body>
@@ -11752,9 +13048,10 @@ function renderJurnalList() {
                   <th>Kelas</th>
                   <th>Mapel</th>
                   <th>Guru</th>
-                  <th>Materi</th>
-                  <th>Indikator</th>
-                  <th style="text-align:center;">Aksi</th>
+                  <!-- ✅ Gabungan Materi + Indikator -->
+                  <th style="min-width:280px; max-width:400px;">Materi &amp; Indikator</th>
+                  <!-- ✅ Aksi di kanan, tapi tabel tidak perlu scroll karena kolom lebih sedikit -->
+                  <th style="text-align:center; min-width:90px; white-space:nowrap;">Aksi</th>
                 </tr>
               </thead>
               <tbody>
@@ -11762,15 +13059,12 @@ function renderJurnalList() {
                   // ============================================================
                   // ✅ FIX: Nomor materi & indikator dihitung dari `jurnalCache`
                   // (data penuh), BUKAN dari `filtered` yang sudah difilter.
-                  // Tujuannya agar nomor tetap konsisten meski filter aktif.
                   // ============================================================
                   const jurnalSama = jurnalCache
                     .filter(x =>
                       x.mapelName === j.mapelName &&
                       String(x.kelas) === String(j.kelas) &&
                       x.materi && x.materi.trim() !== '' &&
-                      // Konsisten dengan filter role USER:
-                      // hanya jurnal milik guru tersebut yang dihitung
                       (userRole !== 'USER' || !verifiedGuruId || x.guruId === verifiedGuruId)
                     )
                     .sort((a, b) => {
@@ -11779,15 +13073,11 @@ function renderJurnalList() {
                       return ta - tb;
                     });
 
-                  // ============================================================
                   // Nomor MATERI (unik dalam satu mapel + kelas)
-                  // ============================================================
                   const materiUnik = [...new Set(jurnalSama.map(x => x.materi))];
                   const nomorMateri = materiUnik.indexOf(j.materi) + 1;
 
-                  // ============================================================
                   // Nomor INDIKATOR (unik dalam satu materi)
-                  // ============================================================
                   const indikatorSama = jurnalSama.filter(x => x.materi === j.materi);
                   const indikatorUnik = [...new Set(
                     indikatorSama.map(x => (x.indikator || '').trim()).filter(i => i !== '')
@@ -11800,16 +13090,26 @@ function renderJurnalList() {
                       <td data-label="Kelas"><span class="badge badge-gray">${j.kelas}</span></td>
                       <td data-label="Mapel">${escapeHtml(j.mapelName || '')}</td>
                       <td data-label="Guru">${escapeHtml(j.guruName || '')}</td>
-                      <td data-label="Materi" style="max-width:200px; word-wrap:break-word;">
-                        ${escapeHtml(j.materi || '')}${nomorMateri > 0 ? ` <span style="color:var(--primary); font-weight:700;">(${nomorMateri})</span>` : ''}
+                      
+                      <!-- ✅ Materi & Indikator digabung dalam satu kolom -->
+                      <td data-label="Materi &amp; Indikator" style="max-width:400px; word-wrap:break-word; vertical-align:top;">
+                        <div style="font-size:12px; line-height:1.55;">
+                          <div style="margin-bottom:6px;">
+                            <strong style="color:var(--primary);">📖 Materi${nomorMateri > 0 ? ` (${nomorMateri})` : ''}:</strong>
+                            <span style="color:var(--text-primary);">${escapeHtml(j.materi || '')}</span>
+                          </div>
+                          <div>
+                            <strong style="color:var(--info);">🎯 Indikator${nomorIndikator > 0 ? ` (${nomorIndikator})` : ''}:</strong>
+                            <span style="color:var(--text-secondary);">${escapeHtml(j.indikator || '')}</span>
+                          </div>
+                        </div>
                       </td>
-                      <td data-label="Indikator" style="max-width:250px; word-wrap:break-word;">
-                        ${escapeHtml(j.indikator || '')}${nomorMateri > 0 ? ` <span style="color:var(--primary); font-weight:700;">(${nomorMateri})</span>` : ''}${nomorIndikator > 0 ? ` <span style="color:var(--info); font-weight:700;">(${nomorIndikator})</span>` : ''}
-                      </td>
-                      <td data-label="Aksi" style="text-align:center;">
-                        <div class="flex" style="justify-content:center; gap:4px;">
-                           <button class="btn btn-warning btn-xs" onclick="window.editJurnal('${j.id}')">✏️ Edit</button>
-                           <button class="btn btn-danger btn-xs" onclick="window.hapusJurnal('${j.id}')">🗑️</button>
+
+                      <!-- ✅ Aksi tetap di kolom sendiri, compact -->
+                      <td data-label="Aksi" style="text-align:center; white-space:nowrap; vertical-align:middle;">
+                        <div style="display:flex; justify-content:center; gap:4px;">
+                          <button class="btn btn-warning btn-xs" onclick="window.editJurnal('${j.id}')" title="Edit jurnal">✏️</button>
+                          <button class="btn btn-danger btn-xs" onclick="window.hapusJurnal('${j.id}')" title="Hapus jurnal">🗑️</button>
                         </div>
                       </td>
                     </tr>
@@ -24318,7 +25618,7 @@ function renderTransaksiTab() {
     const allData = window._latestTx || [];
     const mainPanel = document.getElementById('mainPanel');
     mainPanel.innerHTML = `
-        <div class="flex-between" style="margin-bottom: 16px;">
+        <div class="flex-between" style="margin-bottom: 16px; flex-wrap: wrap; gap: 8px;">
             <h3 style="font-size: 16px; font-weight: 600; margin: 0;">📊 Tabel Transaksi Nilai</h3>
             <span class="badge badge-primary" style="font-size: 13px; padding: 6px 14px;">Total: ${allData.length} Data</span>
         </div>
@@ -24332,6 +25632,7 @@ function renderTransaksiTab() {
           </div>
         ` : ''}
         
+        <!-- ✅ SUB-TABS (pill modern) -->
         <div class="trans-sub-tabs">
             <button class="trans-sub-tab ${transSubTab === 'UH' ? 'active' : ''}" onclick="window.setTransSubTab('UH')">
                 <span class="trans-tab-icon">📝</span> UH
@@ -24344,16 +25645,43 @@ function renderTransaksiTab() {
             </button>
         </div>
         
-        <div id="transactionsFilter"></div>
+        <!-- ✅ FILTER TOGGLE (mobile only) -->
+        <button class="trans-filter-toggle" id="transFilterToggle">
+            <div class="flex" style="align-items: center; gap: 10px;">
+                <span class="filter-icon">⚙️</span>
+                <span>Filter & Pengaturan</span>
+            </div>
+            <span class="arrow">▼</span>
+        </button>
+        
+        <!-- ✅ FILTER SECTION (collapsible di mobile) -->
+        <div class="trans-filter-section" id="transFilterSection">
+            <div id="transactionsFilter"></div>
+        </div>
+        
+        <!-- ✅ HASIL (card list mobile / tabel desktop) -->
         <div id="transactionsPanel"></div>
+        
         <div style="margin-top: 12px; font-size: 12px; color: var(--text-muted);">
             Data transaksi berisi semua nilai UH, PTS, PAS. Bisa edit/hapus. Disimpan di Firestore.
         </div>
     `;
     
+    // ✅ Event listener filter toggle
+    const filterToggle = document.getElementById('transFilterToggle');
+    if (filterToggle) {
+        filterToggle.onclick = function() {
+            const section = document.getElementById('transFilterSection');
+            if (!section) return;
+            section.classList.toggle('open');
+            this.classList.toggle('open');
+        };
+    }
+    
     renderTransFilterUI();
     renderTransactionsWith(allData);
 }
+
 
 window.setTransSubTab = function(sub) {
     transSubTab = sub;
@@ -24519,7 +25847,7 @@ function renderTransFilterUI() {
     // RENDER HTML
     // ============================================================
     filterArea.innerHTML = `
-        <div class="filter-section" style="margin-bottom: 12px;">
+        <div style="margin-bottom: 12px;">
             <div style="background: var(--primary-50); padding: 8px 12px; border-radius: var(--radius-sm); margin-bottom: 12px; font-size: 12px; color: var(--primary-dark); border-left: 3px solid var(--primary);">
                 🔗 <strong>Filter Cascade:</strong> Pilih <strong>Kelas</strong> → <strong>Mapel</strong> 
                 ${showMateriFilter ? '→ <strong>Materi</strong> → <strong>PH Ke-</strong>' : ''}
@@ -24870,7 +26198,7 @@ function renderTransactionsWith(dataList) {
         // 4. ✅ FILTER KELAS
         if (fKelas !== "" && String(d.kelas) !== String(fKelas)) return false;
         
-        // 5. ✅ FILTER MAPEL (hanya jika kelas sudah dipilih atau bisa independen)
+        // 5. ✅ FILTER MAPEL
         if (fMapel !== "" && (d.mapel || '').trim() !== fMapel) return false;
         
         // 6. ✅ FILTER MATERI (khusus UH)
@@ -24903,82 +26231,175 @@ function renderTransactionsWith(dataList) {
     const showMateriPH = (transSubTab === 'UH');
     
     // ============================================================
-    // RENDER TABEL (SAMA SEPERTI SEBELUMNYA)
+    // ✅ BUILD DATA UNTUK CARD & TABEL (normalisasi sekali)
+    // ============================================================
+    const buildRowData = (d) => {
+        const masterMapel = mapelCache.find(m => 
+            String(m.name).toLowerCase() === String(d.mapel).toLowerCase() && 
+            String(m.kelas) === String(d.kelas)
+        );
+        const currentKKM = masterMapel ? (parseInt(masterMapel.kkm) || 70) : (parseInt(d.kkm) || 70);
+        const isTuntas = d.score >= currentKKM;
+        const guruDisplay = d.guruId ? getGuruNameById(d.guruId) : (d.guru || '-');
+        return {
+            ...d,
+            currentKKM,
+            isTuntas,
+            guruDisplay,
+            materiDisplay: d.materi || d.indicator || '-',
+            phDisplay: d.phKe || d.pertemuan || '-'
+        };
+    };
+    
+    const rowsData = paginatedData.map(buildRowData);
+    
+    // ============================================================
+    // RENDER HTML
     // ============================================================
     let html = `
         <div class="flex-between" style="margin-bottom: 10px; flex-wrap:wrap; gap:8px;">
             <span class="badge badge-primary">${filtered.length} Total Data</span>
             <div class="flex" style="gap:8px;">
-                <button class="btn btn-danger btn-sm" id="btnHapusSemuaTrans">🗑️ HAPUS SEMUA</button>
+                ${!isUser ? `<button class="btn btn-danger btn-sm" id="btnHapusSemuaTrans">🗑️ HAPUS SEMUA</button>` : ''}
             </div>
         </div>
-        <div class="table-wrapper">
-          <table>
-            <thead>
-              <tr>
-                <th class="checkbox-cell"><input type="checkbox" id="chkAllTransaksi"></th>
-                <th>Nama Santri</th>
-                <th>Kelas</th>
-                <th>Mapel</th>
-                <th>Guru</th>
-                <th>Tipe</th>
-                <th>Nilai</th>
-                ${showMateriPH ? `<th>Materi Pembelajaran</th><th>PH Ke</th>` : ''}
-                <th>Status</th>
-                <th style="text-align:center;">Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${paginatedData.map(d => {
-                const masterMapel = mapelCache.find(m => 
-                    String(m.name).toLowerCase() === String(d.mapel).toLowerCase() && 
-                    String(m.kelas) === String(d.kelas)
-                );
-                const currentKKM = masterMapel ? (parseInt(masterMapel.kkm) || 70) : (parseInt(d.kkm) || 70);
-                const scoreColor = d.score < currentKKM ? 'var(--danger)' : 'var(--success)';
-                const guruDisplay = d.guruId ? getGuruNameById(d.guruId) : (d.guru || '-');
-                
-                const statusTuntas = d.score >= currentKKM 
-                    ? { label: 'Tuntas', class: 'badge-success' } 
-                    : { label: 'Belum Tuntas', class: 'badge-danger' };
-                
-                const materiDisplay = d.materi || d.indicator || '-';
-                const phDisplay = d.phKe || d.pertemuan || '-';
+        
+        <!-- ✅ CARD LIST (mobile) -->
+        <div class="trans-card-list">
+            ${rowsData.length ? rowsData.map(r => {
+                const initial = (r.santriName || '?').charAt(0).toUpperCase();
                 return `
-                <tr data-id="${d.id}">
-                  <td class="checkbox-cell"><input type="checkbox" class="chkTransaksi" data-id="${d.id}"></td>
-                  <td data-label="Santri"><strong>${escapeHtml(d.santriName)}</strong></td>
-                  <td data-label="Kelas"><span class="badge badge-gray">${escapeHtml(d.kelas || '-')}</span></td>
-                  <td data-label="Mapel">${escapeHtml(d.mapel)}</td>
-                  <td data-label="Guru">${escapeHtml(guruDisplay)}</td>
-                  <td data-label="Tipe"><span class="badge ${d.type === 'UH' ? 'badge-primary' : d.type === 'PTS' ? 'badge-warning' : 'badge-success'}">${d.type}</span></td>
-                  <td data-label="Nilai">
-                    <strong style="color: ${scoreColor}">${d.score}</strong>
-                    <small style="color: var(--text-muted); font-size:10px;">(KKM: ${currentKKM})</small>
-                  </td>
-                  ${showMateriPH ? `
-                    <td data-label="Materi"><span style="font-size:12px;">${escapeHtml(materiDisplay)}</span></td>
-                    <td data-label="PH Ke"><span class="badge badge-info">${phDisplay}</span></td>
-                  ` : ''}
-                  <td data-label="Status"><span class="status-badge-score ${statusTuntas.class}">${statusTuntas.label}</span></td>
-                  <td data-label="Aksi" style="text-align:center;">
-                    <button class="btn btn-warning btn-xs btnEditNilai" data-id="${d.id}">✏️ Edit</button>
-                    <button class="btn btn-danger btn-xs btnHapusNilai" data-id="${d.id}">🗑️ Hapus</button>
-                  </td>
-                </tr>
-              `}).join('')}
-            </tbody>
-          </table>
+                    <div class="trans-card ${r.isTuntas ? '' : 'belum-tuntas'}">
+                        <div class="trans-card-header">
+                            <div class="trans-avatar">${initial}</div>
+                            <div class="trans-header-info">
+                                <div class="trans-nama">${escapeHtml(r.santriName)}</div>
+                                <div class="trans-meta">
+                                    <span class="badge badge-gray">Kls ${escapeHtml(r.kelas || '-')}</span>
+                                    <span>•</span>
+                                    <span>${escapeHtml(r.mapel)}</span>
+                                    <span class="badge ${r.type === 'UH' ? 'badge-primary' : r.type === 'PTS' ? 'badge-warning' : 'badge-success'}" style="font-size:9px;">
+                                        ${r.type}
+                                    </span>
+                                </div>
+                                <div class="trans-meta" style="margin-top: 2px;">
+                                    <span style="font-size: 10px;">👨‍🏫 ${escapeHtml(r.guruDisplay)}</span>
+                                </div>
+                            </div>
+                            <div class="trans-status-badge ${r.isTuntas ? 'tuntas' : 'belum'}">
+                                ${r.isTuntas ? 'TUNTAS' : 'BELUM'}
+                            </div>
+                        </div>
+                        
+                        ${showMateriPH ? `
+                            <div class="trans-materi-row">
+                                <span title="${escapeHtml(r.materiDisplay)}">📖 ${escapeHtml(r.materiDisplay)}</span>
+                                <span>🔢 PH ${r.phDisplay}</span>
+                            </div>
+                        ` : ''}
+                        
+                        <div class="trans-nilai-grid">
+                            <div class="trans-nilai-item">
+                                <span class="trans-nilai-label">Nilai</span>
+                                <span class="trans-nilai-value ${r.isTuntas ? 'unggul' : 'kurang'}">${r.score}</span>
+                            </div>
+                            <div class="trans-nilai-item">
+                                <span class="trans-nilai-label">KKM</span>
+                                <span class="trans-nilai-value empty">${r.currentKKM}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="trans-na-box">
+                            <div>
+                                <div class="trans-na-label">Status</div>
+                            </div>
+                            <div class="trans-na-value" style="font-size:16px;">
+                                ${r.isTuntas ? '✅ Tuntas' : '❌ Belum'}
+                            </div>
+                        </div>
+                        
+                        <div class="trans-card-actions">
+                            <button class="btn btn-warning btnEditNilai" data-id="${r.id}">✏️ Edit</button>
+                            <button class="btn btn-danger btnHapusNilai" data-id="${r.id}">🗑️ Hapus</button>
+                        </div>
+                    </div>
+                `;
+            }).join('') : `
+                <div class="trans-empty">
+                    <div class="trans-empty-icon">📭</div>
+                    <div class="trans-empty-title">Tidak Ada Data</div>
+                    <div class="trans-empty-text">
+                        ${fKelas !== '' || fMapel !== '' || search
+                          ? 'Coba ubah filter atau reset pencarian.'
+                          : `Belum ada data nilai ${transSubTab} yang tersedia.`}
+                    </div>
+                </div>
+            `}
         </div>
-        <div style="margin-top: 12px; display:flex; justify-content:center; gap:10px; align-items:center;">
-          <button class="btn btn-ghost btn-sm" ${currentPage === 1 ? 'disabled' : ''} id="prevPageTrans">◀ Prev</button>
-          <span style="font-size:13px; font-weight:500;">Halaman ${currentPage} dari ${totalPages || 1}</span>
-          <button class="btn btn-ghost btn-sm" ${currentPage >= totalPages ? 'disabled' : ''} id="nextPageTrans">Next ▶</button>
+        
+        <!-- ✅ TABEL (desktop) -->
+        <div class="trans-table-desktop">
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th class="checkbox-cell"><input type="checkbox" id="chkAllTransaksi"></th>
+                    <th>Nama Santri</th>
+                    <th>Kelas</th>
+                    <th>Mapel</th>
+                    <th>Guru</th>
+                    <th>Tipe</th>
+                    <th>Nilai</th>
+                    ${showMateriPH ? `<th>Materi Pembelajaran</th><th>PH Ke</th>` : ''}
+                    <th>Status</th>
+                    <th style="text-align:center;">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${rowsData.length ? rowsData.map(r => `
+                    <tr data-id="${r.id}">
+                      <td class="checkbox-cell"><input type="checkbox" class="chkTransaksi" data-id="${r.id}"></td>
+                      <td data-label="Santri"><strong>${escapeHtml(r.santriName)}</strong></td>
+                      <td data-label="Kelas"><span class="badge badge-gray">${escapeHtml(r.kelas || '-')}</span></td>
+                      <td data-label="Mapel">${escapeHtml(r.mapel)}</td>
+                      <td data-label="Guru">${escapeHtml(r.guruDisplay)}</td>
+                      <td data-label="Tipe"><span class="badge ${r.type === 'UH' ? 'badge-primary' : r.type === 'PTS' ? 'badge-warning' : 'badge-success'}">${r.type}</span></td>
+                      <td data-label="Nilai">
+                        <strong style="color: ${r.isTuntas ? 'var(--success)' : 'var(--danger)'}">${r.score}</strong>
+                        <small style="color: var(--text-muted); font-size:10px;">(KKM: ${r.currentKKM})</small>
+                      </td>
+                      ${showMateriPH ? `
+                        <td data-label="Materi"><span style="font-size:12px;">${escapeHtml(r.materiDisplay)}</span></td>
+                        <td data-label="PH Ke"><span class="badge badge-info">${r.phDisplay}</span></td>
+                      ` : ''}
+                      <td data-label="Status"><span class="status-badge-score ${r.isTuntas ? 'badge-success' : 'badge-danger'}">${r.isTuntas ? 'Tuntas' : 'Belum Tuntas'}</span></td>
+                      <td data-label="Aksi" style="text-align:center;">
+                        <button class="btn btn-warning btn-xs btnEditNilai" data-id="${r.id}">✏️ Edit</button>
+                        <button class="btn btn-danger btn-xs btnHapusNilai" data-id="${r.id}">🗑️ Hapus</button>
+                      </td>
+                    </tr>
+                  `).join('') : `
+                    <tr><td colspan="${showMateriPH ? 10 : 8}" style="text-align:center; padding:30px; color:var(--text-muted);">
+                      Tidak ada data
+                    </td></tr>
+                  `}
+                </tbody>
+              </table>
+            </div>
+        </div>
+        
+        <!-- ✅ PAGINATION (shared) -->
+        <div class="trans-pagination">
+            <button class="trans-page-btn" id="prevPageTrans" ${currentPage === 1 ? 'disabled' : ''}>◀</button>
+            <div class="trans-page-info">Hal <strong>${currentPage}</strong> / ${totalPages || 1}</div>
+            <button class="trans-page-btn" id="nextPageTrans" ${currentPage >= totalPages ? 'disabled' : ''}>▶</button>
         </div>
     `;
     panel.innerHTML = html;
     
-    // ====== Event listener tombol & pagination ======
+    // ============================================================
+    // EVENT LISTENERS
+    // ============================================================
     const chkAll = panel.querySelector('#chkAllTransaksi');
     if (chkAll) {
         chkAll.addEventListener('change', function() {
@@ -25196,6 +26617,13 @@ function renderRekapSiswa(page = 1) {
     rekapSearchNama = fSearch;
     
     // ============================================================
+    // ✅ FIX #2: HELPER NORMALISASI NAMA (trim + lowercase + collapse spaces)
+    // Digunakan untuk perbandingan nama guru yang konsisten
+    // ============================================================
+    const normalize = (s) => 
+        (s || '').toString().trim().toLowerCase().replace(/\s+/g, ' ');
+    
+    // ============================================================
     // ✅ FILTER CASCADE 3 TINGKAT: KELAS → MAPEL → GURU
     // ============================================================
     const isUserLoggedIn = userRole === 'USER' && verifiedGuruId;
@@ -25206,26 +26634,26 @@ function renderRekapSiswa(page = 1) {
         const mapelGuru = mapelCache.filter(m => m.guruId === verifiedGuruId);
         listKelasUnik = [...new Set(mapelGuru.map(m => m.kelas).filter(k => k))].sort();
     } else {
-        // ADMIN: semua kelas dari santri
         listKelasUnik = [...new Set(santriCache.map(s => s.kelas).filter(k => k))].sort();
     }
 
-    // Validasi: jika kelas filter tidak valid, reset
-    if (fKelas !== "SEMUA" && !listKelasUnik.includes(fKelas)) {
+    // ✅ FIX #3: Validasi lebih ketat — reset jika list kosong ATAU tidak termasuk
+    if (fKelas !== "SEMUA" && (
+        listKelasUnik.length === 0 || 
+        !listKelasUnik.map(String).includes(String(fKelas))
+    )) {
         rekapFilterKelas = fKelas = "SEMUA";
     }
 
-    // ---------- STEP 2: Daftar Mapel (CASCADE dari Kelas) ----------
+    // ---------- STEP 2: Daftar Mapel ----------
     let mapelUnik;
     if (fKelas !== "SEMUA") {
-        // Kelas dipilih → hanya mapel kelas tsb
         let mapelKelasIni = mapelCache.filter(m => String(m.kelas) === String(fKelas));
         if (isUserLoggedIn) {
             mapelKelasIni = mapelKelasIni.filter(m => m.guruId === verifiedGuruId);
         }
         mapelUnik = [...new Set(mapelKelasIni.map(m => m.name.trim()).filter(n => n))].sort();
     } else {
-        // Belum pilih kelas → semua mapel (tergantung role)
         if (isUserLoggedIn) {
             const mapelGuru = mapelCache.filter(m => m.guruId === verifiedGuruId);
             mapelUnik = [...new Set(mapelGuru.map(m => m.name.trim()).filter(n => n))].sort();
@@ -25234,16 +26662,17 @@ function renderRekapSiswa(page = 1) {
         }
     }
 
-    // Validasi: jika mapel filter tidak valid untuk kelas ini, reset
-    if (fMapel !== "SEMUA" && !mapelUnik.includes(fMapel)) {
+    // ✅ FIX #3: Validasi Mapel — reset jika list kosong atau tidak termasuk
+    if (fMapel !== "SEMUA" && (
+        mapelUnik.length === 0 || 
+        !mapelUnik.includes(fMapel)
+    )) {
         rekapFilterMapel = fMapel = "SEMUA";
     }
 
-    // ---------- STEP 3: Daftar Guru (CASCADE dari Kelas + Mapel) ----------
-    // Hanya untuk ADMIN — USER sudah terkunci
+    // ---------- STEP 3: Daftar Guru ----------
     let listGuruUnik = [];
     if (!isUserLoggedIn) {
-        // Filter mapel sesuai konteks Kelas + Mapel yang dipilih
         let mapelKonteks = mapelCache;
         if (fKelas !== "SEMUA") {
             mapelKonteks = mapelKonteks.filter(m => String(m.kelas) === String(fKelas));
@@ -25252,15 +26681,17 @@ function renderRekapSiswa(page = 1) {
             mapelKonteks = mapelKonteks.filter(m => m.name.trim() === fMapel);
         }
         
-        // Ambil nama guru unik dari mapel konteks
         const guruNames = mapelKonteks
             .map(m => m.guruId ? getGuruNameById(m.guruId) : null)
             .filter(g => g && g !== '-');
         listGuruUnik = [...new Set(guruNames)].sort();
     }
 
-    // Validasi: jika guru filter tidak valid untuk konteks ini, reset
-    if (!isUserLoggedIn && fGuru !== "SEMUA" && !listGuruUnik.includes(fGuru)) {
+    // ✅ FIX #3: Validasi Guru — reset jika list kosong atau tidak termasuk
+    if (!isUserLoggedIn && fGuru !== "SEMUA" && (
+        listGuruUnik.length === 0 || 
+        !listGuruUnik.map(normalize).includes(normalize(fGuru))
+    )) {
         rekapFilterGuru = fGuru = "SEMUA";
     }
     
@@ -25277,18 +26708,27 @@ function renderRekapSiswa(page = 1) {
     let rawTableData = [];
     Object.keys(grouped).forEach(sName => {
         if (fSearch && !sName.toLowerCase().includes(fSearch)) return;
-        const distinctMapels = [...new Set(grouped[sName].map(t => t.mapel.trim()))];
+        
+        // ✅ FIX: Filter mapel null/undefined sebelum di-trim (cegah error)
+        const distinctMapels = [...new Set(
+            grouped[sName]
+                .map(t => (t.mapel || '').toString().trim())
+                .filter(m => m && m !== 'undefined' && m !== 'null')
+        )];
+        
         distinctMapels.forEach(mName => {
             if (fMapel !== "SEMUA" && mName !== fMapel) return;
-            const records = grouped[sName].filter(t => t.mapel === mName);
+            const records = grouped[sName].filter(t => 
+                (t.mapel || '').toString().trim() === mName
+            );
             const sKelas = records[0]?.kelas || '-';
-            if (fKelas !== "SEMUA" && sKelas !== fKelas) return;
+            if (fKelas !== "SEMUA" && String(sKelas) !== String(fKelas)) return;
             
-            const uhScores = records.filter(t => t.type === 'UH').map(t => t.score);
-            const ptsScores = records.filter(t => t.type === 'PTS').map(t => t.score);
-            const pasLisan = records.filter(t => t.type === 'PAS_LISAN').map(t => t.score);
-            const pasTulis = records.filter(t => t.type === 'PAS_TULIS').map(t => t.score);
-            const pasPraktek = records.filter(t => t.type === 'PAS_PRAKTEK').map(t => t.score);
+            const uhScores = records.filter(t => t.type === 'UH').map(t => Number(t.score) || 0);
+            const ptsScores = records.filter(t => t.type === 'PTS').map(t => Number(t.score) || 0);
+            const pasLisan = records.filter(t => t.type === 'PAS_LISAN').map(t => Number(t.score) || 0);
+            const pasTulis = records.filter(t => t.type === 'PAS_TULIS').map(t => Number(t.score) || 0);
+            const pasPraktek = records.filter(t => t.type === 'PAS_PRAKTEK').map(t => Number(t.score) || 0);
             const allPasScores = [...pasLisan, ...pasTulis, ...pasPraktek];
             const avgUH = uhScores.length ? avg(uhScores) : 0;
             const avgPTS = ptsScores.length ? avg(ptsScores) : 0;
@@ -25300,7 +26740,6 @@ function renderRekapSiswa(page = 1) {
             if (!mapelRef) mapelRef = mapelCache.find(m => m.name === mName);
             const kkm = mapelRef ? parseFloat(mapelRef.kkm || 70) : 70;
             
-            // ✅ STATUS BERDASARKAN KKM: TUNTAS / BELUM TUNTAS
             const isTuntas = finalNA >= kkm;
             const status = isTuntas ? "TUNTAS" : "BELUM_TUNTAS";
             const statusLabel = isTuntas ? "Tuntas" : "Belum Tuntas";
@@ -25333,13 +26772,15 @@ function renderRekapSiswa(page = 1) {
         });
     });
     
+    // ============================================================
+    // ✅ FIX #2: Filter menggunakan NORMALISASI nama guru
+    // ============================================================
     const filteredData = rawTableData.filter(item => {
         if (isUser) {
-            if (item.guru !== verifiedGuruName) return false;
-        } else if (fGuru !== "SEMUA" && item.guru !== fGuru) {
+            if (normalize(item.guru) !== normalize(verifiedGuruName)) return false;
+        } else if (fGuru !== "SEMUA" && normalize(item.guru) !== normalize(fGuru)) {
             return false;
         }
-        // ✅ FILTER STATUS: TUNTAS / BELUM TUNTAS
         if (fStatus === "BELUM_TUNTAS") return item.status === "BELUM_TUNTAS";
         if (fStatus === "TUNTAS") return item.status === "TUNTAS";
         return true;
@@ -25359,195 +26800,343 @@ function renderRekapSiswa(page = 1) {
     ).join('');
     
     const guruOptions = listGuruUnik.map(gName => 
-        `<option value="${escapeHtml(gName)}" ${fGuru === gName ? 'selected' : ''}>${escapeHtml(gName)}</option>`
+        `<option value="${escapeHtml(gName)}" ${normalize(fGuru) === normalize(gName) ? 'selected' : ''}>${escapeHtml(gName)}</option>`
     ).join('');
 
     const mainPanel = document.getElementById('mainPanel');
+
+    const totalData = filteredData.length;
+    const totalTuntas = filteredData.filter(d => d.status === 'TUNTAS').length;
+    const totalBelum = filteredData.filter(d => d.status === 'BELUM_TUNTAS').length;
+    const rataNA = totalData > 0
+        ? (filteredData.reduce((a, b) => a + b.na, 0) / totalData).toFixed(1)
+        : '0.0';
+
     let html = `
-        <div class="rekap-scroll-wrapper">
-        <div class="card">
-          <div class="card-header">
-            <h3>📈 REKAP NILAI AKHIR (NA)</h3>
+        <div class="rekap-summary-bar">
+            <div class="rekap-summary-item blue">
+                <div class="rekap-summary-number">${totalData}</div>
+                <div class="rekap-summary-label">Total Data</div>
+            </div>
+            <div class="rekap-summary-item green">
+                <div class="rekap-summary-number">${totalTuntas}</div>
+                <div class="rekap-summary-label">Tuntas</div>
+            </div>
+            <div class="rekap-summary-item red">
+                <div class="rekap-summary-number">${totalBelum}</div>
+                <div class="rekap-summary-label">Belum</div>
+            </div>
+            <div class="rekap-summary-item yellow">
+                <div class="rekap-summary-number">${rataNA}</div>
+                <div class="rekap-summary-label">Rata NA</div>
+            </div>
+        </div>
+
+        ${isUser ? `
+          <div class="periode-info" style="border-left-color: var(--primary); margin-bottom: 12px; padding: 10px 14px; font-size: 12px;">
+              <span style="font-size: 16px;">🔒</span>
+              <div class="periode-text">
+                  <strong>Data Anda:</strong> ${escapeHtml(verifiedGuruName)}
+              </div>
           </div>
-          <div class="card-body">
-            ${isUser ? `
-              <div class="periode-info" style="border-left-color: var(--primary); margin-bottom: 16px;">
-                  <div class="periode-icon">🔒</div>
-                  <div class="periode-text">
-                      <strong>Filter Terkunci:</strong> Data ditampilkan hanya untuk guru <strong>${escapeHtml(verifiedGuruName)}</strong>
-                  </div>
-              </div>
-            ` : ''}
-            
-            <div class="filter-section">
-              <!-- ✅ INDIKATOR CASCADE -->
-              <div style="background: var(--primary-50); padding: 8px 12px; border-radius: var(--radius-sm); margin-bottom: 12px; font-size: 12px; color: var(--primary-dark); border-left: 3px solid var(--primary);">
-                  🔗 <strong>Filter Cascade:</strong> 
-                  ${isUser 
-                    ? 'Pilih <strong>Kelas</strong> → dropdown <strong>Mapel</strong> otomatis menyesuaikan.'
-                    : 'Pilih <strong>Kelas</strong> → <strong>Mapel</strong> → <strong>Guru</strong> secara bertingkat.'
-                  }
-              </div>
-              
-              <div class="filter-grid" style="grid-template-columns: 1.5fr 1fr;">
-                <div>
-                  <div class="form-group" style="margin-bottom:8px;">
-                    <label>🔍 Cari Nama Santri</label>
-                    <input type="text" id="rekapSearchNama" class="form-control" placeholder="Ketik nama santri..." value="${escapeHtml(fSearch)}">
-                  </div>
-                  <div class="form-row">
-                    <!-- ① KELAS -->
-                    <div class="form-group" style="margin-bottom:8px;">
-                      <label>① 📚 Kelas</label>
-                      <select id="rekapFilterKelas" class="form-control">
-                        <option value="SEMUA">📋 Semua Kelas</option>
-                        ${listKelasUnik.map(k => `<option value="${k}" ${fKelas === k ? 'selected' : ''}>Kelas ${k}</option>`).join('')}
-                      </select>
-                    </div>
-                    <!-- ② MAPEL (CASCADE) -->
-                    <div class="form-group" style="margin-bottom:8px;">
-                      <label>② 📚 Mapel</label>
-                      <select id="rekapFilterMapel" class="form-control">
-                        <option value="SEMUA">📋 Semua Mapel</option>
+        ` : ''}
+
+        <!-- ✅ TOGGLE FILTER (MOBILE ONLY) -->
+        <button class="rekap-filter-toggle" id="rekapFilterToggle">
+            <div class="flex" style="align-items: center; gap: 10px;">
+                <span class="filter-icon">⚙️</span>
+                <span>Filter & Pengaturan</span>
+            </div>
+            <span class="arrow">▼</span>
+        </button>
+
+        <!-- ✅ FILTER SECTION (collapsible) -->
+        <div class="filter-section rekap-filter-section" id="rekapFilterSection">
+            <div class="filter-grid" style="grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));">
+                
+                <div class="filter-item" style="grid-column: span 2;">
+                    <label>🔍 Cari Santri</label>
+                    <input type="text" id="rekapSearchNama" class="form-control"
+                           placeholder="Ketik nama santri..." value="${escapeHtml(fSearch)}">
+                </div>
+
+                <div class="filter-item">
+                    <label>📚 Kelas</label>
+                    <select id="rekapFilterKelas" class="form-control">
+                        <option value="SEMUA">Semua Kelas</option>
+                        ${listKelasUnik.map(k => `<option value="${k}" ${String(fKelas) === String(k) ? 'selected' : ''}>Kelas ${k}</option>`).join('')}
+                    </select>
+                </div>
+
+                <div class="filter-item">
+                    <label>📖 Mapel</label>
+                    <select id="rekapFilterMapel" class="form-control">
+                        <option value="SEMUA">Semua Mapel</option>
                         ${mapelOptions}
-                      </select>
-                      ${fKelas !== "SEMUA" ? `
-                        <small class="field-hint" style="color: var(--success);">
-                          ✅ ${mapelUnik.length} mapel untuk Kelas ${fKelas}
-                        </small>
-                      ` : `
-                        <small class="field-hint" style="color: var(--text-muted);">
-                          💡 Pilih Kelas untuk memfilter Mapel
-                        </small>
-                      `}
-                    </div>
-                  </div>
-                  
-                  <!-- ③ GURU (CASCADE) — ADMIN only -->
-                  <div class="form-group" style="margin-bottom:8px;">
-                    <label>③ 👨‍🏫 Guru</label>
-                    ${isUser ? `
-                      <input type="text" class="form-control" value="${escapeHtml(verifiedGuruName || '-')}" readonly 
-                             style="background: var(--bg-primary); cursor: not-allowed; color: var(--text-secondary); font-weight: 600;">
-                      <small class="field-hint" style="color: var(--primary);">🔒 Terkunci ke akun Anda</small>
-                    ` : `
-                      <select id="rekapFilterGuru" class="form-control">
-                        <option value="SEMUA">📋 Semua Guru</option>
+                    </select>
+                </div>
+
+                ${!isUser ? `
+                <div class="filter-item">
+                    <label>👨‍🏫 Guru</label>
+                    <select id="rekapFilterGuru" class="form-control">
+                        <option value="SEMUA">Semua Guru</option>
                         ${guruOptions}
-                      </select>
-                      ${(fKelas !== "SEMUA" || fMapel !== "SEMUA") && listGuruUnik.length > 0 ? `
-                        <small class="field-hint" style="color: var(--success);">
-                          ✅ ${listGuruUnik.length} guru pengampu
-                          ${fMapel !== "SEMUA" ? `mapel <strong>${escapeHtml(fMapel)}</strong>` : ''}
-                          ${fKelas !== "SEMUA" ? `di Kelas <strong>${fKelas}</strong>` : ''}
-                        </small>
-                      ` : (fKelas === "SEMUA" && fMapel === "SEMUA" ? `
-                        <small class="field-hint" style="color: var(--text-muted);">
-                          💡 Pilih Kelas & Mapel untuk memfilter Guru
-                        </small>
-                      ` : '')}
-                    `}
-                  </div>
-                  
-                  <div class="form-group" style="margin-bottom:0;">
+                    </select>
+                </div>
+                ` : ''}
+
+                <div class="filter-item">
                     <label>📋 Status</label>
                     <select id="rekapFilterStatus" class="form-control">
-                      <option value="SEMUA" ${fStatus==='SEMUA'?'selected':''}>Tampilkan Semua Status</option>
-                      <option value="BELUM_TUNTAS" ${fStatus==='BELUM_TUNTAS'?'selected':''}>Belum Tuntas ( &lt; KKM )</option>
-                      <option value="TUNTAS" ${fStatus==='TUNTAS'?'selected':''}>Tuntas ( ≥ KKM )</option>
+                        <option value="SEMUA" ${fStatus==='SEMUA'?'selected':''}>Semua Status</option>
+                        <option value="BELUM_TUNTAS" ${fStatus==='BELUM_TUNTAS'?'selected':''}>Belum Tuntas</option>
+                        <option value="TUNTAS" ${fStatus==='TUNTAS'?'selected':''}>Tuntas</option>
                     </select>
-                  </div>
                 </div>
-                
-                <div style="background: var(--bg-primary); padding: 12px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
-                  <label style="font-weight:600; font-size:12px; text-transform:uppercase; color:var(--text-secondary);">⚖️ Bobot Nilai</label>
-                  <div style="margin-top:6px;">
-                    <div class="flex-between" style="margin-bottom:4px;">
-                      <span style="font-size:13px;">📝 UH</span>
-                      <input type="number" id="weightUH" class="form-control" value="${wUH}" step="1" style="width:70px; padding:4px 8px;">
-                    </div>
-                    <div class="flex-between" style="margin-bottom:4px;">
-                      <span style="font-size:13px;">📊 PTS</span>
-                      <input type="number" id="weightPTS" class="form-control" value="${wPTS}" step="1" style="width:70px; padding:4px 8px;">
-                    </div>
-                    <div class="flex-between" style="margin-bottom:8px;">
-                      <span style="font-size:13px;">📋 PAS</span>
-                      <input type="number" id="weightPAS" class="form-control" value="${wPAS}" step="1" style="width:70px; padding:4px 8px;">
-                    </div>
-                    <button class="btn btn-primary btn-sm" style="width:100%;" id="btnUpdateNA">🔄 Update & Hitung</button>
-                  </div>
-                </div>
-              </div>
-              <div class="filter-actions">
-                <button class="btn btn-ghost btn-sm" id="btnResetRekapFilter">🔄 Reset Filter</button>
-                <button class="btn btn-success btn-sm" id="btnExportExcelRekap">📗 Download Excel</button>
-                <span class="badge badge-primary" style="padding:6px 14px;">Ditemukan: ${totalRows} Data</span>
-              </div>
             </div>
 
-            <div class="table-wrapper" style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
-              <table style="font-size:12px; min-width: 1200px; width: max-content;">
-                <thead>
-                  <tr>
-                    <th>Santri</th>
-                    <th>Kelas</th>
-                    <th>Mapel</th>
-                    <th>Guru</th>
-                    <th title="Jumlah UH">Jml UH</th>
-                    <th>Rata UH</th>
-                    <th>PTS</th>
-                    <th>PAS L</th>
-                    <th>PAS T</th>
-                    <th>PAS P</th>
-                    <th style="background: var(--bg-primary); text-align:center;">N.A</th>
-                    <th>Status</th>
-                    <th style="min-width: 250px; max-width: 350px;">Deskripsi</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${paginatedRows.length ? paginatedRows.map(r => {
-                    const isBelumTuntas = r.status === "BELUM_TUNTAS";
-                    const naStyle = `background:${isBelumTuntas ? 'var(--danger)' : 'var(--success)'}; color:#fff; padding:4px 8px; border-radius:4px; font-weight:700; display:inline-block;`;
-                    const statusInfo = isBelumTuntas 
-                        ? { label: 'Belum Tuntas', class: 'badge-danger' }
-                        : { label: 'Tuntas', class: 'badge-success' };
-                    return `
-                      <tr>
-                        <td data-label="Santri"><strong>${r.santri}</strong></td>
-                        <td data-label="Kelas"><span class="badge badge-gray">${r.kelas}</span></td>
-                        <td data-label="Mapel">${r.mapel} <small style="color:var(--text-muted);">KKM: ${r.kkm}</small></td>
-                        <td data-label="Guru">${escapeHtml(r.guru || '-')}</td>
-                        <td data-label="Jml UH" style="text-align:center;"><strong style="color:var(--primary);">${r.uhCount}</strong></td>
-                        <td data-label="Rata UH" style="text-align:center;">${r.uh ?? '-'}</td>
-                        <td data-label="PTS" style="text-align:center;">${r.pts ?? '-'}</td>
-                        <td data-label="PAS L" style="text-align:center;color:var(--primary);">${r.pasLisan ?? '-'}</td>
-                        <td data-label="PAS T" style="text-align:center;color:var(--primary);">${r.pasTulis ?? '-'}</td>
-                        <td data-label="PAS P" style="text-align:center;color:var(--primary);">${r.pasPraktek ?? '-'}</td>
-                        <td data-label="N.A" style="text-align:center;"><span style="${naStyle}">${r.na}</span></td>
-                        <td data-label="Status"><span class="status-badge-score ${statusInfo.class}">${statusInfo.label}</span></td>
-                        <td data-label="Deskripsi" style="font-size: 11px; color: var(--text-secondary); max-width: 300px; word-wrap: break-word; white-space: normal; line-height: 1.4;">
-                          ${escapeHtml(r.deskripsi || '')}
-                        </td>
-                      </tr>
-                    `;
-                  }).join('') : '<tr><td colspan="13" style="text-align:center; padding:30px; color:var(--text-muted);">Data tidak ditemukan.</td></tr>'}
-                </tbody>
-              </table>
+            <!-- Bobot Nilai -->
+            <div style="background: var(--bg-primary); padding: 12px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); margin-top: 12px;">
+                <label style="font-weight: 700; font-size: 11px; text-transform: uppercase; color: var(--text-secondary); display: block; margin-bottom: 8px;">
+                    ⚖️ Bobot Nilai
+                </label>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
+                    <div>
+                        <label style="font-size: 10px; color: var(--text-muted);">📝 UH</label>
+                        <input type="number" id="weightUH" class="form-control" value="${wUH}" step="1" style="padding: 6px 8px; text-align: center; font-weight: 700;">
+                    </div>
+                    <div>
+                        <label style="font-size: 10px; color: var(--text-muted);">📊 PTS</label>
+                        <input type="number" id="weightPTS" class="form-control" value="${wPTS}" step="1" style="padding: 6px 8px; text-align: center; font-weight: 700;">
+                    </div>
+                    <div>
+                        <label style="font-size: 10px; color: var(--text-muted);">📋 PAS</label>
+                        <input type="number" id="weightPAS" class="form-control" value="${wPAS}" step="1" style="padding: 6px 8px; text-align: center; font-weight: 700;">
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-sm" style="width: 100%; margin-top: 10px;" id="btnUpdateNA">
+                    🔄 Hitung Ulang
+                </button>
             </div>
 
-            <div style="margin-top: 12px; display:flex; justify-content:center; align-items:center; gap:15px; flex-wrap:wrap;">
-              <button class="btn btn-ghost btn-sm" id="pgPrev" ${activePage<=1?'disabled':''}>◀ Prev</button>
-              <span style="font-size:13px; font-weight:500;">Hal. <strong>${activePage}</strong> / ${totalPages}</span>
-              <button class="btn btn-ghost btn-sm" id="pgNext" ${activePage>=totalPages?'disabled':''}>Next ▶</button>
-              <select id="rowsPerPageSelect" class="form-control" style="width:auto; padding:4px 10px;">
-                ${[10,20,50,100,500].map(v => `<option value="${v}" ${rowsPerPage===v?'selected':''}>${v} baris</option>`).join('')}
-              </select>
+            <div class="filter-actions" style="margin-top: 12px;">
+                <button class="btn btn-ghost btn-sm" id="btnResetRekapFilter">🔄 Reset</button>
+                <button class="btn btn-success btn-sm" id="btnExportExcelRekap">📗 Excel</button>
             </div>
-          </div>
         </div>
+
+        <!-- ============================================================ -->
+        <!-- ✅ FIX #1: CARD LIST (mobile) — hapus inline display:none -->
+        <!-- ============================================================ -->
+        <div class="rekap-card-list">
+            ${paginatedRows.length ? paginatedRows.map(r => {
+                const isBelum = r.status === 'BELUM_TUNTAS';
+                const initial = (r.santri || '?').charAt(0).toUpperCase();
+                
+                // ✅ Sanitasi ID untuk target deskripsi (hindari karakter aneh)
+                const safeId = (str) => (str || '').toString().replace(/[^a-zA-Z0-9]/g, '_');
+                const deskTargetId = `desk-${safeId(r.santri)}-${safeId(r.mapel)}`;
+                
+                return `
+                    <div class="rekap-card ${isBelum ? 'belum-tuntas' : ''}">
+                        <!-- HEADER -->
+                        <div class="rekap-card-header">
+                            <div class="rekap-avatar">${initial}</div>
+                            <div class="rekap-header-info">
+                                <div class="rekap-nama">${escapeHtml(r.santri)}</div>
+                                <div class="rekap-meta">
+                                    <span class="badge badge-gray">Kls ${escapeHtml(r.kelas)}</span>
+                                    <span>•</span>
+                                    <span>${escapeHtml(r.mapel)}</span>
+                                </div>
+                                <div class="rekap-meta" style="margin-top: 2px;">
+                                    <span style="font-size: 10px;">👨‍🏫 ${escapeHtml(r.guru || '-')}</span>
+                                </div>
+                            </div>
+                            <div class="rekap-status-badge ${isBelum ? 'belum' : 'tuntas'}">
+                                ${isBelum ? 'BELUM' : 'TUNTAS'}
+                            </div>
+                        </div>
+
+                        <!-- NILAI GRID -->
+                        <div class="rekap-nilai-grid">
+                            <div class="rekap-nilai-item nilai-uh">
+                                <span class="rekap-nilai-label">📝 UH</span>
+                                <span class="rekap-nilai-value ${r.uh === null ? 'empty' : ''}">
+                                    ${r.uh !== null ? r.uh : '—'}
+                                </span>
+                            </div>
+                            <div class="rekap-nilai-item nilai-pts">
+                                <span class="rekap-nilai-label">📊 PTS</span>
+                                <span class="rekap-nilai-value ${r.pts === null ? 'empty' : ''}">
+                                    ${r.pts !== null ? r.pts : '—'}
+                                </span>
+                            </div>
+                            <div class="rekap-nilai-item nilai-pas">
+                                <span class="rekap-nilai-label">🗣️ PAS L</span>
+                                <span class="rekap-nilai-value ${r.pasLisan === null ? 'empty' : ''}">
+                                    ${r.pasLisan !== null ? r.pasLisan : '—'}
+                                </span>
+                            </div>
+                            <div class="rekap-nilai-item nilai-pas">
+                                <span class="rekap-nilai-label">✍️ PAS T</span>
+                                <span class="rekap-nilai-value ${r.pasTulis === null ? 'empty' : ''}">
+                                    ${r.pasTulis !== null ? r.pasTulis : '—'}
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- NA BOX -->
+                        <div class="rekap-na-box">
+                            <div>
+                                <div class="rekap-na-label">Nilai Akhir</div>
+                                <div class="rekap-na-kkm">KKM: ${r.kkm}</div>
+                            </div>
+                            <div class="rekap-na-value">${r.na}</div>
+                        </div>
+
+                        <!-- DESKRIPSI (collapsible) -->
+                        <div class="rekap-deskripsi-wrapper">
+                            <button class="rekap-deskripsi-toggle" data-target="${deskTargetId}">
+                                <span>📝 Lihat Deskripsi</span>
+                                <span class="arrow">▼</span>
+                            </button>
+                            <div class="rekap-deskripsi-content" id="${deskTargetId}">
+                                ${escapeHtml(r.deskripsi || 'Belum ada deskripsi.')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('') : `
+                <div class="rekap-empty">
+                    <div class="rekap-empty-icon">📭</div>
+                    <div class="rekap-empty-title">Tidak Ada Data</div>
+                    <div class="rekap-empty-text">
+                        ${fKelas !== 'SEMUA' || fMapel !== 'SEMUA' 
+                          ? 'Coba ubah filter atau reset pencarian.'
+                          : 'Belum ada data nilai yang tersedia.'}
+                    </div>
+                </div>
+            `}
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- ✅ FIX #1: TABEL DESKTOP — hapus inline display:none -->
+        <!-- ============================================================ -->
+        <div class="card rekap-table-desktop">
+            <div class="card-body" style="padding: 0;">
+                <div class="table-wrapper" style="overflow-x: auto;">
+                    <table style="font-size:12px; min-width: 1200px; width: max-content;">
+                        <thead>
+                            <tr>
+                                <th>Santri</th>
+                                <th>Kelas</th>
+                                <th>Mapel</th>
+                                <th>Guru</th>
+                                <th>Jml UH</th>
+                                <th>Rata UH</th>
+                                <th>PTS</th>
+                                <th>PAS L</th>
+                                <th>PAS T</th>
+                                <th>PAS P</th>
+                                <th style="background: var(--bg-primary); text-align:center;">N.A</th>
+                                <th>Status</th>
+                                <th style="min-width: 250px; max-width: 350px;">Deskripsi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${paginatedRows.length ? paginatedRows.map(r => {
+                                const isBelum = r.status === "BELUM_TUNTAS";
+                                const naStyle = `background:${isBelum ? 'var(--danger)' : 'var(--success)'}; color:#fff; padding:4px 8px; border-radius:4px; font-weight:700; display:inline-block;`;
+                                const statusInfo = isBelum 
+                                    ? { label: 'Belum Tuntas', class: 'badge-danger' }
+                                    : { label: 'Tuntas', class: 'badge-success' };
+                                return `
+                                    <tr>
+                                        <td data-label="Santri"><strong>${escapeHtml(r.santri)}</strong></td>
+                                        <td data-label="Kelas"><span class="badge badge-gray">${escapeHtml(String(r.kelas))}</span></td>
+                                        <td data-label="Mapel">${escapeHtml(r.mapel)} <small style="color:var(--text-muted);">KKM: ${r.kkm}</small></td>
+                                        <td data-label="Guru">${escapeHtml(r.guru || '-')}</td>
+                                        <td data-label="Jml UH" style="text-align:center;"><strong style="color:var(--primary);">${r.uhCount}</strong></td>
+                                        <td data-label="Rata UH" style="text-align:center;">${r.uh ?? '-'}</td>
+                                        <td data-label="PTS" style="text-align:center;">${r.pts ?? '-'}</td>
+                                        <td data-label="PAS L" style="text-align:center;color:var(--primary);">${r.pasLisan ?? '-'}</td>
+                                        <td data-label="PAS T" style="text-align:center;color:var(--primary);">${r.pasTulis ?? '-'}</td>
+                                        <td data-label="PAS P" style="text-align:center;color:var(--primary);">${r.pasPraktek ?? '-'}</td>
+                                        <td data-label="N.A" style="text-align:center;"><span style="${naStyle}">${r.na}</span></td>
+                                        <td data-label="Status"><span class="status-badge-score ${statusInfo.class}">${statusInfo.label}</span></td>
+                                        <td data-label="Deskripsi" style="font-size: 11px; color: var(--text-secondary); max-width: 300px; word-wrap: break-word; white-space: normal; line-height: 1.4;">
+                                            ${escapeHtml(r.deskripsi || '')}
+                                        </td>
+                                    </tr>
+                                `;
+                            }).join('') : '<tr><td colspan="13" style="text-align:center; padding:30px; color:var(--text-muted);">Data tidak ditemukan.</td></tr>'}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- ✅ PAGINATION (shared)                                        -->
+        <!-- ============================================================ -->
+        <div class="rekap-pagination">
+            <button class="rekap-page-btn" id="pgPrev" ${activePage<=1?'disabled':''}>◀</button>
+            <div class="rekap-page-info">
+                Hal <strong>${activePage}</strong> / ${totalPages}
+            </div>
+            <button class="rekap-page-btn" id="pgNext" ${activePage>=totalPages?'disabled':''}>▶</button>
+            <select id="rowsPerPageSelect" class="form-control" style="width: auto; padding: 6px 10px; font-size: 12px;">
+                ${[10,20,50,100,500].map(v => `<option value="${v}" ${rowsPerPage===v?'selected':''}>${v}</option>`).join('')}
+            </select>
         </div>
     `;
     mainPanel.innerHTML = html;
+
+    // ✅ Event listener filter toggle
+    document.getElementById('rekapFilterToggle')?.addEventListener('click', function() {
+        const section = document.getElementById('rekapFilterSection');
+        if (!section) return;
+        const isOpen = section.classList.contains('open');
+        if (isOpen) {
+            section.classList.remove('open');
+            this.classList.remove('open');
+        } else {
+            section.classList.add('open');
+            this.classList.add('open');
+        }
+    });
+
+    // ✅ Event listener deskripsi toggle
+    document.querySelectorAll('.rekap-deskripsi-toggle').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const targetId = this.dataset.target;
+            const content = document.getElementById(targetId);
+            if (content) {
+                content.classList.toggle('open');
+                this.classList.toggle('open');
+                const label = this.querySelector('span:first-child');
+                if (content.classList.contains('open')) {
+                    label.textContent = '📝 Sembunyikan Deskripsi';
+                } else {
+                    label.textContent = '📝 Lihat Deskripsi';
+                }
+            }
+        });
+    });
+
+    // ✅ Auto-open filter jika ada filter aktif (UX)
+    const hasActiveFilter = fKelas !== 'SEMUA' || fMapel !== 'SEMUA' || 
+                            (fGuru && fGuru !== 'SEMUA') || fStatus !== 'SEMUA';
+    if (hasActiveFilter) {
+        const toggleBtn = document.getElementById('rekapFilterToggle');
+        const section = document.getElementById('rekapFilterSection');
+        if (toggleBtn && section) {
+            section.classList.add('open');
+            toggleBtn.classList.add('open');
+        }
+    }
     
     // ============================================================
     // EVENT LISTENERS
@@ -25573,15 +27162,15 @@ function renderRekapSiswa(page = 1) {
     // ✅ ① KELAS berubah → RESET MAPEL & GURU (cascade)
     document.getElementById('rekapFilterKelas')?.addEventListener('change', function() {
         rekapFilterKelas = this.value;
-        rekapFilterMapel = "SEMUA";   // ✅ reset mapel
-        rekapFilterGuru = "SEMUA";    // ✅ reset guru juga (ADMIN)
+        rekapFilterMapel = "SEMUA";
+        rekapFilterGuru = "SEMUA";
         renderRekapSiswa(1);
     });
     
     // ✅ ② MAPEL berubah → RESET GURU (cascade)
     document.getElementById('rekapFilterMapel')?.addEventListener('change', function() {
         rekapFilterMapel = this.value;
-        rekapFilterGuru = "SEMUA";    // ✅ reset guru saat mapel berubah
+        rekapFilterGuru = "SEMUA";
         renderRekapSiswa(1);
     });
     
