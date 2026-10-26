@@ -3264,6 +3264,1197 @@ select.form-control.error {
   0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.35); }
   100% { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
 }
+
+
+/* ============================================================
+   ✅ MONITORING — MOBILE-FRIENDLY & ELEGAN
+   ============================================================ */
+
+/* ---------- DESKTOP: tetap seperti sebelumnya ---------- */
+.monitoring-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+}
+
+.monitoring-card {
+    position: relative;
+    overflow: hidden;
+    padding: 18px 20px;
+}
+
+/* Aksen garis atas untuk status */
+.monitoring-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--text-muted);
+    opacity: 0.6;
+}
+.monitoring-card.status-complete::before { background: var(--success); opacity: 1; }
+.monitoring-card.status-partial::before  { background: var(--warning); opacity: 1; }
+.monitoring-card.status-empty::before    { background: var(--danger);  opacity: 1; }
+
+/* ---------- TABLET (≤ 900px) ---------- */
+@media (max-width: 900px) {
+    .monitoring-progress {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+}
+
+/* ============================================================
+   ✅ MOBILE (≤ 640px) — Grid Rapi & Elegan
+   ============================================================ */
+@media (max-width: 640px) {
+
+    /* --- Grid container --- */
+    .monitoring-grid {
+        gap: 12px;
+    }
+
+    /* --- Card utama --- */
+    .monitoring-card {
+        padding: 14px 14px 12px;
+        border-radius: 14px;
+        border-left-width: 4px;
+    }
+
+    .monitoring-card:hover {
+        transform: none; /* matikan hover-lift di mobile */
+    }
+
+    /* --- Header card: nama & badge bertumpuk rapi --- */
+    .monitoring-card .guru-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        margin-bottom: 12px;
+        padding-bottom: 10px;
+        border-bottom: 1px dashed var(--border-color);
+    }
+
+    .monitoring-card .guru-name {
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1.25;
+        word-break: break-word;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+
+    /* Badge status di header — full width & rata kanan */
+    .monitoring-card .guru-header > .flex {
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    .monitoring-card .guru-header .badge {
+        font-size: 11px;
+        padding: 4px 12px;
+        border-radius: 50px;
+    }
+
+    .monitoring-card .guru-detail {
+        font-size: 11px;
+        line-height: 1.5;
+        color: var(--text-muted);
+        margin-top: 2px;
+        word-break: break-word;
+    }
+
+    /* ============================================================
+       ✅ PROGRESS UH / PTS / PAS — 3 kartu sejajar, rapi & compact
+       ============================================================ */
+    .monitoring-progress {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+        margin-top: 4px;
+    }
+
+    .monitoring-progress .progress-item {
+        padding: 8px 4px 6px;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 68px;
+        text-align: center;
+        gap: 2px;
+    }
+
+    .monitoring-progress .progress-item .count {
+        font-size: 14px;
+        font-weight: 800;
+        line-height: 1.1;
+        letter-spacing: -0.3px;
+    }
+
+    .monitoring-progress .progress-item .label {
+        font-size: 9px;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        opacity: 0.85;
+        line-height: 1.2;
+        white-space: nowrap;
+    }
+
+    /* Sembunyikan progress-bar mini di kartu progress (biar tidak sesak) */
+    .monitoring-progress .progress-item .progress-bar {
+        display: none;
+    }
+
+    /* Ikon status kecil di kanan atas tiap kartu progress */
+    .monitoring-progress .progress-item {
+        position: relative;
+    }
+
+    .monitoring-progress .progress-item.complete::after,
+    .monitoring-progress .progress-item.partial::after,
+    .monitoring-progress .progress-item.empty::after {
+        content: '';
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+    }
+    .monitoring-progress .progress-item.complete::after { background: var(--success); }
+    .monitoring-progress .progress-item.partial::after  { background: var(--warning); }
+    .monitoring-progress .progress-item.empty::after    { background: var(--danger); }
+
+    /* ============================================================
+       ✅ MAPEL DETAIL — kartu-kartu elegan per mapel
+       ============================================================ */
+    .mapel-detail-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        margin-top: 12px;
+        padding-top: 12px;
+    }
+
+    .mapel-detail-item {
+        padding: 10px 12px;
+        border-radius: 10px;
+        border-left-width: 4px;
+        background: var(--bg-secondary);
+        box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
+
+    .mapel-detail-item .mapel-name {
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1.3;
+        margin-bottom: 6px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .mapel-detail-item .mapel-name > span {
+        font-size: 10px !important;
+        padding: 2px 8px;
+        background: var(--bg-primary);
+        border-radius: 50px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    /* Baris UH / PTS / PAS per mapel */
+    .mapel-detail-item .mapel-progress {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        align-items: center;
+        font-size: 10px;
+        margin-top: 4px;
+    }
+
+    .mapel-detail-item .mapel-progress span {
+        padding: 2px 8px;
+        border-radius: 50px;
+        background: var(--bg-primary);
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .mapel-detail-item .mapel-progress .done    { color: var(--success); }
+    .mapel-detail-item .mapel-progress .pending { color: var(--warning); }
+    .mapel-detail-item .mapel-progress .empty   { color: var(--danger); }
+
+    /* Persentase akhir rata kanan */
+    .mapel-detail-item .mapel-progress span:last-child {
+        margin-left: auto !important;
+        background: var(--primary-50) !important;
+        color: var(--primary-dark) !important;
+        font-weight: 800;
+    }
+
+    /* Progress bar per mapel — tipis & modern */
+    .mapel-detail-item .progress-bar {
+        height: 5px;
+        margin-top: 8px;
+        border-radius: 3px;
+    }
+
+    /* ============================================================
+       ✅ STATISTIK ATAS — 2 kolom rapi di mobile
+       ============================================================ */
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+    }
+
+    .stats-grid .stat-card {
+        padding: 12px 8px;
+    }
+
+    .stats-grid .stat-card .stat-number {
+        font-size: 22px;
+    }
+
+    .stats-grid .stat-card .stat-label {
+        font-size: 10px;
+        line-height: 1.3;
+    }
+
+    /* Filter grid jadi 1 kolom penuh */
+    .filter-grid {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+    }
+
+    /* Info cascade: perkecil */
+    .filter-section > div[style*="primary-50"] {
+        font-size: 11px !important;
+        padding: 6px 10px !important;
+    }
+}
+
+/* ============================================================
+   ✅ HP SANGAT KECIL (≤ 380px) — ekstra compact
+   ============================================================ */
+@media (max-width: 380px) {
+    .monitoring-card {
+        padding: 12px 10px 10px;
+    }
+
+    .monitoring-progress .progress-item {
+        min-height: 60px;
+        padding: 6px 2px;
+    }
+
+    .monitoring-progress .progress-item .count {
+        font-size: 13px;
+    }
+
+    .monitoring-progress .progress-item .label {
+        font-size: 8px;
+    }
+
+    .mapel-detail-item {
+        padding: 8px 10px;
+    }
+
+    .mapel-detail-item .mapel-name {
+        font-size: 12px;
+    }
+
+    .mapel-detail-item .mapel-progress span {
+        font-size: 9px;
+        padding: 2px 6px;
+    }
+}
+
+/* ============================================================
+   ✅ DARK MODE adjustments
+   ============================================================ */
+[data-theme="dark"] .mapel-detail-item {
+    background: var(--bg-primary);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+[data-theme="dark"] .mapel-detail-item .mapel-name > span {
+    background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .monitoring-progress .progress-item {
+    border-color: rgba(255,255,255,0.08);
+}
+
+
+/* ============================================================
+   ✅ JURNAL MENGAJAR — MOBILE ELEGANT (≤ 768px)
+   ============================================================ */
+
+@media (max-width: 768px) {
+
+    /* ============================================
+       1. SUB-TABS: Pill modern, full-width, scrollable
+       ============================================ */
+    .sub-tabs {
+        padding: 5px;
+        gap: 4px;
+        border-radius: 14px;
+        background: var(--bg-secondary);
+        border: 1.5px solid var(--border-color);
+        box-shadow: var(--shadow-sm);
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .sub-tabs::-webkit-scrollbar { display: none; }
+
+    .sub-tabs .sub-tab {
+        flex: 1;
+        min-width: max-content;
+        padding: 11px 16px;
+        font-size: 13.5px;
+        font-weight: 600;
+        border-radius: 10px;
+        color: var(--text-secondary);
+        background: transparent;
+        border: none;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        -webkit-tap-highlight-color: transparent;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        white-space: nowrap;
+    }
+
+    .sub-tabs .sub-tab.active {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: #ffffff;
+        box-shadow: 0 4px 12px rgba(5, 150, 105, 0.35),
+                    0 2px 4px rgba(5, 150, 105, 0.2);
+        transform: translateY(-1px);
+    }
+
+    .sub-tabs .sub-tab.active .badge {
+        background: rgba(255, 255, 255, 0.25) !important;
+        color: #fff !important;
+        font-size: 10px !important;
+        padding: 1px 7px !important;
+    }
+
+    .sub-tabs .sub-tab:active {
+        transform: scale(0.97);
+    }
+
+    /* ============================================
+       2. FORM TAMBAH JURNAL: Card modern + spacing
+       ============================================ */
+    #jurnalSubTabContent .card {
+        border-radius: 16px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        border: 1px solid var(--border-color);
+        overflow: hidden;
+    }
+
+    #jurnalSubTabContent .card-header {
+        padding: 16px 18px;
+        background: linear-gradient(135deg, var(--primary-50), var(--bg-primary));
+        border-bottom: 2px solid var(--primary-100);
+    }
+
+    #jurnalSubTabContent .card-header h3 {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--primary-dark);
+    }
+
+    #jurnalSubTabContent .card-body {
+        padding: 18px 16px;
+    }
+
+    /* Form row jadi 1 kolom dengan spacing nyaman */
+    #jurnalSubTabContent .form-row-3,
+    #jurnalSubTabContent .form-row {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+    }
+
+    /* Label form: lebih tegas & terbaca */
+    #jurnalSubTabContent .form-group {
+        margin-bottom: 14px;
+    }
+
+    #jurnalSubTabContent .form-group label {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--text-secondary);
+        letter-spacing: 0.4px;
+        margin-bottom: 6px;
+        display: block;
+    }
+
+    /* Input: touch-friendly (44px height sesuai aksesibilitas) */
+    #jurnalSubTabContent .form-control {
+        padding: 12px 14px;
+        font-size: 14.5px;
+        border-radius: 10px;
+        border-width: 1.5px;
+        min-height: 46px;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    #jurnalSubTabContent .form-control:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.12);
+    }
+
+    #jurnalSubTabContent textarea.form-control {
+        min-height: 80px;
+        line-height: 1.5;
+    }
+
+    /* Field hint lebih jelas */
+    #jurnalSubTabContent .field-hint {
+        font-size: 11.5px;
+        line-height: 1.5;
+        margin-top: 6px;
+        display: block;
+    }
+
+    /* Readonly input (kelas, guru) */
+    #jurnalSubTabContent input[readonly] {
+        background: var(--bg-primary) !important;
+        color: var(--text-secondary) !important;
+        font-weight: 600;
+        border-style: dashed;
+    }
+
+    /* Tombol simpan: besar & menonjol */
+    #jurnalSubTabContent #btnSaveJurnal {
+        padding: 15px 20px;
+        font-size: 15px;
+        font-weight: 700;
+        border-radius: 12px;
+        margin-top: 8px;
+        box-shadow: 0 6px 20px rgba(5, 150, 105, 0.35);
+        letter-spacing: 0.3px;
+    }
+
+    #jurnalSubTabContent #btnSaveJurnal:active {
+        transform: scale(0.97);
+        box-shadow: 0 3px 10px rgba(5, 150, 105, 0.3);
+    }
+
+    /* ============================================
+       3. FILTER DAFTAR JURNAL: Card + grid 2 kolom rapi
+       ============================================ */
+    #jurnalSubTabContent .filter-section {
+        padding: 16px;
+        border-radius: 14px;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-sm);
+        margin-bottom: 14px;
+    }
+
+    /* Filter grid: 2 kolom rapi (bukan 4 kolom sempit) */
+    #jurnalSubTabContent .filter-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 10px !important;
+    }
+
+    /* Item filter full-width untuk yang panjang */
+    #jurnalSubTabContent .filter-item:nth-child(1) {
+        grid-column: 1 / -1;
+    }
+
+    #jurnalSubTabContent .filter-item label {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        margin-bottom: 5px;
+    }
+
+    #jurnalSubTabContent .filter-item .form-control {
+        padding: 10px 12px;
+        font-size: 13.5px;
+        min-height: 42px;
+        border-radius: 9px;
+    }
+
+    #jurnalSubTabContent .filter-item .form-control:disabled {
+        background: var(--bg-primary);
+        color: var(--text-secondary);
+        font-weight: 600;
+        border-style: dashed;
+    }
+
+    /* Filter actions: full-width buttons */
+    #jurnalSubTabContent .filter-actions {
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 14px;
+    }
+
+    #jurnalSubTabContent .filter-actions .btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 13.5px;
+        font-weight: 600;
+        border-radius: 10px;
+        justify-content: center;
+    }
+
+    /* ============================================
+       4. TABEL DAFTAR JURNAL → CARD STYLE
+       ============================================ */
+    #jurnalListContainer .card {
+        border-radius: 14px;
+        overflow: hidden;
+    }
+
+    #jurnalListContainer .card-header {
+        padding: 14px 16px;
+        background: linear-gradient(135deg, var(--primary-50), var(--bg-primary));
+    }
+
+    #jurnalListContainer .card-header h3 {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--primary-dark);
+    }
+
+    /* Card per jurnal: elegan dengan border kiri */
+    #jurnalListContainer .table-wrapper {
+        padding: 12px;
+        background: var(--bg-primary);
+    }
+
+    #jurnalListContainer table,
+    #jurnalListContainer tbody {
+        display: block;
+        width: 100%;
+    }
+
+    #jurnalListContainer thead {
+        display: none;
+    }
+
+    #jurnalListContainer tbody tr {
+        display: block;
+        width: 100%;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        border-left: 4px solid var(--primary);
+        border-radius: 12px;
+        margin-bottom: 12px;
+        padding: 14px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        transition: box-shadow 0.2s ease;
+        position: relative;
+    }
+
+    #jurnalListContainer tbody tr:hover {
+        background: var(--bg-secondary);
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Setiap td: label di atas, value di bawah */
+    #jurnalListContainer tbody td {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 8px 0;
+        border: none;
+        border-bottom: 1px dashed var(--border-color);
+        font-size: 13px;
+        gap: 3px;
+        width: 100%;
+    }
+
+    #jurnalListContainer tbody td:last-child {
+        border-bottom: none;
+        padding-top: 12px;
+        margin-top: 6px;
+        border-top: 1px solid var(--border-color);
+    }
+
+    /* Label dari data-label */
+    #jurnalListContainer tbody td::before {
+        content: attr(data-label);
+        font-size: 10.5px;
+        font-weight: 700;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        display: block;
+        margin-bottom: 2px;
+    }
+
+    /* Value */
+    #jurnalListContainer tbody td > *,
+    #jurnalListContainer tbody td {
+        word-wrap: break-word;
+        white-space: normal;
+    }
+
+    /* Kolom mapel: menonjol */
+    #jurnalListContainer tbody td[data-label="Mapel"] {
+        font-weight: 700;
+        color: var(--primary-dark);
+        font-size: 14px;
+    }
+
+    /* Kolom tanggal: badge-like */
+    #jurnalListContainer tbody td[data-label="Tanggal"] {
+        font-weight: 600;
+        color: var(--primary);
+        font-size: 12.5px;
+        margin-bottom: 4px;
+    }
+
+    /* Kolom aksi: full width buttons */
+    #jurnalListContainer tbody td[data-label="Aksi"] .flex {
+        width: 100%;
+        gap: 8px !important;
+    }
+
+    #jurnalListContainer tbody td[data-label="Aksi"] .btn {
+        flex: 1;
+        padding: 10px 12px;
+        font-size: 12.5px;
+        font-weight: 600;
+        border-radius: 8px;
+        justify-content: center;
+    }
+
+    /* Kolom Materi & Indikator: kotak highlight */
+    #jurnalListContainer tbody td[data-label="Materi"],
+    #jurnalListContainer tbody td[data-label="Indikator"] {
+        font-size: 12px;
+        line-height: 1.5;
+        color: var(--text-secondary);
+        background: var(--bg-primary);
+        padding: 8px 12px !important;
+        border-radius: 8px;
+        margin-top: 4px;
+        border-bottom: none !important;
+    }
+
+    #jurnalListContainer tbody td[data-label="Materi"]::before,
+    #jurnalListContainer tbody td[data-label="Indikator"]::before {
+        color: var(--primary);
+        font-weight: 700;
+    }
+
+    /* Nomor materi/indikator di highlight */
+    #jurnalListContainer tbody td[data-label="Materi"] span,
+    #jurnalListContainer tbody td[data-label="Indikator"] span {
+        display: inline-block;
+        background: var(--primary-100);
+        color: var(--primary-dark);
+        padding: 1px 8px;
+        border-radius: 10px;
+        font-size: 10.5px;
+        font-weight: 700;
+        margin-left: 4px;
+    }
+
+    /* Empty state */
+    #jurnalListContainer tbody td[colspan] {
+        border: none !important;
+        background: transparent !important;
+        padding: 30px 16px !important;
+        text-align: center;
+    }
+}
+
+/* ============================================================
+   ✅ EXTRA SMALL (≤ 480px) — Lebih compact
+   ============================================================ */
+@media (max-width: 480px) {
+    .sub-tabs .sub-tab {
+        padding: 10px 12px;
+        font-size: 12.5px;
+    }
+
+    #jurnalSubTabContent .filter-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    #jurnalSubTabContent .filter-item:nth-child(1) {
+        grid-column: 1 !important;
+    }
+
+    #jurnalSubTabContent .card-body {
+        padding: 16px 14px;
+    }
+
+    #jurnalListContainer tbody tr {
+        padding: 12px;
+    }
+}
+
+
+/* ============================================================
+   ✅ JURNAL MENGAJAR — DESKTOP ELEGANT + ANIMASI SUB-TAB
+   ============================================================ */
+
+/* ---------- 1. SUB-TAB: pill modern dengan animasi ---------- */
+.sub-tabs {
+    position: relative;
+    background: var(--bg-secondary);
+    border: 1.5px solid var(--border-color);
+    border-radius: 14px;
+    padding: 5px;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.3s ease;
+}
+
+.sub-tabs .sub-tab {
+    position: relative;
+    z-index: 1;
+    transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 10px;
+}
+
+/* Hover state elegan */
+.sub-tabs .sub-tab:not(.active):hover {
+    background: var(--primary-50);
+    color: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+/* Active state: gradient + glow + subtle lift */
+.sub-tabs .sub-tab.active {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #ffffff !important;
+    font-weight: 700;
+    box-shadow: 
+        0 4px 14px rgba(5, 150, 105, 0.35),
+        0 2px 6px rgba(5, 150, 105, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+/* Badge di dalam tab aktif */
+.sub-tabs .sub-tab.active .badge {
+    background: rgba(255, 255, 255, 0.28) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* Efek ripple saat klik */
+.sub-tabs .sub-tab::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), 
+                rgba(255, 255, 255, 0.4), transparent 60%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+.sub-tabs .sub-tab.ripple::after {
+    opacity: 1;
+    animation: subTabRipple 0.6s ease-out;
+}
+@keyframes subTabRipple {
+    0%   { opacity: 0.9; transform: scale(0.8); }
+    100% { opacity: 0; transform: scale(1.6); }
+}
+
+/* ---------- 2. ANIMASI SLIDE-IN KONTEN SUB-TAB ---------- */
+#jurnalSubTabContent {
+    animation: subTabContentIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+    will-change: opacity, transform;
+}
+
+@keyframes subTabContentIn {
+    0% {
+        opacity: 0;
+        transform: translateY(14px) scale(0.995);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Animasi saat keluar (opsional) */
+#jurnalSubTabContent.leaving {
+    animation: subTabContentOut 0.2s cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+@keyframes subTabContentOut {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+/* ---------- 3. CARD TAMBAH JURNAL: Desktop elegan ---------- */
+@media (min-width: 769px) {
+
+    #jurnalSubTabContent .card {
+        border-radius: 18px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        border: 1px solid var(--border-color);
+        overflow: hidden;
+        transition: box-shadow 0.3s ease, transform 0.2s ease;
+    }
+
+    #jurnalSubTabContent .card:hover {
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.09);
+    }
+
+    #jurnalSubTabContent .card-header {
+        padding: 18px 24px;
+        background: linear-gradient(135deg, var(--primary-50), var(--bg-primary));
+        border-bottom: 2px solid var(--primary-100);
+        position: relative;
+    }
+
+    /* Accent bar di atas header */
+    #jurnalSubTabContent .card-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary), var(--primary-light), var(--primary));
+        background-size: 200% 100%;
+        animation: gradientShift 3s ease infinite;
+    }
+
+    @keyframes gradientShift {
+        0%, 100% { background-position: 0% 50%; }
+        50%      { background-position: 100% 50%; }
+    }
+
+    #jurnalSubTabContent .card-header h3 {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--primary-dark);
+        letter-spacing: -0.2px;
+    }
+
+    #jurnalSubTabContent .card-body {
+        padding: 24px;
+    }
+
+    /* Form group: spacing lebih lega */
+    #jurnalSubTabContent .form-group {
+        margin-bottom: 18px;
+    }
+
+    #jurnalSubTabContent .form-group label {
+        font-size: 12.5px;
+        font-weight: 700;
+        color: var(--text-secondary);
+        letter-spacing: 0.5px;
+        margin-bottom: 6px;
+        display: block;
+        text-transform: uppercase;
+    }
+
+    /* Input: border radius + focus ring lebih tegas */
+    #jurnalSubTabContent .form-control {
+        padding: 11px 16px;
+        font-size: 14px;
+        border-radius: 10px;
+        border-width: 1.5px;
+        transition: all 0.2s ease;
+    }
+
+    #jurnalSubTabContent .form-control:hover:not(:disabled):not([readonly]) {
+        border-color: var(--primary-200, #a7f3d0);
+    }
+
+    #jurnalSubTabContent .form-control:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.12);
+    }
+
+    /* Readonly input: dashed border */
+    #jurnalSubTabContent input[readonly] {
+        background: var(--bg-primary) !important;
+        border-style: dashed !important;
+        color: var(--text-secondary) !important;
+        font-weight: 600;
+    }
+
+    /* Tombol simpan jurnal: full-width, besar, gradient */
+    #jurnalSubTabContent #btnSaveJurnal {
+        padding: 14px 24px;
+        font-size: 15px;
+        font-weight: 700;
+        border-radius: 12px;
+        margin-top: 8px;
+        letter-spacing: 0.3px;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        box-shadow: 
+            0 6px 20px rgba(5, 150, 105, 0.3),
+            0 2px 6px rgba(5, 150, 105, 0.15);
+        transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Shine effect saat hover */
+    #jurnalSubTabContent #btnSaveJurnal::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, 
+                    transparent, 
+                    rgba(255, 255, 255, 0.25), 
+                    transparent);
+        transition: left 0.6s ease;
+    }
+
+    #jurnalSubTabContent #btnSaveJurnal:hover {
+        transform: translateY(-2px);
+        box-shadow: 
+            0 10px 28px rgba(5, 150, 105, 0.4),
+            0 4px 10px rgba(5, 150, 105, 0.25);
+    }
+
+    #jurnalSubTabContent #btnSaveJurnal:hover::before {
+        left: 100%;
+    }
+
+    #jurnalSubTabContent #btnSaveJurnal:active {
+        transform: translateY(0) scale(0.98);
+    }
+
+    /* ---------- 4. FILTER SECTION DESKTOP ---------- */
+    #jurnalSubTabContent .filter-section {
+        padding: 18px 22px;
+        border-radius: 16px;
+        background: var(--bg-secondary);
+        border: 1.5px solid var(--border-color);
+        box-shadow: var(--shadow-sm);
+        margin-bottom: 18px;
+        transition: box-shadow 0.3s ease;
+    }
+
+    #jurnalSubTabContent .filter-section:hover {
+        box-shadow: var(--shadow-md);
+    }
+
+    #jurnalSubTabContent .filter-grid {
+        gap: 14px !important;
+    }
+
+    #jurnalSubTabContent .filter-item label {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.6px;
+        margin-bottom: 5px;
+    }
+
+    #jurnalSubTabContent .filter-item .form-control {
+        padding: 10px 14px;
+        font-size: 13.5px;
+        border-radius: 9px;
+    }
+
+    #jurnalSubTabContent .filter-actions {
+        margin-top: 16px;
+        padding-top: 14px;
+        border-top: 1px dashed var(--border-color);
+    }
+
+    /* ---------- 5. TABEL DAFTAR JURNAL DESKTOP ---------- */
+    #jurnalListContainer .card {
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    #jurnalListContainer .card-header {
+        padding: 18px 24px;
+        background: linear-gradient(135deg, var(--primary-50), var(--bg-primary));
+        border-bottom: 2px solid var(--primary-100);
+        position: relative;
+    }
+
+    #jurnalListContainer .card-header::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary), var(--primary-light), var(--primary));
+        background-size: 200% 100%;
+        animation: gradientShift 3s ease infinite;
+    }
+
+    #jurnalListContainer .card-header h3 {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--primary-dark);
+    }
+
+    /* Tabel: header sticky, row hover elegan */
+    #jurnalListContainer table {
+        font-size: 13px;
+    }
+
+    #jurnalListContainer thead th {
+        background: var(--bg-primary);
+        color: var(--text-secondary);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        padding: 12px 16px;
+        border-bottom: 2px solid var(--border-color);
+        text-transform: uppercase;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+    }
+
+    #jurnalListContainer tbody td {
+        padding: 14px 16px;
+        vertical-align: top;
+        border-bottom: 1px solid var(--border-color);
+        transition: background 0.15s ease;
+    }
+
+    #jurnalListContainer tbody tr {
+        transition: all 0.2s ease;
+        position: relative;
+    }
+
+    #jurnalListContainer tbody tr:hover {
+        background: var(--primary-50);
+        box-shadow: inset 4px 0 0 var(--primary);
+    }
+
+    #jurnalListContainer tbody tr:hover td {
+        border-bottom-color: var(--primary-100);
+    }
+
+    /* Kolom mapel: menonjol */
+    #jurnalListContainer tbody td:nth-child(3) {
+        font-weight: 600;
+        color: var(--primary-dark);
+    }
+
+    /* Kolom materi & indikator: highlight box */
+    #jurnalListContainer tbody td:nth-child(5),
+    #jurnalListContainer tbody td:nth-child(6) {
+        max-width: 240px;
+        font-size: 12px;
+        line-height: 1.5;
+        color: var(--text-secondary);
+    }
+
+    /* Badge nomor materi/indikator */
+    #jurnalListContainer tbody td span[style*="font-weight:700"] {
+        display: inline-block;
+        background: var(--primary-100);
+        color: var(--primary-dark);
+        padding: 1px 8px;
+        border-radius: 10px;
+        font-size: 10.5px;
+        font-weight: 800 !important;
+        margin-left: 4px;
+        border: 1px solid var(--primary-200, #a7f3d0);
+    }
+
+    /* Kolom aksi: tombol icon modern */
+    #jurnalListContainer tbody td:last-child .btn {
+        padding: 6px 10px;
+        border-radius: 8px;
+        font-size: 11.5px;
+        font-weight: 600;
+        transition: all 0.2s ease;
+    }
+
+    #jurnalListContainer tbody td:last-child .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-sm);
+    }
+
+    /* Empty state elegan */
+    #jurnalListContainer tbody td[colspan] {
+        padding: 50px 20px !important;
+        text-align: center;
+    }
+}
+
+/* ---------- 6. ANIMASI STAGGER UNTUK ROW TABEL ---------- */
+@keyframes rowFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#jurnalListContainer tbody tr {
+    animation: rowFadeIn 0.3s ease both;
+}
+
+#jurnalListContainer tbody tr:nth-child(1)  { animation-delay: 0.02s; }
+#jurnalListContainer tbody tr:nth-child(2)  { animation-delay: 0.04s; }
+#jurnalListContainer tbody tr:nth-child(3)  { animation-delay: 0.06s; }
+#jurnalListContainer tbody tr:nth-child(4)  { animation-delay: 0.08s; }
+#jurnalListContainer tbody tr:nth-child(5)  { animation-delay: 0.10s; }
+#jurnalListContainer tbody tr:nth-child(6)  { animation-delay: 0.12s; }
+#jurnalListContainer tbody tr:nth-child(7)  { animation-delay: 0.14s; }
+#jurnalListContainer tbody tr:nth-child(8)  { animation-delay: 0.16s; }
+#jurnalListContainer tbody tr:nth-child(9)  { animation-delay: 0.18s; }
+#jurnalListContainer tbody tr:nth-child(10) { animation-delay: 0.20s; }
+
+/* ---------- 7. DARK MODE ADJUSTMENTS ---------- */
+[data-theme="dark"] #jurnalSubTabContent .card-header,
+[data-theme="dark"] #jurnalListContainer .card-header {
+    background: linear-gradient(135deg, rgba(5, 150, 105, 0.15), var(--bg-secondary));
+}
+
+[data-theme="dark"] #jurnalListContainer tbody tr:hover {
+    background: rgba(5, 150, 105, 0.12);
+}
+
+[data-theme="dark"] #jurnalListContainer tbody td span[style*="font-weight:700"] {
+    background: var(--primary-50);
+    color: var(--primary-light);
+}
+
+[data-theme="dark"] #jurnalSubTabContent input[readonly] {
+    background: var(--bg-input) !important;
+}
+
+/* ---------- 8. REDUCED MOTION ---------- */
+@media (prefers-reduced-motion: reduce) {
+    #jurnalSubTabContent,
+    #jurnalListContainer tbody tr,
+    .sub-tabs .sub-tab {
+        animation-duration: 0.01s !important;
+        transition-duration: 0.01s !important;
+    }
+}
   </style>
 </head>
 <body>
@@ -4017,7 +5208,7 @@ let weightPTS = 30;
 let weightPAS = 40;
 
 let PIN_USER = "1234";
-let PIN_ADMIN = "555";
+let PIN_ADMIN = "5555";
 
 let hapusSantriId = null;
 let hapusSantriMassalIds = [];
@@ -4144,7 +5335,7 @@ let jamAbsensiSetting = {
     durasiIzinHari: 2
 };
 
-let jurnalSubTab = 'INPUT_JURNAL';
+let jurnalSubTab = 'TAMBAH_JURNAL'; // 'TAMBAH_JURNAL' | 'DAFTAR_JURNAL'
 let absensiSiswaSubTab = 'INPUT_ABSENSI';
 
 // ============================================================
@@ -6737,6 +7928,32 @@ document.addEventListener('DOMContentLoaded', async () => {
             sweepAutoAlpaGuru().catch(e => console.error('Sweep visibility error:', e));
         }
     });
+
+    // ============================================================
+    // ✅ RIPPLE EFFECT untuk semua sub-tab (global)
+    // ============================================================
+    // Guard: pastikan listener hanya dipasang SEKALI seumur halaman
+    // untuk mencegah penumpukan listener jika DOMContentLoaded ter-trigger ulang
+    if (!window._subTabRippleAttached) {
+        window._subTabRippleAttached = true;
+        
+        document.addEventListener('click', function(e) {
+            const subTab = e.target.closest('.sub-tab, .trans-sub-tab');
+            if (!subTab) return;
+            
+            const rect = subTab.getBoundingClientRect();
+            subTab.style.setProperty('--x', `${e.clientX - rect.left}px`);
+            subTab.style.setProperty('--y', `${e.clientY - rect.top}px`);
+            
+            subTab.classList.remove('ripple');
+            void subTab.offsetWidth; // force reflow
+            subTab.classList.add('ripple');
+            
+            setTimeout(() => subTab.classList.remove('ripple'), 700);
+        });
+        
+        console.log('✅ Ripple effect untuk sub-tab terpasang');
+    }
     
     isAuthorized = false;
     updateUIAfterLogin();
@@ -9726,20 +10943,121 @@ function renderJurnalTab() {
     const daftarMapelUnik = [...new Set(baseJurnalData.map(j => j.mapelName).filter(n => n))].sort();
     const daftarKelasUnik = [...new Set(baseJurnalData.map(j => j.kelas).filter(k => k))].sort();
 
+    // Hitung jumlah data untuk badge di tab
+    const jumlahJurnal = baseJurnalData.length;
+
     mainPanel.innerHTML = `
       <div style="margin-bottom:16px;">
         <h3 style="font-size:16px; font-weight:600; margin:0;">📔 Jurnal Mengajar</h3>
       </div>
       
       ${renderJurnalPeriodeInfo()}
-      
+
+      <!-- ============================================================ -->
+      <!-- ✅ SUB-TABS: Tambah Jurnal & Daftar Jurnal                   -->
+      <!-- ============================================================ -->
+      <div class="sub-tabs" style="margin-bottom:16px;">
+        <button class="sub-tab ${jurnalSubTab === 'TAMBAH_JURNAL' ? 'active' : ''}" 
+                onclick="window.setJurnalSubTab('TAMBAH_JURNAL')">
+          ➕ Tambah Jurnal
+        </button>
+        <button class="sub-tab ${jurnalSubTab === 'DAFTAR_JURNAL' ? 'active' : ''}" 
+                onclick="window.setJurnalSubTab('DAFTAR_JURNAL')">
+          📋 Daftar Jurnal
+          <span class="badge badge-primary" style="margin-left:6px; font-size:10px; padding:1px 8px;">${jumlahJurnal}</span>
+        </button>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- KONTEN BERDASARKAN SUB-TAB AKTIF                             -->
+      <!-- ============================================================ -->
+      <div id="jurnalSubTabContent"></div>
+    `;
+
+    // Render konten sesuai sub-tab yang aktif
+    if (jurnalSubTab === 'DAFTAR_JURNAL') {
+        renderDaftarJurnalSubTab({
+            daftarGuruUnik,
+            daftarMapelUnik,
+            daftarKelasUnik,
+            baseJurnalData
+        });
+    } else {
+        renderTambahJurnalSubTab({ canInput });
+    }
+}
+
+
+window.setJurnalSubTab = function(subTab) {
+    // Jika tab sama, tidak perlu animasi
+    if (jurnalSubTab === subTab) return;
+    
+    const contentEl = document.getElementById('jurnalSubTabContent');
+    
+    // Jika content belum ada, langsung render
+    if (!contentEl) {
+        jurnalSubTab = subTab;
+        renderJurnalTab();
+        return;
+    }
+    
+    // Update state SEBELUM animasi (agar render dapat data baru)
+    const oldSubTab = jurnalSubTab;
+    jurnalSubTab = subTab;
+    
+    // ============================================================
+    // FASE 1: Fade out konten lama (200ms)
+    // ============================================================
+    contentEl.classList.add('leaving');
+    
+    setTimeout(() => {
+        // ============================================================
+        // FASE 2: Update tombol sub-tab active state (tanpa full re-render)
+        // ============================================================
+        document.querySelectorAll('#jurnalSubTabContent')
+            .forEach(el => el.classList.remove('leaving'));
+        
+        // Update active class pada tombol sub-tab
+        const subTabButtons = document.querySelectorAll('.sub-tabs .sub-tab');
+        subTabButtons.forEach(btn => {
+            btn.classList.remove('active');
+        });
+        
+        // Cari tombol yang sesuai dengan subTab baru
+        subTabButtons.forEach(btn => {
+            const onclick = btn.getAttribute('onclick') || '';
+            if (onclick.includes(`'${subTab}'`)) {
+                btn.classList.add('active');
+                // Ripple effect
+                btn.classList.add('ripple');
+                setTimeout(() => btn.classList.remove('ripple'), 700);
+            }
+        });
+        
+        // ============================================================
+        // FASE 3: Re-render SELURUH tab (untuk update data & listener)
+        // ============================================================
+        renderJurnalTab();
+        
+        // Scroll ke atas smooth (opsional)
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+    }, 200);
+};
+
+
+function renderTambahJurnalSubTab({ canInput }) {
+    const container = document.getElementById('jurnalSubTabContent');
+    if (!container) return;
+
+    container.innerHTML = `
       <div class="card" style="margin-bottom:16px;">
         <div class="card-header"><h3>➕ Tambah Jurnal</h3></div>
         <div class="card-body">
           <div class="form-row-3">
             <div class="form-group" style="margin-bottom:0;">
               <label>Tanggal</label>
-              <input type="date" id="jurnalTanggal" class="form-control" value="${new Date().toISOString().slice(0,10)}" ${!canInput ? 'disabled' : ''}>
+              <input type="date" id="jurnalTanggal" class="form-control" value="${getTodayWIB()}" ${!canInput ? 'disabled' : ''}>
             </div>
             <div class="form-group" style="margin-bottom:0;">
               <label>Mapel</label>
@@ -9765,9 +11083,7 @@ function renderJurnalTab() {
             </div>
           </div>
           
-          <!-- ============================================================ -->
           <!-- ✅ MATERI PEMBELAJARAN dengan DROPDOWN dari Jurnal Sebelumnya -->
-          <!-- ============================================================ -->
           <div class="form-group" style="margin-top:12px;">
             <label>📖 Materi Pembelajaran</label>
             <div class="indicator-dropdown-container">
@@ -9798,7 +11114,303 @@ function renderJurnalTab() {
           ${!canInput ? `<p style="color:var(--danger); font-size:12px; margin-top:8px; text-align:center;">⚠️ Input jurnal tidak tersedia di luar periode</p>` : ''}
         </div>
       </div>
+    `;
+
+    // ============================================================
+    // ELEMENT REFERENCES
+    // ============================================================
+    const mapelSelect = container.querySelector('#jurnalMapel');
+    const guruInput = container.querySelector('#jurnalGuru');
+    const kelasInput = container.querySelector('#jurnalKelas');
+    const jurnalMateriInput = container.querySelector('#jurnalMateri');
+    const jurnalMateriOptions = container.querySelector('#jurnalMateriOptions');
+    const jurnalMateriHint = container.querySelector('#jurnalMateriHint');
+    const jurnalIndikatorInput = container.querySelector('#jurnalIndikator');
+
+    // ============================================================
+    // EVENT: Mapel berubah → auto-isi Guru & Kelas, reset Materi
+    // ============================================================
+    if (mapelSelect) {
+      mapelSelect.onchange = () => {
+        const opt = mapelSelect.options[mapelSelect.selectedIndex];
+        const mapelId = opt.value;
+        const guruIdFromMapel = opt.dataset.guru || '';
+        const kelasDariMapel = opt.dataset.kelas || '';
+        const guru = guruCache.find(g => g.id === guruIdFromMapel);
+        
+        if (guru) {
+          guruInput.value = guru.name;
+        } else if (userRole === 'USER') {
+          guruInput.value = verifiedGuruName || '';
+        }
+        
+        if (kelasDariMapel) {
+          kelasInput.value = `Kelas ${kelasDariMapel}`;
+        } else {
+          kelasInput.value = '';
+        }
+        
+        // ✅ Reset field materi & dropdown saat mapel berubah
+        if (jurnalMateriInput) jurnalMateriInput.value = '';
+        if (jurnalMateriOptions) jurnalMateriOptions.classList.remove('show');
+        if (jurnalMateriHint) {
+          if (mapelId) {
+            jurnalMateriHint.innerHTML = '💡 Klik field materi untuk melihat materi sebelumnya';
+            jurnalMateriHint.className = 'field-hint';
+            jurnalMateriHint.style.color = 'var(--text-muted)';
+          } else {
+            jurnalMateriHint.textContent = '💡 Klik untuk pilih materi sebelumnya, atau ketik materi baru';
+            jurnalMateriHint.className = 'field-hint';
+            jurnalMateriHint.style.color = '';
+          }
+        }
+      };
+    }
+
+    // ============================================================
+    // ✅ Dropdown Materi Pembelajaran dari Jurnal Sebelumnya
+    // ============================================================
+    function showJurnalMateriDropdown() {
+      if (!jurnalMateriOptions || !jurnalMateriInput) return;
+      if (!canInput) return;
       
+      const mapelId = mapelSelect?.value || '';
+      const mapelData = mapelCache.find(m => m.id === mapelId);
+      const mapelName = mapelData?.name || '';
+      const kelas = String(mapelData?.kelas || '');
+      
+      if (!mapelName || !kelas) {
+        jurnalMateriHint.innerHTML = '⚠️ <strong>Pilih Mapel terlebih dahulu</strong> untuk melihat materi sebelumnya';
+        jurnalMateriHint.className = 'field-hint danger';
+        jurnalMateriHint.style.color = 'var(--warning)';
+        jurnalMateriOptions.classList.remove('show');
+        return;
+      }
+      
+      const materiUnik = new Map();
+      
+      (jurnalCache || []).forEach(j => {
+        if (j.mapelName !== mapelName) return;
+        if (String(j.kelas) !== kelas) return;
+        
+        if (userRole === 'USER' && verifiedGuruId) {
+          if (j.guruId !== verifiedGuruId) return;
+        }
+        
+        const materi = (j.materi || '').toString().trim();
+        if (!materi || materi === 'undefined' || materi === 'null' || materi === 'NaN') return;
+        
+        if (!materiUnik.has(materi)) {
+          materiUnik.set(materi, {
+            materi: materi,
+            count: 0,
+            pertemuan: parseInt(j.pertemuan) || 1
+          });
+        }
+        const item = materiUnik.get(materi);
+        item.count++;
+        if ((parseInt(j.pertemuan) || 1) > item.pertemuan) {
+          item.pertemuan = parseInt(j.pertemuan) || 1;
+        }
+      });
+      
+      if (materiUnik.size === 0) {
+        jurnalMateriHint.innerHTML = `ℹ️ Belum ada materi sebelumnya untuk <strong>${escapeHtml(mapelName)}</strong> (Kelas ${escapeHtml(kelas)}).<br>Ketik materi baru di field ini.`;
+        jurnalMateriHint.className = 'field-hint';
+        jurnalMateriHint.style.color = 'var(--text-muted)';
+        jurnalMateriOptions.classList.remove('show');
+        return;
+      }
+      
+      jurnalMateriHint.innerHTML = `💡 Ditemukan <strong>${materiUnik.size} materi</strong> sebelumnya — klik untuk pilih atau ketik baru`;
+      jurnalMateriHint.className = 'field-hint success';
+      jurnalMateriHint.style.color = 'var(--success)';
+      
+      const sortedMateri = Array.from(materiUnik.values())
+        .sort((a, b) => b.count - a.count);
+      
+      jurnalMateriOptions.innerHTML = sortedMateri.map(item => `
+        <div class="indicator-item" data-materi="${escapeHtml(item.materi)}">
+          📖 ${escapeHtml(item.materi)}
+          <span class="badge-pertemuan">${item.count}x dipakai</span>
+        </div>
+      `).join('');
+      
+      jurnalMateriOptions.classList.add('show');
+      
+      jurnalMateriOptions.querySelectorAll('.indicator-item').forEach(el => {
+        el.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const materi = this.dataset.materi;
+          jurnalMateriInput.value = materi;
+          jurnalMateriOptions.classList.remove('show');
+          jurnalMateriInput.focus();
+          showToast("Info", `Materi "${materi}" dipilih`, "info");
+        });
+      });
+    }
+
+    // ============================================================
+    // EVENT LISTENER: Klik field → show dropdown
+    // ============================================================
+    if (jurnalMateriInput && jurnalMateriOptions && canInput) {
+      
+      jurnalMateriInput.addEventListener('focus', showJurnalMateriDropdown);
+      jurnalMateriInput.addEventListener('click', function(e) {
+        e.stopPropagation();
+        showJurnalMateriDropdown();
+      });
+      
+      jurnalMateriInput.addEventListener('input', function() {
+        const keyword = this.value.toLowerCase().trim();
+        if (!keyword) {
+          showJurnalMateriDropdown();
+          return;
+        }
+        
+        const items = jurnalMateriOptions.querySelectorAll('.indicator-item');
+        let visibleCount = 0;
+        items.forEach(el => {
+          const materi = (el.dataset.materi || '').toLowerCase();
+          if (materi.includes(keyword)) {
+            el.style.display = '';
+            visibleCount++;
+          } else {
+            el.style.display = 'none';
+          }
+        });
+        
+        if (visibleCount === 0 && items.length > 0) {
+          jurnalMateriOptions.classList.remove('show');
+        } else if (visibleCount > 0) {
+          jurnalMateriOptions.classList.add('show');
+        }
+      });
+      
+      jurnalMateriInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          jurnalMateriOptions.classList.remove('show');
+        }
+        if (e.key === 'Enter' && jurnalMateriOptions.classList.contains('show')) {
+          const firstVisible = Array.from(jurnalMateriOptions.querySelectorAll('.indicator-item'))
+            .find(el => el.style.display !== 'none');
+          if (firstVisible) {
+            e.preventDefault();
+            jurnalMateriInput.value = firstVisible.dataset.materi;
+            jurnalMateriOptions.classList.remove('show');
+          }
+        }
+      });
+      
+      document.addEventListener('click', function(e) {
+        if (jurnalMateriOptions && jurnalMateriInput && 
+            !jurnalMateriOptions.contains(e.target) && 
+            e.target !== jurnalMateriInput) {
+          jurnalMateriOptions.classList.remove('show');
+        }
+      });
+    }
+
+    // ============================================================
+    // HANDLER: Tombol SIMPAN JURNAL
+    // ============================================================
+    const btnSave = container.querySelector('#btnSaveJurnal');
+    if (btnSave && canInput) {
+      btnSave.onclick = async () => {
+        const tanggal = container.querySelector('#jurnalTanggal').value;
+        const mapelId = mapelSelect.value;
+        const materi = jurnalMateriInput.value.trim();
+        const indikator = jurnalIndikatorInput.value.trim();
+        const catatan = container.querySelector('#jurnalCatatan').value.trim();
+        
+        const mapelData = mapelCache.find(m => m.id === mapelId);
+        if (!mapelData) {
+          showToast("Peringatan", "Mapel tidak valid, silakan pilih ulang!", "danger");
+          return;
+        }
+        
+        const kelas = String(mapelData.kelas || '');
+        const guruIdFromMapel = mapelData.guruId || '';
+        const guruObj = guruCache.find(g => g.id === guruIdFromMapel);
+        const guruName = guruObj ? guruObj.name : (verifiedGuruName || '');
+        const mapelName = mapelData.name;
+        
+        if (!tanggal) {
+          showToast("Peringatan", "Tanggal wajib diisi!", "danger");
+          container.querySelector('#jurnalTanggal')?.focus();
+          return;
+        }
+        if (!mapelId || !mapelName) {
+          showToast("Peringatan", "Mata Pelajaran wajib dipilih!", "danger");
+          mapelSelect?.focus();
+          return;
+        }
+        if (!materi) {
+          showToast("Peringatan", "Materi Pembelajaran wajib diisi!", "danger");
+          jurnalMateriInput?.focus();
+          return;
+        }
+        if (!indikator) {
+          showToast("Peringatan", "Indikator / Tujuan Pembelajaran wajib diisi!", "danger");
+          jurnalIndikatorInput?.focus();
+          return;
+        }
+        
+        if (userRole === 'USER' && verifiedGuruId && guruIdFromMapel !== verifiedGuruId) {
+          showToast("Akses Ditolak", "Anda hanya dapat menginput jurnal untuk mapel yang Anda ampu!", "danger");
+          return;
+        }
+        
+        btnSave.disabled = true;
+        btnSave.innerHTML = '<span class="spinner"></span> Menyimpan...';
+        
+        try {
+          await addDoc(jurnalCol, {
+            tanggal,
+            kelas: kelas,
+            mapelId: mapelData.id,
+            mapelName: mapelName,
+            guruId: guruIdFromMapel,
+            guruName: guruName,
+            materi, 
+            indikator, 
+            catatan,
+            createdAt: serverTimestamp()
+          });
+          
+          showToast("Berhasil", "Jurnal berhasil disimpan!", "success");
+          
+          // Reset form
+          jurnalMateriInput.value = '';
+          jurnalIndikatorInput.value = '';
+          container.querySelector('#jurnalCatatan').value = '';
+          mapelSelect.value = '';
+          kelasInput.value = '';
+          guruInput.value = userRole === 'USER' ? (verifiedGuruName || '') : '';
+          
+          if (jurnalMateriHint) {
+            jurnalMateriHint.textContent = '💡 Klik untuk pilih materi sebelumnya, atau ketik materi baru';
+            jurnalMateriHint.className = 'field-hint';
+            jurnalMateriHint.style.color = '';
+          }
+          if (jurnalMateriOptions) jurnalMateriOptions.classList.remove('show');
+          
+        } catch (e) { 
+          showToast("Gagal", e.message, "danger"); 
+        } finally {
+          btnSave.disabled = false;
+          btnSave.innerHTML = '💾 Simpan Jurnal';
+        }
+      };
+    }
+}
+
+
+function renderDaftarJurnalSubTab({ daftarGuruUnik, daftarMapelUnik, daftarKelasUnik, baseJurnalData }) {
+    const container = document.getElementById('jurnalSubTabContent');
+    if (!container) return;
+
+    container.innerHTML = `
       <!-- FILTER DINAMIS: GURU, MATERI, MAPEL, KELAS -->
       <div class="filter-section">
         <div class="filter-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr;">
@@ -9843,319 +11455,8 @@ function renderJurnalTab() {
       <div id="jurnalListContainer"></div>
     `;
 
-    // ============================================================
-    // ELEMENT REFERENCES
-    // ============================================================
-    const mapelSelect = mainPanel.querySelector('#jurnalMapel');
-    const guruInput = mainPanel.querySelector('#jurnalGuru');
-    const kelasInput = mainPanel.querySelector('#jurnalKelas');
-    const jurnalMateriInput = mainPanel.querySelector('#jurnalMateri');
-    const jurnalMateriOptions = mainPanel.querySelector('#jurnalMateriOptions');
-    const jurnalMateriHint = mainPanel.querySelector('#jurnalMateriHint');
-    const jurnalIndikatorInput = mainPanel.querySelector('#jurnalIndikator');
-
-    // ============================================================
-    // EVENT: Mapel berubah → auto-isi Guru & Kelas, reset Materi
-    // ============================================================
-    if (mapelSelect) {
-      mapelSelect.onchange = () => {
-        const opt = mapelSelect.options[mapelSelect.selectedIndex];
-        const mapelId = opt.value;
-        const guruIdFromMapel = opt.dataset.guru || '';
-        const kelasDariMapel = opt.dataset.kelas || '';
-        const guru = guruCache.find(g => g.id === guruIdFromMapel);
-        
-        if (guru) {
-          guruInput.value = guru.name;
-        } else if (userRole === 'USER') {
-          guruInput.value = verifiedGuruName || '';
-        }
-        
-        if (kelasDariMapel) {
-          kelasInput.value = `Kelas ${kelasDariMapel}`;
-        } else {
-          kelasInput.value = '';
-        }
-        
-        // ✅ Reset field materi & dropdown saat mapel berubah
-        if (jurnalMateriInput) jurnalMateriInput.value = '';
-        if (jurnalMateriOptions) jurnalMateriOptions.classList.remove('show');
-        if (jurnalMateriHint) {
-          if (mapelId) {
-            jurnalMateriHint.innerHTML = '💡 Klik field materi untuk melihat materi sebelumnya';
-            jurnalMateriHint.className = 'field-hint';
-            jurnalMateriHint.style.color = 'var(--text-muted)';
-          } else {
-            jurnalMateriHint.textContent = '💡 Klik untuk pilih materi sebelumnya, atau ketik materi baru';
-            jurnalMateriHint.className = 'field-hint';
-            jurnalMateriHint.style.color = '';
-          }
-        }
-      };
-    }
-
-    // ============================================================
-    // ✅ FITUR BARU: Dropdown Materi Pembelajaran dari Jurnal Sebelumnya
-    // ============================================================
-    function showJurnalMateriDropdown() {
-      if (!jurnalMateriOptions || !jurnalMateriInput) return;
-      if (!canInput) return;
-      
-      const mapelId = mapelSelect?.value || '';
-      const mapelData = mapelCache.find(m => m.id === mapelId);
-      const mapelName = mapelData?.name || '';
-      const kelas = String(mapelData?.kelas || '');
-      
-      // Validasi: harus pilih mapel dulu
-      if (!mapelName || !kelas) {
-        jurnalMateriHint.innerHTML = '⚠️ <strong>Pilih Mapel terlebih dahulu</strong> untuk melihat materi sebelumnya';
-        jurnalMateriHint.className = 'field-hint danger';
-        jurnalMateriHint.style.color = 'var(--warning)';
-        jurnalMateriOptions.classList.remove('show');
-        return;
-      }
-      
-      // ============================================================
-      // KUMPULKAN MATERI UNIK dari jurnal dengan mapel + kelas sama
-      // ============================================================
-      const materiUnik = new Map(); // key: materi, value: {materi, count, pertemuan}
-      
-      (jurnalCache || []).forEach(j => {
-        // Filter mapel + kelas
-        if (j.mapelName !== mapelName) return;
-        if (String(j.kelas) !== kelas) return;
-        
-        // Filter guru (untuk USER: hanya jurnal miliknya sendiri)
-        if (userRole === 'USER' && verifiedGuruId) {
-          if (j.guruId !== verifiedGuruId) return;
-        }
-        
-        const materi = (j.materi || '').toString().trim();
-        if (!materi || materi === 'undefined' || materi === 'null' || materi === 'NaN') return;
-        
-        if (!materiUnik.has(materi)) {
-          materiUnik.set(materi, {
-            materi: materi,
-            count: 0,
-            pertemuan: parseInt(j.pertemuan) || 1
-          });
-        }
-        const item = materiUnik.get(materi);
-        item.count++;
-        if ((parseInt(j.pertemuan) || 1) > item.pertemuan) {
-          item.pertemuan = parseInt(j.pertemuan) || 1;
-        }
-      });
-      
-      // ============================================================
-      // KOSONG → tampilkan pesan
-      // ============================================================
-      if (materiUnik.size === 0) {
-        jurnalMateriHint.innerHTML = `ℹ️ Belum ada materi sebelumnya untuk <strong>${escapeHtml(mapelName)}</strong> (Kelas ${escapeHtml(kelas)}).<br>Ketik materi baru di field ini.`;
-        jurnalMateriHint.className = 'field-hint';
-        jurnalMateriHint.style.color = 'var(--text-muted)';
-        jurnalMateriOptions.classList.remove('show');
-        return;
-      }
-      
-      // Update hint
-      jurnalMateriHint.innerHTML = `💡 Ditemukan <strong>${materiUnik.size} materi</strong> sebelumnya — klik untuk pilih atau ketik baru`;
-      jurnalMateriHint.className = 'field-hint success';
-      jurnalMateriHint.style.color = 'var(--success)';
-      
-      // ============================================================
-      // SORT: yang paling sering dipakai di atas
-      // ============================================================
-      const sortedMateri = Array.from(materiUnik.values())
-        .sort((a, b) => b.count - a.count);
-      
-      // Render dropdown
-      jurnalMateriOptions.innerHTML = sortedMateri.map(item => `
-        <div class="indicator-item" data-materi="${escapeHtml(item.materi)}">
-          📖 ${escapeHtml(item.materi)}
-          <span class="badge-pertemuan">${item.count}x dipakai</span>
-        </div>
-      `).join('');
-      
-      jurnalMateriOptions.classList.add('show');
-      
-      // Event listener klik item
-      jurnalMateriOptions.querySelectorAll('.indicator-item').forEach(el => {
-        el.addEventListener('click', function(e) {
-          e.stopPropagation();
-          const materi = this.dataset.materi;
-          jurnalMateriInput.value = materi;
-          jurnalMateriOptions.classList.remove('show');
-          jurnalMateriInput.focus();
-          showToast("Info", `Materi "${materi}" dipilih`, "info");
-        });
-      });
-    }
-
-    // ============================================================
-    // EVENT LISTENER: Klik field → show dropdown
-    // ============================================================
-    if (jurnalMateriInput && jurnalMateriOptions && canInput) {
-      
-      // Focus / Click → tampilkan dropdown
-      jurnalMateriInput.addEventListener('focus', showJurnalMateriDropdown);
-      jurnalMateriInput.addEventListener('click', function(e) {
-        e.stopPropagation();
-        showJurnalMateriDropdown();
-      });
-      
-      // Ketik manual → filter dropdown
-      jurnalMateriInput.addEventListener('input', function() {
-        const keyword = this.value.toLowerCase().trim();
-        if (!keyword) {
-          showJurnalMateriDropdown();
-          return;
-        }
-        
-        const items = jurnalMateriOptions.querySelectorAll('.indicator-item');
-        let visibleCount = 0;
-        items.forEach(el => {
-          const materi = (el.dataset.materi || '').toLowerCase();
-          if (materi.includes(keyword)) {
-            el.style.display = '';
-            visibleCount++;
-          } else {
-            el.style.display = 'none';
-          }
-        });
-        
-        if (visibleCount === 0 && items.length > 0) {
-          jurnalMateriOptions.classList.remove('show');
-        } else if (visibleCount > 0) {
-          jurnalMateriOptions.classList.add('show');
-        }
-      });
-      
-      // Keyboard: ESC = tutup, Enter = pilih item pertama
-      jurnalMateriInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-          jurnalMateriOptions.classList.remove('show');
-        }
-        if (e.key === 'Enter' && jurnalMateriOptions.classList.contains('show')) {
-          const firstVisible = Array.from(jurnalMateriOptions.querySelectorAll('.indicator-item'))
-            .find(el => el.style.display !== 'none');
-          if (firstVisible) {
-            e.preventDefault();
-            jurnalMateriInput.value = firstVisible.dataset.materi;
-            jurnalMateriOptions.classList.remove('show');
-          }
-        }
-      });
-      
-      // Klik di luar → tutup dropdown
-      document.addEventListener('click', function(e) {
-        if (jurnalMateriOptions && jurnalMateriInput && 
-            !jurnalMateriOptions.contains(e.target) && 
-            e.target !== jurnalMateriInput) {
-          jurnalMateriOptions.classList.remove('show');
-        }
-      });
-    }
-
-    // ============================================================
-    // HANDLER: Tombol SIMPAN JURNAL
-    // ============================================================
-    const btnSave = mainPanel.querySelector('#btnSaveJurnal');
-    if (btnSave && canInput) {
-      btnSave.onclick = async () => {
-        const tanggal = mainPanel.querySelector('#jurnalTanggal').value;
-        const mapelId = mapelSelect.value;
-        const materi = jurnalMateriInput.value.trim();
-        const indikator = jurnalIndikatorInput.value.trim();
-        const catatan = mainPanel.querySelector('#jurnalCatatan').value.trim();
-        
-        const mapelData = mapelCache.find(m => m.id === mapelId);
-        if (!mapelData) {
-          showToast("Peringatan", "Mapel tidak valid, silakan pilih ulang!", "danger");
-          return;
-        }
-        
-        const kelas = String(mapelData.kelas || '');
-        const guruIdFromMapel = mapelData.guruId || '';
-        const guruObj = guruCache.find(g => g.id === guruIdFromMapel);
-        const guruName = guruObj ? guruObj.name : (verifiedGuruName || '');
-        const mapelName = mapelData.name;
-        
-        // ===== VALIDASI =====
-        if (!tanggal) {
-          showToast("Peringatan", "Tanggal wajib diisi!", "danger");
-          mainPanel.querySelector('#jurnalTanggal')?.focus();
-          return;
-        }
-        if (!mapelId || !mapelName) {
-          showToast("Peringatan", "Mata Pelajaran wajib dipilih!", "danger");
-          mapelSelect?.focus();
-          return;
-        }
-        if (!materi) {
-          showToast("Peringatan", "Materi Pembelajaran wajib diisi!", "danger");
-          jurnalMateriInput?.focus();
-          return;
-        }
-        if (!indikator) {
-          showToast("Peringatan", "Indikator / Tujuan Pembelajaran wajib diisi!", "danger");
-          jurnalIndikatorInput?.focus();
-          return;
-        }
-        
-        // Cek hak akses USER
-        if (userRole === 'USER' && verifiedGuruId && guruIdFromMapel !== verifiedGuruId) {
-          showToast("Akses Ditolak", "Anda hanya dapat menginput jurnal untuk mapel yang Anda ampu!", "danger");
-          return;
-        }
-        
-        // ===== SIMPAN =====
-        btnSave.disabled = true;
-        btnSave.innerHTML = '<span class="spinner"></span> Menyimpan...';
-        
-        try {
-          await addDoc(jurnalCol, {
-            tanggal,
-            kelas: kelas,
-            mapelId: mapelData.id,
-            mapelName: mapelName,
-            guruId: guruIdFromMapel,
-            guruName: guruName,
-            materi, 
-            indikator, 
-            catatan,
-            createdAt: serverTimestamp()
-          });
-          
-          showToast("Berhasil", "Jurnal berhasil disimpan!", "success");
-          
-          // Reset form
-          jurnalMateriInput.value = '';
-          jurnalIndikatorInput.value = '';
-          mainPanel.querySelector('#jurnalCatatan').value = '';
-          mapelSelect.value = '';
-          kelasInput.value = '';
-          guruInput.value = userRole === 'USER' ? (verifiedGuruName || '') : '';
-          
-          // Reset hint
-          if (jurnalMateriHint) {
-            jurnalMateriHint.textContent = '💡 Klik untuk pilih materi sebelumnya, atau ketik materi baru';
-            jurnalMateriHint.className = 'field-hint';
-            jurnalMateriHint.style.color = '';
-          }
-          if (jurnalMateriOptions) jurnalMateriOptions.classList.remove('show');
-          
-        } catch (e) { 
-          showToast("Gagal", e.message, "danger"); 
-        } finally {
-          btnSave.disabled = false;
-          btnSave.innerHTML = '💾 Simpan Jurnal';
-        }
-      };
-    }
-
     // ====== Setup filter listeners ======
-    setupJurnalFilterListeners(mainPanel);
+    setupJurnalFilterListeners(container);
     renderJurnalList();
 }
 
