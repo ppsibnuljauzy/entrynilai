@@ -1015,6 +1015,159 @@
     .periode-info .periode-badge.inactive { background: var(--danger); color: white; }
     .periode-info .periode-badge.pending { background: var(--warning); color: white; }
 
+
+/* ============================================================
+   ✅ PERBAIKAN PERIODE INFO — MOBILE FRIENDLY
+   ============================================================ */
+
+/* ---------- TABLET & MOBILE (≤ 768px) ---------- */
+@media (max-width: 768px) {
+    .periode-info {
+        padding: 12px 14px;
+        gap: 10px;
+        flex-direction: column;
+        align-items: stretch;
+        border-radius: var(--radius-md);
+        position: relative;
+    }
+    
+    /* Icon periode - posisi absolute di kiri atas */
+    .periode-info .periode-icon {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        font-size: 18px;
+        background: var(--bg-secondary);
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--border-color);
+    }
+    
+    /* Text periode - beri padding kiri untuk icon */
+    .periode-info .periode-text {
+        padding-left: 42px;
+        font-size: 12.5px;
+        line-height: 1.5;
+        min-height: 32px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    .periode-info .periode-text strong {
+        display: block;
+        margin-bottom: 2px;
+        font-size: 13px;
+        color: var(--text-primary);
+    }
+    
+    /* Countdown - full width, di bawah text */
+    .periode-info .periode-countdown {
+        width: 100%;
+        justify-content: center;
+        padding: 8px 12px;
+        margin-top: 4px;
+        font-size: 13px;
+        background: var(--bg-secondary);
+        border-radius: 10px;
+    }
+    
+    .periode-info .periode-countdown .time-unit {
+        flex: 1;
+        justify-content: center;
+    }
+    
+    .periode-info .periode-countdown .time-unit .number {
+        font-size: 16px;
+        min-width: 28px;
+    }
+    
+    .periode-info .periode-countdown .time-unit .label {
+        font-size: 9px;
+    }
+    
+    /* Badge status - full width, di tengah */
+    .periode-info .periode-badge {
+        width: 100%;
+        text-align: center;
+        padding: 8px 14px;
+        font-size: 12px;
+        font-weight: 700;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+    }
+    
+    /* Tombol Atur Periode - full width, besar */
+    .periode-info .btn {
+        width: 100%;
+        padding: 12px 16px;
+        font-size: 13px;
+        font-weight: 600;
+        border-radius: 10px;
+        justify-content: center;
+        min-height: 44px;
+        margin-top: 4px;
+    }
+}
+
+/* ---------- HP KECIL (≤ 480px) ---------- */
+@media (max-width: 480px) {
+    .periode-info {
+        padding: 10px 12px;
+        gap: 8px;
+    }
+    
+    .periode-info .periode-icon {
+        top: 10px;
+        left: 10px;
+        width: 28px;
+        height: 28px;
+        font-size: 16px;
+    }
+    
+    .periode-info .periode-text {
+        padding-left: 36px;
+        font-size: 11.5px;
+        min-height: 28px;
+    }
+    
+    .periode-info .periode-text strong {
+        font-size: 12px;
+    }
+    
+    /* Sembunyikan label waktu countdown di HP kecil */
+    .periode-info .periode-countdown .time-unit .label {
+        display: none;
+    }
+    
+    .periode-info .periode-countdown .time-unit .number {
+        font-size: 15px;
+    }
+    
+    .periode-info .periode-countdown .time-unit {
+        gap: 0;
+    }
+    
+    .periode-info .periode-badge {
+        font-size: 11px;
+        padding: 7px 12px;
+    }
+    
+    .periode-info .btn {
+        padding: 10px 14px;
+        font-size: 12px;
+        min-height: 40px;
+    }
+}
+
+
     .periode-countdown {
       display: inline-flex; align-items: center; gap: 8px;
       font-size: 13px; font-weight: 600;
@@ -3763,16 +3916,16 @@ select.form-control.error {
         margin-bottom: 14px;
     }
 
-    /* Filter grid: 2 kolom rapi (bukan 4 kolom sempit) */
-    #jurnalSubTabContent .filter-grid {
-        grid-template-columns: 1fr 1fr !important;
-        gap: 10px !important;
-    }
+/* ✅ Mobile: 1 kolom penuh */
+#jurnalSubTabContent .filter-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+}
 
-    /* Item filter full-width untuk yang panjang */
-    #jurnalSubTabContent .filter-item:nth-child(1) {
-        grid-column: 1 / -1;
-    }
+/* Semua item full-width di mobile */
+#jurnalSubTabContent .filter-item {
+    grid-column: 1 / -1 !important;
+}
 
     #jurnalSubTabContent .filter-item label {
         font-size: 11px;
@@ -3975,6 +4128,7 @@ select.form-control.error {
     }
 }
 
+
 /* ============================================================
    ✅ EXTRA SMALL (≤ 480px) — Lebih compact
    ============================================================ */
@@ -3984,12 +4138,14 @@ select.form-control.error {
         font-size: 12.5px;
     }
 
+    /* ✅ Filter grid: 1 kolom penuh */
     #jurnalSubTabContent .filter-grid {
         grid-template-columns: 1fr !important;
     }
 
-    #jurnalSubTabContent .filter-item:nth-child(1) {
-        grid-column: 1 !important;
+    /* ✅ Semua filter item full-width (bukan hanya item ke-1) */
+    #jurnalSubTabContent .filter-item {
+        grid-column: 1 / -1 !important;
     }
 
     #jurnalSubTabContent .card-body {
@@ -4103,6 +4259,73 @@ select.form-control.error {
         transform: translateY(-10px);
     }
 }
+
+
+/* ============================================================
+   ✅ SMOOTH TRANSITION — Input Nilai & Transaksi
+   (Mengikuti pola Jurnal Mengajar)
+============================================================ */
+
+/* Input Nilai */
+#inputContent {
+  animation: subTabContentIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: opacity, transform;
+}
+
+#inputContent.leaving {
+  animation: subTabContentOut 0.2s cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+/* Transaksi — filter & panel */
+#transactionsFilter,
+#transactionsPanel {
+  animation: subTabContentIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: opacity, transform;
+}
+
+#transactionsFilter.leaving,
+#transactionsPanel.leaving {
+  animation: subTabContentOut 0.2s cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+/* Wrapper transaksi — bungkus keduanya */
+#transaksiSubTabContent {
+  animation: subTabContentIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: opacity, transform;
+}
+
+#transaksiSubTabContent.leaving {
+  animation: subTabContentOut 0.2s cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+/* Active state sub-tab: gradient + glow (samakan dengan Jurnal) */
+.sub-tabs .sub-tab.active {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark)) !important;
+  color: #ffffff !important;
+  font-weight: 700;
+  box-shadow:
+    0 4px 14px rgba(5, 150, 105, 0.35),
+    0 2px 6px rgba(5, 150, 105, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.sub-tabs .sub-tab.active .badge {
+  background: rgba(255, 255, 255, 0.28) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #inputContent,
+  #transactionsFilter,
+  #transactionsPanel,
+  #transaksiSubTabContent {
+    animation-duration: 0.01s !important;
+    transition-duration: 0.01s !important;
+  }
+}
+
 
 /* ---------- 3. CARD TAMBAH JURNAL: Desktop elegan ---------- */
 @media (min-width: 769px) {
@@ -5387,9 +5610,15 @@ select.form-control.error {
 .trans-sub-tab.active {
     background: linear-gradient(135deg, var(--primary), var(--primary-dark));
     color: #fff;
+    font-weight: 700;
     box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35),
-                0 2px 6px rgba(5, 150, 105, 0.2);
+                0 2px 6px rgba(5, 150, 105, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
     transform: translateY(-1px);
+}
+
+.trans-sub-tab.active .trans-tab-icon {
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
 }
 
 .trans-sub-tab:active { transform: scale(0.97); }
@@ -5750,6 +5979,742 @@ select.form-control.error {
 }
 [data-theme="dark"] .trans-nilai-item {
     background: var(--bg-input);
+}
+
+
+/* ============================================================
+   ✅ FIX: SUB-TABS JURNAL MENGAJAR — FULL WIDTH DI DESKTOP
+   ============================================================ */
+
+/* Container sub-tabs: flex + full width */
+.sub-tabs {
+    display: flex;
+    width: 100%;
+    gap: 4px;
+}
+
+/* Setiap tombol sub-tab: membagi rata full width */
+.sub-tabs .sub-tab {
+    flex: 1 1 0;
+    min-width: 0;
+    text-align: center;
+    justify-content: center;
+}
+
+/* Pastikan container konten juga full width */
+#jurnalSubTabContent {
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Card di dalam sub-tab jurnal: full width */
+#jurnalSubTabContent > .card,
+#jurnalSubTabContent .card {
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Filter section di daftar jurnal: full width */
+#jurnalSubTabContent .filter-section {
+    width: 100%;
+    max-width: 100%;
+}
+
+/* List container jurnal: full width */
+#jurnalListContainer {
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Tabel di jurnal: full width */
+#jurnalListContainer .table-wrapper,
+#jurnalListContainer table {
+    width: 100%;
+}
+
+/* ============================================================
+   ✅ KHUSUS DESKTOP: Pastikan sub-tabs mengisi penuh
+   ============================================================ */
+@media (min-width: 769px) {
+    .sub-tabs {
+        display: flex;
+        width: 100%;
+        padding: 5px;
+        gap: 4px;
+    }
+    
+    .sub-tabs .sub-tab {
+        flex: 1 1 0;
+        width: 50%;
+        min-width: 0;
+        padding: 12px 20px;
+        font-size: 14px;
+        justify-content: center;
+        text-align: center;
+    }
+    
+    /* Sub-tab aktif: tetap gradient tapi full width */
+    .sub-tabs .sub-tab.active {
+        flex: 1 1 0;
+    }
+}
+
+
+/* ============================================================
+   ✅ INPUT NILAI — Mapel & Materi 2 Grid pada Desktop
+   ============================================================ */
+.field-row-mapel-materi {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+}
+
+@media (min-width: 769px) {
+    .field-row-mapel-materi {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        align-items: start;
+    }
+    .field-row-mapel-materi .form-group {
+        margin-bottom: 0;
+        min-width: 0;
+    }
+    .field-row-mapel-materi .indicator-dropdown-container {
+        position: relative;
+        width: 100%;
+    }
+    .field-row-mapel-materi .field-hint {
+        display: block;
+        margin-top: 4px;
+        line-height: 1.4;
+        word-wrap: break-word;
+    }
+}
+
+
+/* ============================================================ */
+/* ✅ FILTER TRANSAKSI — Layout Grid Desktop 3 Kolom             */
+/* ============================================================ */
+
+/* Desktop: paksa 3 kolom */
+@media (min-width: 769px) {
+    #transactionsFilter .filter-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+}
+
+/* Mobile: 1 kolom, reset semua grid-column span */
+@media (max-width: 768px) {
+    #transactionsFilter .filter-grid {
+        grid-template-columns: 1fr !important;
+    }
+    #transactionsFilter .filter-item {
+        grid-column: 1 / -1 !important;
+    }
+}
+
+
+/* ============================================================
+   ✅ REKAP NILAI — FILTER RAPI DESKTOP & MOBILE
+============================================================ */
+
+/* ---------- DESKTOP (> 768px): 4 kolom seimbang ---------- */
+@media (min-width: 769px) {
+    #rekapFilterSection .filter-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 14px !important;
+    }
+
+    /* Search santri: full width (baris sendiri) */
+    #rekapFilterSection .filter-item.search-wide {
+        grid-column: 1 / -1;
+    }
+
+    /* Dropdown: masing-masing 1 kolom */
+    #rekapFilterSection .filter-item:not(.search-wide) {
+        grid-column: span 1;
+    }
+
+    /* Bobot nilai: grid 3 kolom rapi */
+    #rekapFilterSection .bobot-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 10px !important;
+    }
+}
+
+/* ---------- TABLET (641-768px): 2 kolom ---------- */
+@media (min-width: 641px) and (max-width: 768px) {
+    #rekapFilterSection .filter-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+    }
+    #rekapFilterSection .filter-item.search-wide {
+        grid-column: 1 / -1;
+    }
+}
+
+/* ---------- MOBILE (≤ 640px): 1 kolom penuh ---------- */
+@media (max-width: 640px) {
+    #rekapFilterSection .filter-grid {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
+    #rekapFilterSection .filter-item {
+        grid-column: 1 / -1 !important;
+    }
+
+    /* Label lebih tegas */
+    #rekapFilterSection .filter-item label {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.4px;
+        margin-bottom: 5px;
+    }
+
+    /* Input lebih touch-friendly */
+    #rekapFilterSection .filter-item .form-control {
+        padding: 10px 12px;
+        font-size: 14px;
+        min-height: 44px;
+        border-radius: 10px;
+    }
+
+    /* Bobot grid tetap 3 kolom (compact) */
+    #rekapFilterSection .bobot-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 6px !important;
+    }
+
+    #rekapFilterSection .bobot-grid input {
+        padding: 8px 4px !important;
+        font-size: 13px;
+    }
+
+    /* Tombol aksi full width */
+    #rekapFilterSection .filter-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+    #rekapFilterSection .filter-actions .btn {
+        width: 100%;
+        justify-content: center;
+        min-height: 44px;
+    }
+}
+
+/* ---------- HP KECIL (≤ 380px): ekstra compact ---------- */
+@media (max-width: 380px) {
+    #rekapFilterSection .filter-item .form-control {
+        padding: 9px 10px;
+        font-size: 13px;
+        min-height: 40px;
+    }
+    #rekapFilterSection .bobot-grid input {
+        padding: 7px 2px !important;
+        font-size: 12px;
+    }
+}
+
+
+/* ============================================================
+   ✅ MONITORING — FILTER RAPI DESKTOP & MOBILE
+   ============================================================ */
+
+/* ---------- DESKTOP (> 768px): 4 kolom seimbang ---------- */
+@media (min-width: 769px) {
+    /* Container filter utama */
+    #mainPanel .filter-section:has(#monitoringFilterGuru) .filter-grid,
+    #mainPanel .filter-section:has(#monitoringFilterKelas) .filter-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 14px !important;
+        align-items: end;
+    }
+
+    /* Untuk USER (tanpa filter Guru) → 3 kolom */
+    #mainPanel .filter-section:has(#monitoringFilterKelas):not(:has(#monitoringFilterGuru)) .filter-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+
+    /* Setiap filter item */
+    #mainPanel .filter-section:has(#monitoringFilterKelas) .filter-item {
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Label konsisten */
+    #mainPanel .filter-section:has(#monitoringFilterKelas) .filter-item label {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.4px;
+        margin-bottom: 6px;
+        color: var(--text-secondary);
+    }
+
+    /* Select & input seragam */
+    #mainPanel .filter-section:has(#monitoringFilterKelas) .filter-item .form-control {
+        padding: 9px 12px;
+        font-size: 13px;
+        min-height: 42px;
+        border-radius: 9px;
+    }
+
+    /* Field hint rapi di bawah */
+    #mainPanel .filter-section:has(#monitoringFilterKelas) .filter-item .field-hint {
+        font-size: 10.5px;
+        line-height: 1.4;
+        margin-top: 5px;
+        min-height: 14px;
+    }
+
+    /* Filter actions: tombol sejajar kanan */
+    #mainPanel .filter-section:has(#monitoringFilterKelas) .filter-actions {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 10px;
+        margin-top: 14px;
+        padding-top: 14px;
+        border-top: 1px dashed var(--border-color);
+        flex-wrap: wrap;
+    }
+}
+
+/* ---------- TABLET (641-768px): 2 kolom ---------- */
+@media (min-width: 641px) and (max-width: 768px) {
+    #mainPanel .filter-section:has(#monitoringFilterKelas) .filter-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+    }
+}
+
+/* ---------- MOBILE (≤ 640px): 1 kolom ---------- */
+@media (max-width: 640px) {
+    #mainPanel .filter-section:has(#monitoringFilterKelas) .filter-grid {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
+
+    #mainPanel .filter-section:has(#monitoringFilterKelas) .filter-item .form-control {
+        padding: 10px 12px;
+        font-size: 14px;
+        min-height: 44px;
+    }
+
+    #mainPanel .filter-section:has(#monitoringFilterKelas) .filter-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    #mainPanel .filter-section:has(#monitoringFilterKelas) .filter-actions .btn,
+    #mainPanel .filter-section:has(#monitoringFilterKelas) .filter-actions .badge {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+
+/* ============================================================
+   ✅ SETTING SUBMENU DROPDOWN — Modern & Premium
+   ============================================================ */
+
+/* ---------- CONTAINER ---------- */
+.setting-dropdown-wrapper {
+    position: relative;
+    margin-bottom: 16px;
+    z-index: 50;
+}
+
+/* ---------- TRIGGER BUTTON ---------- */
+.setting-dropdown-trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary));
+    border: 1.5px solid var(--border-color);
+    border-radius: 16px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    text-align: left;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    position: relative;
+    overflow: hidden;
+}
+
+.setting-dropdown-trigger:hover {
+    border-color: var(--primary);
+    box-shadow: 0 6px 20px rgba(5, 150, 105, 0.15);
+    transform: translateY(-1px);
+}
+
+.setting-dropdown-trigger:active {
+    transform: scale(0.99);
+}
+
+/* Icon aktif (kiri) */
+.setting-dropdown-trigger .trigger-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+    transition: all 0.3s ease;
+}
+
+.setting-dropdown-trigger .trigger-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.setting-dropdown-trigger .trigger-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 2px;
+}
+
+.setting-dropdown-trigger .trigger-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.setting-dropdown-trigger .trigger-arrow {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.setting-dropdown-trigger.open {
+    border-color: var(--primary);
+    box-shadow: 0 8px 24px rgba(5, 150, 105, 0.2);
+}
+
+.setting-dropdown-trigger.open .trigger-arrow {
+    transform: rotate(180deg);
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+}
+
+/* ---------- PANEL DROPDOWN (DESKTOP) ---------- */
+.setting-dropdown-panel {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background: var(--bg-secondary);
+    border: 1.5px solid var(--border-color);
+    border-radius: 18px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), 0 8px 24px rgba(0, 0, 0, 0.08);
+    padding: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px) scale(0.98);
+    transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    max-height: 0;
+    overflow: hidden;
+    z-index: 100;
+}
+
+.setting-dropdown-panel.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    max-height: 600px;
+}
+
+/* Grid 2 kolom untuk item */
+.setting-dropdown-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+}
+
+/* ---------- ITEM DROPDOWN ---------- */
+.setting-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: transparent;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    text-align: left;
+    width: 100%;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.setting-dropdown-item:hover {
+    background: var(--primary-50);
+    border-color: var(--primary-200, #a7f3d0);
+    transform: translateX(2px);
+}
+
+.setting-dropdown-item:active {
+    transform: scale(0.98);
+}
+
+.setting-dropdown-item.active {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border-color: transparent;
+    box-shadow: 0 4px 14px rgba(5, 150, 105, 0.3);
+}
+
+.setting-dropdown-item .item-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: var(--bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+    border: 1px solid var(--border-color);
+}
+
+.setting-dropdown-item:hover .item-icon {
+    background: var(--bg-secondary);
+    transform: scale(1.08) rotate(-3deg);
+}
+
+.setting-dropdown-item.active .item-icon {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.setting-dropdown-item .item-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.setting-dropdown-item .item-title {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.3;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.setting-dropdown-item.active .item-title {
+    color: #fff;
+    font-weight: 700;
+}
+
+.setting-dropdown-item .item-desc {
+    font-size: 10.5px;
+    color: var(--text-muted);
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.setting-dropdown-item.active .item-desc {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Indikator active */
+.setting-dropdown-item.active::before {
+    content: '✓';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+/* ---------- OVERLAY (untuk tutup saat klik luar) ---------- */
+.setting-dropdown-overlay {
+    position: fixed;
+    inset: 0;
+    background: transparent;
+    z-index: 40;
+    display: none;
+}
+
+.setting-dropdown-overlay.show {
+    display: block;
+}
+
+/* ============================================================
+   MOBILE: Bottom Sheet Style
+   ============================================================ */
+@media (max-width: 768px) {
+    .setting-dropdown-trigger {
+        padding: 12px 14px;
+        gap: 12px;
+        border-radius: 14px;
+    }
+    
+    .setting-dropdown-trigger .trigger-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+        border-radius: 10px;
+    }
+    
+    .setting-dropdown-trigger .trigger-title {
+        font-size: 14px;
+    }
+    
+    /* Bottom sheet */
+    .setting-dropdown-panel {
+        position: fixed;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-radius: 24px 24px 0 0;
+        max-height: 80vh;
+        padding: 0;
+        transform: translateY(100%);
+        z-index: 9999;
+        box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.25);
+    }
+    
+    .setting-dropdown-panel.open {
+        transform: translateY(0);
+        max-height: 80vh;
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    /* Handle bar di atas bottom sheet */
+    .setting-dropdown-panel::before {
+        content: '';
+        position: absolute;
+        top: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40px;
+        height: 4px;
+        background: var(--border-color);
+        border-radius: 2px;
+    }
+    
+    .setting-dropdown-panel-inner {
+        padding: 24px 14px 20px;
+        overflow-y: auto;
+        max-height: 80vh;
+    }
+    
+    .setting-dropdown-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    
+    .setting-dropdown-item {
+        padding: 14px 16px;
+        border-radius: 14px;
+        background: var(--bg-primary);
+        border: 1.5px solid var(--border-color);
+    }
+    
+    .setting-dropdown-item.active {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        border-color: transparent;
+    }
+    
+    .setting-dropdown-item .item-icon {
+        width: 42px;
+        height: 42px;
+        font-size: 20px;
+        border-radius: 12px;
+    }
+    
+    .setting-dropdown-item .item-title {
+        font-size: 14.5px;
+        white-space: normal;
+    }
+    
+    .setting-dropdown-item .item-desc {
+        font-size: 11.5px;
+        white-space: normal;
+    }
+    
+    /* Overlay gelap di mobile */
+    .setting-dropdown-overlay {
+        background: rgba(15, 23, 42, 0.5);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+    }
+    
+    .setting-dropdown-overlay.show {
+        display: block;
+        animation: dropdownFadeIn 0.3s ease;
+    }
+    
+    @keyframes dropdownFadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+}
+
+/* Dark mode adjustment */
+[data-theme="dark"] .setting-dropdown-trigger {
+    background: linear-gradient(135deg, var(--bg-secondary), #0f172a);
+}
+
+[data-theme="dark"] .setting-dropdown-item:hover {
+    background: rgba(5, 150, 105, 0.15);
+}
+
+[data-theme="dark"] .setting-dropdown-panel {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .setting-dropdown-trigger,
+    .setting-dropdown-panel,
+    .setting-dropdown-item,
+    .setting-dropdown-item .item-icon,
+    .setting-dropdown-trigger .trigger-arrow {
+        transition-duration: 0.01s !important;
+        animation-duration: 0.01s !important;
+    }
 }
   </style>
 </head>
@@ -12709,7 +13674,7 @@ function renderDaftarJurnalSubTab({ daftarGuruUnik, daftarMapelUnik, daftarKelas
     container.innerHTML = `
       <!-- FILTER DINAMIS: GURU, MATERI, MAPEL, KELAS -->
       <div class="filter-section">
-        <div class="filter-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr;">
+        <div class="filter-grid" style="grid-template-columns: 1fr 1fr;">
           <div class="filter-item">
             <label>👨‍🏫 Filter Guru</label>
             <select id="jurnalFilterGuru" class="form-control" ${userRole === 'USER' ? 'disabled' : ''}>
@@ -24453,10 +25418,56 @@ window.openEditMapelModal = function(mapelId) {
       renderInputContent();
   }
 
-  window.setInputSubTab = (sub) => {
-      inputSubTab = sub;
-      renderInputTab();
-  };
+
+window.setInputSubTab = function(sub) {
+    // Jika tab sama, tidak perlu animasi
+    if (inputSubTab === sub) return;
+
+    const contentEl = document.getElementById('inputContent');
+
+    // Jika content belum ada, langsung render
+    if (!contentEl) {
+        inputSubTab = sub;
+        renderInputTab();
+        return;
+    }
+
+    // Update state SEBELUM animasi
+    inputSubTab = sub;
+
+    // ============================================================
+    // FASE 1: Fade out konten lama (200ms)
+    // ============================================================
+    contentEl.classList.add('leaving');
+
+    setTimeout(() => {
+        contentEl.classList.remove('leaving');
+
+        // Update active class pada tombol sub-tab
+        const subTabButtons = document.querySelectorAll('#mainPanel .sub-tabs .sub-tab');
+        subTabButtons.forEach(btn => btn.classList.remove('active'));
+
+        subTabButtons.forEach(btn => {
+            const onclick = btn.getAttribute('onclick') || '';
+            if (onclick.includes(`'${sub}'`)) {
+                btn.classList.add('active');
+                // Ripple effect
+                btn.classList.add('ripple');
+                setTimeout(() => btn.classList.remove('ripple'), 700);
+            }
+        });
+
+        // ============================================================
+        // FASE 2: Re-render konten (dengan animasi fade-in via CSS)
+        // ============================================================
+        renderInputTab();
+
+        // Scroll ke atas smooth
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    }, 200);
+};
+
 
   function renderPeriodeInfo(container) {
       if (userRole !== 'ADMIN') return '';
@@ -24986,66 +25997,69 @@ else {
             </div>
           ` : ''}
           
-          <div class="input-field-group">
-              <div class="field-row">
-                  <div class="form-group">
-    <label>📚 Pilih Mapel</label>
-    <select id="selectMapel" class="form-control" ${inputDisabled}>
-        ${mapelOptions}
-    </select>
-${userRole === 'USER' && isNipVerified && filteredMapel.length === 0 ? `
-  <small class="field-hint danger">
-      ⚠️ Tidak ada mapel yang bisa diinput. Pastikan Anda punya jurnal mengajar, atau tercatat sebagai guru pengganti hari ini.
-  </small>
-` : ''}
-    ${userRole === 'USER' && isNipVerified && filteredMapel.length > 0 ? `
-      <small class="field-hint" style="color: var(--success);">
-          ✅ ${filteredMapel.length} mapel sinkron dengan Jurnal Mengajar Anda
-      </small>
-    ` : ''}
-    ${!canInput && userRole === 'USER' ? `<small class="field-hint danger">⚠️ Input nilai tidak tersedia di luar periode</small>` : ''}
+<div class="input-field-group">
+    <!-- ✅ BARIS 1: Mapel & Materi — 2 grid pada desktop -->
+    <div class="field-row-mapel-materi">
+        <div class="form-group">
+            <label>📚 Pilih Mapel</label>
+            <select id="selectMapel" class="form-control" ${inputDisabled}>
+                ${mapelOptions}
+            </select>
+            ${userRole === 'USER' && isNipVerified && filteredMapel.length === 0 ? `
+              <small class="field-hint danger">
+                  ⚠️ Tidak ada mapel yang bisa diinput. Pastikan Anda punya jurnal mengajar, atau tercatat sebagai guru pengganti hari ini.
+              </small>
+            ` : ''}
+            ${userRole === 'USER' && isNipVerified && filteredMapel.length > 0 ? `
+              <small class="field-hint" style="color: var(--success);">
+                  ✅ ${filteredMapel.length} mapel sinkron dengan Jurnal Mengajar Anda
+              </small>
+            ` : ''}
+            ${!canInput && userRole === 'USER' ? `<small class="field-hint danger">⚠️ Input nilai tidak tersedia di luar periode</small>` : ''}
+        </div>
+        ${showMateriPH ? `
+        <div class="form-group">
+            <label>📖 Materi Pembelajaran</label>
+            <div class="indicator-dropdown-container">
+                <input type="text" id="materiPembelajaran" class="form-control" placeholder="Pilih materi dari Jurnal Mengajar..." ${inputDisabled} autocomplete="off" readonly style="cursor: pointer;">
+                <div class="indicator-options" id="materiOptions"></div>
+            </div>
+            <small class="field-hint" id="materiHint">Materi otomatis dari Jurnal Mengajar sesuai mapel yang dipilih</small>
+        </div>
+        ` : `
+        <div class="form-group">
+            <label style="color: var(--text-muted);">📖 Materi Pembelajaran</label>
+            <input type="text" class="form-control" value="Tidak diperlukan untuk ${type}" disabled style="background: var(--bg-primary); cursor: not-allowed; opacity:0.7;">
+            <small class="field-hint">Field Materi hanya tersedia untuk UH</small>
+        </div>
+        `}
+    </div>
+    
+    <!-- ✅ BARIS 2: Kelas, PH Ke, KKM (tetap 3 kolom) -->
+    <div class="field-row" style="margin-top: 12px;">
+        <div class="form-group">
+            <label>📚 Kelas</label>
+            <input type="text" id="kelasDisplayInput" class="form-control" readonly placeholder="Pilih mapel terlebih dahulu">
+        </div>
+        ${showMateriPH ? `
+        <div class="form-group">
+            <label>🔢 PH Ke-</label>
+            <input type="number" id="phKe" class="form-control" placeholder="Otomatis" readonly min="1" ${inputDisabled}>
+            <small class="field-hint" id="phHint">Akan terisi otomatis dari riwayat Penilaian Harian</small>
+        </div>
+        ` : `
+        <div class="form-group">
+            <label>🔢 PH Ke-</label>
+            <input type="text" class="form-control" value="Tidak diperlukan untuk ${type}" disabled style="background: var(--bg-primary); cursor: not-allowed; opacity:0.7;">
+            <small class="field-hint">Field PH hanya tersedia untuk UH</small>
+        </div>
+        `}
+        <div class="form-group">
+            <label>📊 KKM</label>
+            <input type="text" id="kkmDisplayInput" class="form-control" readonly placeholder="Pilih mapel terlebih dahulu">
+        </div>
+    </div>
 </div>
-                  ${showMateriPH ? `
-                  <div class="form-group">
-                      <label>📖 Materi Pembelajaran</label>
-                      <div class="indicator-dropdown-container">
-                          <input type="text" id="materiPembelajaran" class="form-control" placeholder="Pilih materi dari Jurnal Mengajar..." ${inputDisabled} autocomplete="off" readonly style="cursor: pointer;">
-                          <div class="indicator-options" id="materiOptions"></div>
-                      </div>
-                      <small class="field-hint" id="materiHint">Materi otomatis dari Jurnal Mengajar sesuai mapel yang dipilih</small>
-                  </div>
-                  ` : `
-                  <div class="form-group">
-                      <label style="color: var(--text-muted);">📖 Materi Pembelajaran</label>
-                      <input type="text" class="form-control" value="Tidak diperlukan untuk ${type}" disabled style="background: var(--bg-primary); cursor: not-allowed; opacity:0.7;">
-                      <small class="field-hint">Field Materi hanya tersedia untuk UH</small>
-                  </div>
-                  `}
-              </div>
-              <div class="field-row" style="margin-top: 12px;">
-                  <div class="form-group">
-                      <label>📚 Kelas</label>
-                      <input type="text" id="kelasDisplayInput" class="form-control" readonly placeholder="Pilih mapel terlebih dahulu">
-                  </div>
-                  ${showMateriPH ? `
-                  <div class="form-group">
-                      <label>🔢 PH Ke-</label>
-                      <input type="number" id="phKe" class="form-control" placeholder="Otomatis" readonly min="1" ${inputDisabled}>
-                      <small class="field-hint" id="phHint">Akan terisi otomatis dari riwayat Penilaian Harian</small>
-                  </div>
-                  ` : `
-                  <div class="form-group">
-                      <label>🔢 PH Ke-</label>
-                      <input type="text" class="form-control" value="Tidak diperlukan untuk ${type}" disabled style="background: var(--bg-primary); cursor: not-allowed; opacity:0.7;">
-                      <small class="field-hint">Field PH hanya tersedia untuk UH</small>
-                  </div>
-                  `}
-                  <div class="form-group">
-                      <label>📊 KKM</label>
-                      <input type="text" id="kkmDisplayInput" class="form-control" readonly placeholder="Pilih mapel terlebih dahulu">
-                  </div>
-              </div>
-          </div>
 
           <div id="kelasInfo" style="background: var(--primary-50); padding: 8px 14px; border-radius: var(--radius-sm); margin-bottom: 8px; color: var(--primary-dark); display: flex; align-items: center; gap: 8px;">
               📚 Kelas: <span id="kelasDisplay" style="font-weight: 600;">-</span>
@@ -25684,8 +26698,55 @@ function renderTransaksiTab() {
 
 
 window.setTransSubTab = function(sub) {
+    // Jika tab sama, tidak perlu animasi
+    if (transSubTab === sub) return;
+
+    const filterEl = document.getElementById('transactionsFilter');
+    const panelEl = document.getElementById('transactionsPanel');
+
+    // Jika content belum ada, langsung render
+    if (!filterEl || !panelEl) {
+        transSubTab = sub;
+        renderTransaksiTab();
+        return;
+    }
+
+    // Update state SEBELUM animasi
     transSubTab = sub;
-    renderTransaksiTab();
+
+    // ============================================================
+    // FASE 1: Fade out konten lama (200ms)
+    // ============================================================
+    filterEl.classList.add('leaving');
+    panelEl.classList.add('leaving');
+
+    setTimeout(() => {
+        filterEl.classList.remove('leaving');
+        panelEl.classList.remove('leaving');
+
+        // Update active class pada tombol sub-tab
+        const subTabButtons = document.querySelectorAll('#mainPanel .trans-sub-tabs .trans-sub-tab');
+        subTabButtons.forEach(btn => btn.classList.remove('active'));
+
+        subTabButtons.forEach(btn => {
+            const onclick = btn.getAttribute('onclick') || '';
+            if (onclick.includes(`'${sub}'`)) {
+                btn.classList.add('active');
+                // Ripple effect
+                btn.classList.add('ripple');
+                setTimeout(() => btn.classList.remove('ripple'), 700);
+            }
+        });
+
+        // ============================================================
+        // FASE 2: Re-render konten (dengan animasi fade-in via CSS)
+        // ============================================================
+        renderTransaksiTab();
+
+        // Scroll ke atas smooth
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    }, 200);
 };
 
 
@@ -25853,85 +26914,104 @@ function renderTransFilterUI() {
                 ${showMateriFilter ? '→ <strong>Materi</strong> → <strong>PH Ke-</strong>' : ''}
             </div>
             
-            <div class="filter-grid" style="grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));">
-                <div class="filter-item" style="grid-column: span 2;">
-                    <label>🔍 Cari Nama Santri</label>
-                    <input type="text" id="transSearchSantri" class="form-control" 
-                           placeholder="Ketik nama santri..." value="${escapeHtml(currentSearch)}">
-                </div>
-                
-                <!-- ① KELAS -->
-                <div class="filter-item">
-                    <label>① 📚 Kelas</label>
-                    <select id="transFilterKelas" class="form-control">
-                        <option value="">📋 Semua Kelas</option>
-                        ${daftarKelas.map(k => 
-                            `<option value="${k}" ${String(currentKelas) === String(k) ? 'selected' : ''}>Kelas ${k}</option>`
-                        ).join('')}
-                    </select>
-                </div>
-                
-                <!-- ② MAPEL -->
-                <div class="filter-item">
-                    <label>② 📖 Mapel</label>
-                    <select id="transFilterMapel" class="form-control">
-                        <option value="">📋 Semua Mapel</option>
-                        ${daftarMapel.map(m => 
-                            `<option value="${escapeHtml(m)}" ${currentMapel === m ? 'selected' : ''}>${escapeHtml(m)}</option>`
-                        ).join('')}
-                    </select>
-                </div>
-                
-                ${showMateriFilter ? `
-                <!-- ③ MATERI -->
-                <div class="filter-item" style="grid-column: span 2;">
-                    <label>③ 📝 Materi Pembelajaran</label>
-                    <select id="transFilterMateri" class="form-control">
-                        <option value="">📋 Semua Materi</option>
-                        ${daftarMateri.map(m => 
-                            `<option value="${escapeHtml(m)}" ${currentMateri === m ? 'selected' : ''}>${escapeHtml(m)}</option>`
-                        ).join('')}
-                    </select>
-                </div>
-                
-                <!-- ④ PH KE -->
-                <div class="filter-item">
-                    <label>④ 🔢 PH Ke-</label>
-                    <select id="transFilterPHKe" class="form-control">
-                        <option value="">📋 Semua PH</option>
-                        ${daftarPHKe.map(p => 
-                            `<option value="${p}" ${String(currentPHKe) === String(p) ? 'selected' : ''}>PH Ke-${p}</option>`
-                        ).join('')}
-                    </select>
-                </div>
-                ` : ''}
-                
-                <!-- GURU (hanya ADMIN) -->
-                <div class="filter-item">
-                    <label>👨‍🏫 Guru</label>
-                    ${isUser ? `
-                        <input type="text" class="form-control" value="${escapeHtml(verifiedGuruName || '-')}" readonly 
-                               style="background: var(--bg-primary); cursor: not-allowed; color: var(--text-secondary); font-weight: 600;">
-                        <small class="field-hint" style="color: var(--primary);">🔒 Terkunci</small>
-                    ` : `
-                        <select id="transFilterGuru" class="form-control">
-                            <option value="">📋 Semua Guru</option>
-                            ${daftarGuruUnik.map(g => 
-                                `<option value="${g.id}" ${currentGuru === g.id ? 'selected' : ''}>${escapeHtml(g.name)}</option>`
-                            ).join('')}
-                        </select>
-                    `}
-                </div>
-                
-                <!-- TIPE -->
-                <div class="filter-item">
-                    <label>📋 Tipe</label>
-                    <select id="transFilterType" class="form-control">
-                        <option value="">Semua Tipe</option>
-                        ${typeOptions}
-                    </select>
-                </div>
-            </div>
+<div class="filter-grid" style="grid-template-columns: repeat(3, 1fr);">
+    <!-- ============================================================ -->
+    <!-- BARIS 1: Cari Nama Santri (1 kolom penuh)                     -->
+    <!-- ============================================================ -->
+    <div class="filter-item" style="grid-column: 1 / -1;">
+        <label>🔍 Cari Nama Santri</label>
+        <input type="text" id="transSearchSantri" class="form-control" 
+               placeholder="Ketik nama santri..." value="${escapeHtml(currentSearch)}">
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- BARIS 2: Kelas | Mapel | Materi Pembelajaran (3 kolom)        -->
+    <!-- ============================================================ -->
+    <!-- ① KELAS -->
+    <div class="filter-item">
+        <label>① 📚 Kelas</label>
+        <select id="transFilterKelas" class="form-control">
+            <option value="">📋 Semua Kelas</option>
+            ${daftarKelas.map(k => 
+                `<option value="${k}" ${String(currentKelas) === String(k) ? 'selected' : ''}>Kelas ${k}</option>`
+            ).join('')}
+        </select>
+    </div>
+    
+    <!-- ② MAPEL -->
+    <div class="filter-item">
+        <label>② 📖 Mapel</label>
+        <select id="transFilterMapel" class="form-control">
+            <option value="">📋 Semua Mapel</option>
+            ${daftarMapel.map(m => 
+                `<option value="${escapeHtml(m)}" ${currentMapel === m ? 'selected' : ''}>${escapeHtml(m)}</option>`
+            ).join('')}
+        </select>
+    </div>
+    
+    <!-- ③ MATERI PEMBELAJARAN -->
+    <div class="filter-item">
+        <label>③ 📝 Materi Pembelajaran</label>
+        ${showMateriFilter ? `
+            <select id="transFilterMateri" class="form-control">
+                <option value="">📋 Semua Materi</option>
+                ${daftarMateri.map(m => 
+                    `<option value="${escapeHtml(m)}" ${currentMateri === m ? 'selected' : ''}>${escapeHtml(m)}</option>`
+                ).join('')}
+            </select>
+        ` : `
+            <select class="form-control" disabled style="background: var(--bg-primary); opacity: 0.6;">
+                <option>— Tidak tersedia —</option>
+            </select>
+        `}
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- BARIS 3: PH Ke | Guru | Tipe (3 kolom)                        -->
+    <!-- ============================================================ -->
+    <!-- ④ PH KE -->
+    <div class="filter-item">
+        <label>④ 🔢 PH Ke-</label>
+        ${showMateriFilter ? `
+            <select id="transFilterPHKe" class="form-control">
+                <option value="">📋 Semua PH</option>
+                ${daftarPHKe.map(p => 
+                    `<option value="${p}" ${String(currentPHKe) === String(p) ? 'selected' : ''}>PH Ke-${p}</option>`
+                ).join('')}
+            </select>
+        ` : `
+            <select class="form-control" disabled style="background: var(--bg-primary); opacity: 0.6;">
+                <option>— Tidak tersedia —</option>
+            </select>
+        `}
+    </div>
+    
+    <!-- GURU -->
+    <div class="filter-item">
+        <label>👨‍🏫 Guru</label>
+        ${isUser ? `
+            <input type="text" class="form-control" value="${escapeHtml(verifiedGuruName || '-')}" readonly 
+                   style="background: var(--bg-primary); cursor: not-allowed; color: var(--text-secondary); font-weight: 600;">
+            <small class="field-hint" style="color: var(--primary);">🔒 Terkunci</small>
+        ` : `
+            <select id="transFilterGuru" class="form-control">
+                <option value="">📋 Semua Guru</option>
+                ${daftarGuruUnik.map(g => 
+                    `<option value="${g.id}" ${currentGuru === g.id ? 'selected' : ''}>${escapeHtml(g.name)}</option>`
+                ).join('')}
+            </select>
+        `}
+    </div>
+    
+    <!-- TIPE -->
+    <div class="filter-item">
+        <label>📋 Tipe</label>
+        <select id="transFilterType" class="form-control">
+            <option value="">Semua Tipe</option>
+            ${typeOptions}
+        </select>
+    </div>
+</div>
             
             <div class="filter-actions">
                 <div class="flex" style="gap:8px; align-items:center; flex-wrap:wrap;">
@@ -26130,6 +27210,16 @@ function resetTransFilter() {
 }
 
 
+function aksiTombolNilai(id) {
+  return `
+    <div style="display:flex; justify-content:center; gap:4px;">
+      <button class="btn btn-warning btn-xs btnEditNilai" data-id="${id}" title="Edit nilai">✏️</button>
+      <button class="btn btn-danger btn-xs btnHapusNilai" data-id="${id}" title="Hapus nilai">🗑️</button>
+    </div>
+  `;
+}
+
+
 function renderTransactionsWith(dataList) {
     const panel = document.getElementById('transactionsPanel');
     if (!panel) return;
@@ -26318,9 +27408,11 @@ function renderTransactionsWith(dataList) {
                             </div>
                         </div>
                         
-                        <div class="trans-card-actions">
-                            <button class="btn btn-warning btnEditNilai" data-id="${r.id}">✏️ Edit</button>
-                            <button class="btn btn-danger btnHapusNilai" data-id="${r.id}">🗑️ Hapus</button>
+                        <div class="trans-card-actions" style="display:flex; justify-content:center; gap:8px;">
+                           <button class="btn btn-warning btn-xs btnEditNilai" data-id="${r.id}" title="Edit nilai" 
+                                   style="flex:0 0 auto; padding:8px 14px;">✏️</button>
+                           <button class="btn btn-danger btn-xs btnHapusNilai" data-id="${r.id}" title="Hapus nilai" 
+                                   style="flex:0 0 auto; padding:8px 14px;">🗑️</button>
                         </div>
                     </div>
                 `;
@@ -26373,9 +27465,11 @@ function renderTransactionsWith(dataList) {
                         <td data-label="PH Ke"><span class="badge badge-info">${r.phDisplay}</span></td>
                       ` : ''}
                       <td data-label="Status"><span class="status-badge-score ${r.isTuntas ? 'badge-success' : 'badge-danger'}">${r.isTuntas ? 'Tuntas' : 'Belum Tuntas'}</span></td>
-                      <td data-label="Aksi" style="text-align:center;">
-                        <button class="btn btn-warning btn-xs btnEditNilai" data-id="${r.id}">✏️ Edit</button>
-                        <button class="btn btn-danger btn-xs btnHapusNilai" data-id="${r.id}">🗑️ Hapus</button>
+                      <td data-label="Aksi" style="text-align:center; white-space:nowrap; vertical-align:middle;">
+                        <div style="display:flex; justify-content:center; gap:4px;">
+                           <button class="btn btn-warning btn-xs btnEditNilai" data-id="${r.id}" title="Edit nilai">✏️</button>
+                           <button class="btn btn-danger btn-xs btnHapusNilai" data-id="${r.id}" title="Hapus nilai">🗑️</button>
+                        </div>
                       </td>
                     </tr>
                   `).join('') : `
@@ -26851,80 +27945,85 @@ function renderRekapSiswa(page = 1) {
         </button>
 
         <!-- ✅ FILTER SECTION (collapsible) -->
-        <div class="filter-section rekap-filter-section" id="rekapFilterSection">
-            <div class="filter-grid" style="grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));">
-                
-                <div class="filter-item" style="grid-column: span 2;">
-                    <label>🔍 Cari Santri</label>
-                    <input type="text" id="rekapSearchNama" class="form-control"
-                           placeholder="Ketik nama santri..." value="${escapeHtml(fSearch)}">
-                </div>
+<div class="filter-section rekap-filter-section" id="rekapFilterSection">
+    <div class="filter-grid">
+        
+        <!-- Search full-width -->
+        <div class="filter-item search-wide">
+            <label>🔍 Cari Santri</label>
+            <input type="text" id="rekapSearchNama" class="form-control"
+                   placeholder="Ketik nama santri..." value="${escapeHtml(fSearch)}">
+        </div>
 
-                <div class="filter-item">
-                    <label>📚 Kelas</label>
-                    <select id="rekapFilterKelas" class="form-control">
-                        <option value="SEMUA">Semua Kelas</option>
-                        ${listKelasUnik.map(k => `<option value="${k}" ${String(fKelas) === String(k) ? 'selected' : ''}>Kelas ${k}</option>`).join('')}
-                    </select>
-                </div>
+        <!-- Kelas -->
+        <div class="filter-item">
+            <label>📚 Kelas</label>
+            <select id="rekapFilterKelas" class="form-control">
+                <option value="SEMUA">Semua Kelas</option>
+                ${listKelasUnik.map(k => `<option value="${k}" ${String(fKelas) === String(k) ? 'selected' : ''}>Kelas ${k}</option>`).join('')}
+            </select>
+        </div>
 
-                <div class="filter-item">
-                    <label>📖 Mapel</label>
-                    <select id="rekapFilterMapel" class="form-control">
-                        <option value="SEMUA">Semua Mapel</option>
-                        ${mapelOptions}
-                    </select>
-                </div>
+        <!-- Mapel -->
+        <div class="filter-item">
+            <label>📖 Mapel</label>
+            <select id="rekapFilterMapel" class="form-control">
+                <option value="SEMUA">Semua Mapel</option>
+                ${mapelOptions}
+            </select>
+        </div>
 
-                ${!isUser ? `
-                <div class="filter-item">
-                    <label>👨‍🏫 Guru</label>
-                    <select id="rekapFilterGuru" class="form-control">
-                        <option value="SEMUA">Semua Guru</option>
-                        ${guruOptions}
-                    </select>
-                </div>
-                ` : ''}
+        <!-- Guru (admin only) -->
+        ${!isUser ? `
+        <div class="filter-item">
+            <label>👨‍🏫 Guru</label>
+            <select id="rekapFilterGuru" class="form-control">
+                <option value="SEMUA">Semua Guru</option>
+                ${guruOptions}
+            </select>
+        </div>
+        ` : ''}
 
-                <div class="filter-item">
-                    <label>📋 Status</label>
-                    <select id="rekapFilterStatus" class="form-control">
-                        <option value="SEMUA" ${fStatus==='SEMUA'?'selected':''}>Semua Status</option>
-                        <option value="BELUM_TUNTAS" ${fStatus==='BELUM_TUNTAS'?'selected':''}>Belum Tuntas</option>
-                        <option value="TUNTAS" ${fStatus==='TUNTAS'?'selected':''}>Tuntas</option>
-                    </select>
-                </div>
+        <!-- Status -->
+        <div class="filter-item">
+            <label>📋 Status</label>
+            <select id="rekapFilterStatus" class="form-control">
+                <option value="SEMUA" ${fStatus==='SEMUA'?'selected':''}>Semua Status</option>
+                <option value="BELUM_TUNTAS" ${fStatus==='BELUM_TUNTAS'?'selected':''}>Belum Tuntas</option>
+                <option value="TUNTAS" ${fStatus==='TUNTAS'?'selected':''}>Tuntas</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Bobot Nilai -->
+    <div style="background: var(--bg-primary); padding: 12px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); margin-top: 12px;">
+        <label style="font-weight: 700; font-size: 11px; text-transform: uppercase; color: var(--text-secondary); display: block; margin-bottom: 8px;">
+            ⚖️ Bobot Nilai
+        </label>
+        <div class="bobot-grid" style="display: grid; gap: 8px;">
+            <div>
+                <label style="font-size: 10px; color: var(--text-muted);">📝 UH</label>
+                <input type="number" id="weightUH" class="form-control" value="${wUH}" step="1" style="padding: 6px 8px; text-align: center; font-weight: 700;">
             </div>
-
-            <!-- Bobot Nilai -->
-            <div style="background: var(--bg-primary); padding: 12px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); margin-top: 12px;">
-                <label style="font-weight: 700; font-size: 11px; text-transform: uppercase; color: var(--text-secondary); display: block; margin-bottom: 8px;">
-                    ⚖️ Bobot Nilai
-                </label>
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
-                    <div>
-                        <label style="font-size: 10px; color: var(--text-muted);">📝 UH</label>
-                        <input type="number" id="weightUH" class="form-control" value="${wUH}" step="1" style="padding: 6px 8px; text-align: center; font-weight: 700;">
-                    </div>
-                    <div>
-                        <label style="font-size: 10px; color: var(--text-muted);">📊 PTS</label>
-                        <input type="number" id="weightPTS" class="form-control" value="${wPTS}" step="1" style="padding: 6px 8px; text-align: center; font-weight: 700;">
-                    </div>
-                    <div>
-                        <label style="font-size: 10px; color: var(--text-muted);">📋 PAS</label>
-                        <input type="number" id="weightPAS" class="form-control" value="${wPAS}" step="1" style="padding: 6px 8px; text-align: center; font-weight: 700;">
-                    </div>
-                </div>
-                <button class="btn btn-primary btn-sm" style="width: 100%; margin-top: 10px;" id="btnUpdateNA">
-                    🔄 Hitung Ulang
-                </button>
+            <div>
+                <label style="font-size: 10px; color: var(--text-muted);">📊 PTS</label>
+                <input type="number" id="weightPTS" class="form-control" value="${wPTS}" step="1" style="padding: 6px 8px; text-align: center; font-weight: 700;">
             </div>
-
-            <div class="filter-actions" style="margin-top: 12px;">
-                <button class="btn btn-ghost btn-sm" id="btnResetRekapFilter">🔄 Reset</button>
-                <button class="btn btn-success btn-sm" id="btnExportExcelRekap">📗 Excel</button>
+            <div>
+                <label style="font-size: 10px; color: var(--text-muted);">📋 PAS</label>
+                <input type="number" id="weightPAS" class="form-control" value="${wPAS}" step="1" style="padding: 6px 8px; text-align: center; font-weight: 700;">
             </div>
         </div>
+        <button class="btn btn-primary btn-sm" style="width: 100%; margin-top: 10px;" id="btnUpdateNA">
+            🔄 Hitung Ulang
+        </button>
+    </div>
+
+    <div class="filter-actions" style="margin-top: 12px;">
+        <button class="btn btn-ghost btn-sm" id="btnResetRekapFilter">🔄 Reset</button>
+        <button class="btn btn-success btn-sm" id="btnExportExcelRekap">📗 Excel</button>
+    </div>
+</div>
 
         <!-- ============================================================ -->
         <!-- ✅ FIX #1: CARD LIST (mobile) — hapus inline display:none -->
@@ -27893,8 +28992,76 @@ function renderMonitoringTab() {
       }
   }
 
+// ============================================================
+// ✅ DATA SUBMENU SETTING (untuk dropdown)
+// ============================================================
+const SETTING_SUBMENU_DATA = {
+    'IDENTITAS': {
+        icon: '🏫',
+        title: 'Identitas Lembaga',
+        desc: 'Nama, alamat & NPSN',
+        color: 'var(--primary)'
+    },
+    'IDENTITAS_SANTRI': {
+        icon: '👤',
+        title: 'Identitas Santri',
+        desc: 'Data lengkap santri',
+        color: 'var(--info)'
+    },
+    'DOKUMEN': {
+        icon: '📁',
+        title: 'Dokumen',
+        desc: 'Logo, kop & tanda tangan',
+        color: 'var(--warning)'
+    },
+    'PIN': {
+        icon: '🔑',
+        title: 'PIN Akses',
+        desc: 'PIN Admin & User',
+        color: 'var(--danger)'
+    },
+    'PERIODE': {
+        icon: '📅',
+        title: 'Periode',
+        desc: 'Batas input nilai',
+        color: 'var(--primary)'
+    },
+    'INTERVAL': {
+        icon: '📊',
+        title: 'Interval Nilai',
+        desc: 'Predikat & rentang',
+        color: 'var(--info)'
+    },
+    'LOKASI': {
+        icon: '📍',
+        title: 'Lokasi Absensi',
+        desc: 'Geofencing GPS',
+        color: 'var(--success)'
+    },
+    'JAM_ABSENSI': {
+        icon: '🕐',
+        title: 'Jam Absensi',
+        desc: 'Validasi jam masuk/keluar',
+        color: 'var(--warning)'
+    }
+};
+
+
+// ============================================================
+// ✅ RENDER TAB SETTING — dengan Dropdown Modern
+// ============================================================
 function renderSettingTab() {
     const mainPanel = document.getElementById('mainPanel');
+    if (!mainPanel) return;
+    
+    // Pastikan settingSubTab valid
+    const validTabs = Object.keys(SETTING_SUBMENU_DATA);
+    if (!validTabs.includes(settingSubTab)) {
+        settingSubTab = 'IDENTITAS';
+    }
+    
+    const currentData = SETTING_SUBMENU_DATA[settingSubTab];
+    
     mainPanel.innerHTML = `
         <div style="margin-bottom: 16px;">
             <h3 style="font-size: 16px; font-weight: 600; margin: 0;">⚙️ Pengaturan</h3>
@@ -27902,19 +29069,209 @@ function renderSettingTab() {
                 Kelola identitas lembaga, dokumen sekolah, PIN akses, periode input, dan interval nilai.
             </p>
         </div>
-        <div class="sub-tabs" id="settingSubTabs">
-            <button class="sub-tab ${settingSubTab === 'IDENTITAS' ? 'active' : ''}" onclick="window.setSettingSubTab('IDENTITAS')">🏫 Identitas Lembaga</button>
-            <button class="sub-tab ${settingSubTab === 'IDENTITAS_SANTRI' ? 'active' : ''}" onclick="window.setSettingSubTab('IDENTITAS_SANTRI')">👤 Identitas Santri</button>
-            <button class="sub-tab ${settingSubTab === 'DOKUMEN' ? 'active' : ''}" onclick="window.setSettingSubTab('DOKUMEN')">📁 Dokumen</button>
-            <button class="sub-tab ${settingSubTab === 'PIN' ? 'active' : ''}" onclick="window.setSettingSubTab('PIN')">🔑 PIN Akses</button>
-            <button class="sub-tab ${settingSubTab === 'PERIODE' ? 'active' : ''}" onclick="window.setSettingSubTab('PERIODE')">📅 Periode</button>
-            <button class="sub-tab ${settingSubTab === 'INTERVAL' ? 'active' : ''}" onclick="window.setSettingSubTab('INTERVAL')">📊 Interval Nilai</button>
-            <button class="sub-tab ${settingSubTab === 'LOKASI' ? 'active' : ''}" onclick="window.setSettingSubTab('LOKASI')">📍 Lokasi Absensi</button>
-            <button class="sub-tab ${settingSubTab === 'JAM_ABSENSI' ? 'active' : ''}" onclick="window.setSettingSubTab('JAM_ABSENSI')">🕐 Jam Absensi</button>
+        
+        <!-- ============================================================ -->
+        <!-- ✅ DROPDOWN SETTING SUBMENU                                  -->
+        <!-- ============================================================ -->
+        <div class="setting-dropdown-wrapper" id="settingDropdownWrapper">
+            <!-- TRIGGER -->
+            <button class="setting-dropdown-trigger" id="settingDropdownTrigger" 
+                    aria-expanded="false" aria-haspopup="true">
+                <div class="trigger-icon" id="settingTriggerIcon">
+                    ${currentData.icon}
+                </div>
+                <div class="trigger-content">
+                    <div class="trigger-label">Menu Pengaturan</div>
+                    <div class="trigger-title" id="settingTriggerTitle">
+                        ${currentData.title}
+                    </div>
+                </div>
+                <div class="trigger-arrow" id="settingTriggerArrow">▼</div>
+            </button>
+            
+            <!-- PANEL -->
+            <div class="setting-dropdown-panel" id="settingDropdownPanel"
+                 role="menu" aria-label="Pilih menu pengaturan">
+                <div class="setting-dropdown-panel-inner">
+                    <div class="setting-dropdown-grid">
+                        ${Object.entries(SETTING_SUBMENU_DATA).map(([key, data]) => `
+                            <button class="setting-dropdown-item ${settingSubTab === key ? 'active' : ''}"
+                                    data-setting-tab="${key}"
+                                    role="menuitem"
+                                    ${settingSubTab === key ? 'aria-current="page"' : ''}>
+                                <div class="item-icon">${data.icon}</div>
+                                <div class="item-content">
+                                    <div class="item-title">${data.title}</div>
+                                    <div class="item-desc">${data.desc}</div>
+                                </div>
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            </div>
         </div>
+        
+        <!-- OVERLAY (untuk tutup saat klik luar) -->
+        <div class="setting-dropdown-overlay" id="settingDropdownOverlay"></div>
+        
+        <!-- ============================================================ -->
+        <!-- ✅ KONTEN SUBMENU AKTIF                                       -->
+        <!-- ============================================================ -->
         <div id="settingContent"></div>
     `;
+    
+    // Render konten submenu
     renderSettingContent();
+    
+    // ============================================================
+    // ✅ EVENT LISTENERS DROPDOWN
+    // ============================================================
+    const trigger = document.getElementById('settingDropdownTrigger');
+    const panel = document.getElementById('settingDropdownPanel');
+    const overlay = document.getElementById('settingDropdownOverlay');
+    const wrapper = document.getElementById('settingDropdownWrapper');
+    
+    let isOpen = false;
+    
+    const openDropdown = () => {
+        if (isOpen) return;
+        isOpen = true;
+        panel.classList.add('open');
+        trigger.classList.add('open');
+        overlay.classList.add('show');
+        trigger.setAttribute('aria-expanded', 'true');
+        
+        // Stagger animation untuk item (hanya desktop)
+        if (window.innerWidth > 768) {
+            const items = panel.querySelectorAll('.setting-dropdown-item');
+            items.forEach((item, index) => {
+                item.style.animation = 'none';
+                void item.offsetWidth;
+                item.style.animation = `subTabContentIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) ${index * 0.03}s both`;
+            });
+        }
+        
+        // Haptic feedback
+        if (window.navigator && window.navigator.vibrate) {
+            window.navigator.vibrate(8);
+        }
+    };
+    
+    const closeDropdown = () => {
+        if (!isOpen) return;
+        isOpen = false;
+        panel.classList.remove('open');
+        trigger.classList.remove('open');
+        overlay.classList.remove('show');
+        trigger.setAttribute('aria-expanded', 'false');
+    };
+    
+    const toggleDropdown = () => {
+        if (isOpen) closeDropdown();
+        else openDropdown();
+    };
+    
+    // Toggle saat klik trigger
+    trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleDropdown();
+    });
+    
+    // Tutup saat klik overlay
+    overlay.addEventListener('click', closeDropdown);
+    
+    // Tutup saat klik luar (fallback)
+    document.addEventListener('click', function outsideClick(e) {
+        if (!wrapper.contains(e.target) && isOpen) {
+            closeDropdown();
+        }
+    });
+    
+    // Tutup saat tekan ESC
+    document.addEventListener('keydown', function escHandler(e) {
+        if (e.key === 'Escape' && isOpen) {
+            closeDropdown();
+            trigger.focus();
+        }
+    });
+    
+    // ============================================================
+    // ✅ KLIK ITEM SUBMENU → GANTI TAB
+    // ============================================================
+    panel.querySelectorAll('.setting-dropdown-item').forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const tabKey = this.dataset.settingTab;
+            
+            if (!tabKey || !SETTING_SUBMENU_DATA[tabKey]) return;
+            if (tabKey === settingSubTab) {
+                closeDropdown();
+                return;
+            }
+            
+            // Update state
+            settingSubTab = tabKey;
+            
+            // Ripple effect
+            this.classList.add('ripple');
+            setTimeout(() => this.classList.remove('ripple'), 600);
+            
+            // Tutup dropdown dengan animasi
+            setTimeout(() => {
+                closeDropdown();
+                
+                // Fade out konten lama
+                const contentEl = document.getElementById('settingContent');
+                if (contentEl) {
+                    contentEl.style.opacity = '0';
+                    contentEl.style.transform = 'translateY(8px)';
+                    contentEl.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+                }
+                
+                // Re-render setelah fade out
+                setTimeout(() => {
+                    renderSettingTab();
+                    
+                    // Scroll ke atas smooth
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 180);
+            }, 120);
+        });
+    });
+    
+    // ============================================================
+    // ✅ KEYBOARD NAVIGATION (Arrow keys)
+    // ============================================================
+    panel.addEventListener('keydown', (e) => {
+        const items = Array.from(panel.querySelectorAll('.setting-dropdown-item'));
+        const currentIndex = items.indexOf(document.activeElement);
+        
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            const nextIndex = currentIndex < items.length - 1 ? currentIndex + 1 : 0;
+            items[nextIndex]?.focus();
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            const prevIndex = currentIndex > 0 ? currentIndex - 1 : items.length - 1;
+            items[prevIndex]?.focus();
+        } else if (e.key === 'Enter' || e.key === ' ') {
+            if (currentIndex >= 0) {
+                e.preventDefault();
+                items[currentIndex].click();
+            }
+        }
+    });
+    
+    // ============================================================
+    // ✅ CLEANUP: Hapus listener saat navigasi keluar
+    // ============================================================
+    if (window._settingDropdownCleanup) {
+        window._settingDropdownCleanup();
+    }
+    window._settingDropdownCleanup = () => {
+        document.removeEventListener('click', function(){});
+        document.removeEventListener('keydown', function(){});
+    };
 }
 
 
